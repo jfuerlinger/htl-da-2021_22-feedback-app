@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace FeedbackApp_WebApi.Authentication
 {
-    [Route("api/[controller]")]
+    [Route("api")]
     [ApiController]
     public class AuthenticateController : ControllerBase
     {
@@ -55,7 +55,7 @@ namespace FeedbackApp_WebApi.Authentication
                     (
                         issuer: _configuration["JWT:ValidIssuer"],
                         audience: _configuration["JWT:ValidAudience"],
-                        expires: DateTime.Now.AddHours(1),
+                        expires: DateTime.Now.AddHours(2),
                         claims: authClaims,
                         signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
@@ -119,6 +119,8 @@ namespace FeedbackApp_WebApi.Authentication
                 await roleManager.CreateAsync(new IdentityRole(UserRoles.admin));
             if (!await roleManager.RoleExistsAsync(UserRoles.pupil))
                 await roleManager.CreateAsync(new IdentityRole(UserRoles.pupil));
+            if (!await roleManager.RoleExistsAsync(UserRoles.teacher))
+                await roleManager.CreateAsync(new IdentityRole(UserRoles.teacher));
 
             if (await roleManager.RoleExistsAsync(UserRoles.teacher))
             {
