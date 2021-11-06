@@ -21,7 +21,12 @@ namespace FeedbackApp_WebApi.Authentication
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IConfiguration _configuration;
 
-        public AuthenticateController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        private string msgUserExists = "Benutzer exestiert bereits!";
+        private string msgCreateUserFail = "Benutzer erstellen fehlgeschlagen! Bitte Eingaben überprüfen und erneut versuchen.";
+        private string msgCreateUserSuccess = "Benutzer erfolgreich erstellt.";
+
+        public AuthenticateController(UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
@@ -77,7 +82,8 @@ namespace FeedbackApp_WebApi.Authentication
 
             if (userExists != null)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User exestiert bereits!" });
+                return StatusCode(StatusCodes.Status500InternalServerError, 
+                    new Response { Status = "Error", Message = msgUserExists });
             }
 
             ApplicationUser user = new ApplicationUser()
@@ -91,10 +97,11 @@ namespace FeedbackApp_WebApi.Authentication
 
             if (!result.Succeeded)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User erstellen fehlgeschlagen! Bitte Eingaben überprüfen und erneut versuchen" });
+                return StatusCode(StatusCodes.Status500InternalServerError, 
+                    new Response { Status = "Error", Message = msgCreateUserFail });
             }
 
-            return Ok(new Response { Status = "Success", Message = "User erfolgreich erstellt" });
+            return Ok(new Response { Status = "Success", Message = msgCreateUserSuccess });
         }
 
         [HttpPost]
@@ -103,7 +110,8 @@ namespace FeedbackApp_WebApi.Authentication
         {
             var userExists = await userManager.FindByNameAsync(model.UserName);
             if (userExists != null)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User exestiert bereits!" });
+                return StatusCode(StatusCodes.Status500InternalServerError, 
+                    new Response { Status = "Error", Message = msgUserExists });
 
             ApplicationUser user = new ApplicationUser()
             {
@@ -113,7 +121,8 @@ namespace FeedbackApp_WebApi.Authentication
             };
             var result = await userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User erstellen fehlgeschlagen! Bitte Eingaben überprüfen und erneut versuchen" });
+                return StatusCode(StatusCodes.Status500InternalServerError, 
+                    new Response { Status = "Error", Message = msgCreateUserFail });
 
             if (!await roleManager.RoleExistsAsync(UserRoles.admin))
                 await roleManager.CreateAsync(new IdentityRole(UserRoles.admin));
@@ -127,7 +136,7 @@ namespace FeedbackApp_WebApi.Authentication
                 await userManager.AddToRoleAsync(user, UserRoles.teacher);
             }
 
-            return Ok(new Response { Status = "Success", Message = "User erfolgreich erstellt!" });
+            return Ok(new Response { Status = "Success", Message = msgCreateUserSuccess });
         }
     }
 }
