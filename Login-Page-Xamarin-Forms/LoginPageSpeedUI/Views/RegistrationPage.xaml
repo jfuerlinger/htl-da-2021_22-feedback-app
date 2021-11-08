@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:LoginPageSpeedUI.CustomRenderer"
+    x:Class="LoginPageSpeedUi.Views.RegistrationPage">
+    <ContentPage.Content>
+
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackLayout Padding="0" Margin="0" HorizontalOptions="FillAndExpand">
+                <Frame HeightRequest="375" BackgroundColor="White" Padding="0" Margin="0">
+                    <Image Source="https://image.freepik.com/free-vector/remote-meeting-concept-illustration_114360-4704.jpg" Aspect="AspectFill" Margin="0"/>
+                </Frame>
+            </StackLayout>
+
+            <StackLayout Padding="10" Margin="10,180,10,10" HorizontalOptions="FillAndExpand">
+                <Frame  BackgroundColor="White" HeightRequest="500" HasShadow="True" Padding="0" Margin="0">
+
+                    <StackLayout>
+                        <StackLayout Margin="20">
+                            <Label Text="Bei FeedbackApp registrieren" TextColor="Black" HorizontalOptions="CenterAndExpand" FontAttributes="Bold"/>
+                        </StackLayout>
+
+                        <StackLayout Padding="0" Margin="20,50">
+
+                            <Frame BackgroundColor="Transparent" BorderColor="Black" Margin="0,15,0,0" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="20">
+                                <StackLayout Grid.Row="0" Orientation="Horizontal">
+                                    <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="100" Padding="0" Margin="5">
+                                        <Image Source="https://cdn-icons-png.flaticon.com/512/848/848043.png" Aspect="AspectFill" Margin="4"/>
+                                    </Frame>
+
+                                    <local:CustomEntry Placeholder="Username"
+                                                       x:Name="EntryUsername"
+                                                       TextColor="Black" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
+                                </StackLayout>
+                            </Frame>
+
+                            <Frame BackgroundColor="Transparent" BorderColor="Black" Margin="0,15,0,0" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="20">
+                                <StackLayout Grid.Row="1" Orientation="Horizontal">
+                                    <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="100" Padding="0" Margin="5">
+                                        <Image Source="https://cdn-icons.flaticon.com/png/512/2549/premium/2549872.png?token=exp=1636304644~hmac=8da4fcd24db0644967da0c0296ef7c0c" Aspect="AspectFill" Margin="4"/>
+                                    </Frame>
+                                    <local:CustomEntry Placeholder="Email"
+                                                       x:Name="EntryEmail"
+                                                       TextColor="Black" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
+                                </StackLayout>
+                            </Frame>
+
+                            <Frame BackgroundColor="Transparent" BorderColor="Black" Margin="0,15,0,0" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="20">
+                                <StackLayout Grid.Row="2" Orientation="Horizontal">
+                                    <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="100" Padding="0" Margin="5">
+                                        <Image Source="https://cdn-icons.flaticon.com/png/512/3107/premium/3107363.png?token=exp=1636320483~hmac=ffc81c6b3c59d098b1cc5c18efef206d" Aspect="AspectFill" Margin="4"/>
+                                    </Frame>
+
+                                    <local:CustomEntry Placeholder="Password" IsPassword="True"
+                                                       x:Name="EntryPassword"
+                                                       TextColor="Black" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
+                                </StackLayout>
+                            </Frame>
+
+
+
+                        </StackLayout>
+
+                            <StackLayout Padding="0" Margin="60,0">
+                                <Button
+                                    Text="REGISTRIEREN" BackgroundColor="Black" TextColor="White" CornerRadius="20"
+                               >     
+                                </Button>
+                            </StackLayout>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

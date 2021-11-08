@@ -126,12 +126,18 @@
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+    <PackageReference Include="sqlite-net-pcl">
+      <Version>1.8.116</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.1</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\LoginPageSpeedUI\LoginPageSpeedUI.csproj">
       <Project>{120BBFBE-FFB4-4F31-98E2-90C52E52B435}</Project>
-      <Name>LoginPageSpeedUI</Name>
+      <Name>LoginPageSpeedUi</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
