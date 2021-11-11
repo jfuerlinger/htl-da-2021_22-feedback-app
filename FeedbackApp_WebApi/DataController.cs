@@ -1,7 +1,9 @@
 ﻿using FeedbackApp_WebApi.Authentication;
+using FeedbackApp_WebApi.MariaDbServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,14 +15,30 @@ namespace FeedbackApp_WebApi
     [ApiController]
     public class DataController : ControllerBase
     {
+        private readonly ILogger<DataController> _logger;
+        private readonly ITestDataService _testDataService;
+
+        public DataController(ILogger<DataController> logger, ITestDataService testDataService)
+        {
+            _logger = logger;
+            _testDataService = testDataService;
+        }
+        
         [HttpGet]
         [Authorize(AuthenticationSchemes = "Bearer")]
         [Route("testdata")]
-        public IActionResult TestData()
+        public async Task<IActionResult> TestData()
         {
-            string testData = "Testdaten, Login funktioniert!";
+            var result = await _testDataService.GetTestDataModel(1);
 
-            return Content(testData, "application/json");
+            if (result == default)
+            {
+                return NotFound();
+            }
+
+            string resultText = result.TestText.ToString();
+
+            return Content(resultText, "application/json");
         }
 
         [HttpGet]
