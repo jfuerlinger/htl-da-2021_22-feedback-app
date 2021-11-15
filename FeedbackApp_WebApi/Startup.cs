@@ -51,7 +51,11 @@ namespace FeedbackApp_WebApi
                 );
 
             // For Identity  
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+                {
+                    var allowed = options.User.AllowedUserNameCharacters + "‰¸ˆƒ‹÷";
+                    options.User.AllowedUserNameCharacters = allowed;
+                })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
