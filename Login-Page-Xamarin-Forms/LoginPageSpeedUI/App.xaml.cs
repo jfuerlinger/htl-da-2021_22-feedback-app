@@ -11,7 +11,7 @@ namespace LoginPageSpeedUI
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new LoginPage());
+            MainPage = new NavigationPage(new RegistrationPage());
         }
 
         protected override void OnStart()
