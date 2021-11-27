@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Feedback_App_XAML.Views.LoginPage">
+    <ContentPage.Content>
+        <StackLayout>
+            
+            <Label Text="Username" HorizontalOptions="Center"/>
+            <Entry Text="" x:Name="EntryUsername"/>
+            
+            <Label Text="Password" HorizontalOptions="Center"/>
+            <Entry Text="" x:Name="EntryPassword" IsPassword="True"/>
+            
+            <Button Text="Login" TextColor="White" BackgroundColor="#22A7F0" x:Name="ButtonLogin" Clicked="ButtonLogin_Clicked"/>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
