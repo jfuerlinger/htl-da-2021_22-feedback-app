@@ -12,10 +12,9 @@ namespace Feedback_App_XAML.ServicesHandler
 
         RestClient<LoginModel> _restClient = new RestClient<LoginModel>();
 
-        // Boolean function with the following parameters of username & password.
-        public async Task<bool> CheckLoginIfExists(string username, string password)
+        public async Task<bool> CheckLoginIfExists(string userName, string password)
         {
-            var check = await _restClient.checkLogin(username, password);
+            var check = await _restClient.checkLogin(userName, password);
 
             return check;
         }
