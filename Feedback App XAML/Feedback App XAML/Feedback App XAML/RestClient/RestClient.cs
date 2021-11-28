@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Newtonsoft.Json;
+using Feedback_App_XAML.Models;
 
 namespace Feedback_App_XAML.RestClient
 {
@@ -14,10 +15,12 @@ namespace Feedback_App_XAML.RestClient
         
         private const string MainWebServiceUrl = "https://10.0.2.2:5001"; // For ANDROID EMULATOR
 
-        private const string LoginWebServiceUrl = MainWebServiceUrl + "/api/login/";
+        private const string LoginWebServiceUrl = MainWebServiceUrl + "/api/login";
 
         public async Task<bool> checkLogin(string userName, string password)
         {
+            LoginModel model = new LoginModel() { Username = userName, Password = password};
+            
             HttpClientHandler httpClientHandler;
 
                 #if (DEBUG)
@@ -27,10 +30,14 @@ namespace Feedback_App_XAML.RestClient
                 #endif
 
             var client = new HttpClient(httpClientHandler);
+
+            var json = JsonConvert.SerializeObject(model);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            //DEBUG
+            string debugContentJson = await content.ReadAsStringAsync();
             
-            var content = new StringContent(
-                JsonConvert.SerializeObject(new { userName = "userName", password = "password" }));
-            var result = await client.PostAsync("https://10.0.2.2:5001", content).ConfigureAwait(false);
+            var result = await client.PostAsync(LoginWebServiceUrl, content).ConfigureAwait(false);
             return result.IsSuccessStatusCode;
 
 
