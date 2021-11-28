@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Feedback_App_XAML.Views.HomePage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Welcome to FeedbackApp!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Button Text="TestDaten" TextColor="Black" x:Name="Button_TestDaten" Clicked="Button_TestDaten_Clicked"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

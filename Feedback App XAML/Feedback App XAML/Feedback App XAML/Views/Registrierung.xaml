@@ -1,18 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Feedback_App_XAML.Views.LoginPage">
+             x:Class="Feedback_App_XAML.Views.Registrierung">
     <ContentPage.Content>
         <StackLayout>
-            
+
             <Label Text="Username" HorizontalOptions="Center"/>
             <Entry Text="" x:Name="EntryUsername"/>
             
+            <Label Text="Email" HorizontalOptions="Center"/>
+            <Entry Text="" x:Name="EntryEmail"/>
+
             <Label Text="Password" HorizontalOptions="Center"/>
             <Entry Text="" x:Name="EntryPassword" IsPassword="True"/>
-            
-            <Button Text="Anmelden" TextColor="White" BackgroundColor="#22A7F0" x:Name="ButtonAnmelden" Clicked="ButtonAnmelden_Clicked"/>
-            <Button Text="Registrieren" TextColor="White" BackgroundColor="Black" x:Name="ButtonRegistrierung" Clicked="ButtonRegistrierung_Clicked"/>
+
+            <Button Text="Registrieren" TextColor="White" BackgroundColor="Blue" x:Name="ButtonRegistrierung" Clicked="ButtonRegistrierung_Clicked"/>
 
         </StackLayout>
     </ContentPage.Content>

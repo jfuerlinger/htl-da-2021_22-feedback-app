@@ -6,15 +6,21 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Essentials;
 
 namespace Feedback_App_XAML.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Home : ContentView
+    public partial class HomePage : ContentPage
     {
-        public Home()
+        public HomePage()
         {
             InitializeComponent();
+        }
+
+        private void Button_TestDaten_Clicked(object sender, EventArgs e)
+        {
+            
         }
     }
 }

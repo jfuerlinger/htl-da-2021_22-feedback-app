@@ -9,7 +9,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Feedback_App_XAML.Views;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Net.Http.Headers;
@@ -24,20 +23,32 @@ namespace Feedback_App_XAML.Views
             InitializeComponent();
         }
 
-        private async void ButtonLogin_Clicked(object sender, EventArgs e)
+        private async void ButtonAnmelden_Clicked(object sender, EventArgs e)
         {
-            LoginService services = new LoginService();
+            if ((string.IsNullOrWhiteSpace(EntryUsername.Text)) ||
+                (string.IsNullOrWhiteSpace(EntryPassword.Text)))
+            {
+                await DisplayAlert("Eingabefehler!", "Daten eingeben.", "Okay");
+            };
 
+            LoginService services = new LoginService();
             var getLoginDetails = await services.CheckLoginIfExists(EntryUsername.Text, EntryPassword.Text);
 
             if (getLoginDetails is true)
             {
-                await DisplayAlert("Login success", "You are login", "Okay");
+                await DisplayAlert("Gratulation!", "Sie sind angemeldet.", "Okay");
+                await Navigation.PushAsync(new HomePage());
             }
             else
             {
-                await DisplayAlert("Login failed", "Username or Password is incorrect or not exists", "Okay");
+                await DisplayAlert("Anmeldung fehlgeschlagen!", "Benutzername oder Passwort ist falsch oder existiert nicht.", "Okay");
             }
         }
+
+        private async void ButtonRegistrierung_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new Registrierung());
+        }
+
     }
 }
