@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -24,6 +25,8 @@ namespace FeedbackApp_WebApi.Authentication
         private string msgUserExists = "Benutzer exestiert bereits!";
         private string msgCreateUserFail = "Benutzer erstellen fehlgeschlagen! Bitte Eingaben überprüfen und erneut versuchen.";
         private string msgCreateUserSuccess = "Benutzer erfolgreich erstellt.";
+        private string msgDeleteUserFail = "Account löschen fehlgeschlagen! Bitte Eingaben überprüfen und erneut versuchen.";
+        private string msgDeleteUserSuccess = "Account erfolgreich gelöscht!";
 
         public AuthenticateController(UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager, IConfiguration configuration)
@@ -60,7 +63,7 @@ namespace FeedbackApp_WebApi.Authentication
                     (
                         issuer: _configuration["JWT:ValidIssuer"],
                         audience: _configuration["JWT:ValidAudience"],
-                        expires: DateTime.Now.AddHours(2),
+                        expires: DateTime.Now.AddMinutes(5),
                         claims: authClaims,
                         signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
@@ -137,6 +140,28 @@ namespace FeedbackApp_WebApi.Authentication
             }
 
             return Ok(new Response { Status = "Success", Message = msgCreateUserSuccess });
+        }
+
+        [HttpPost]
+        [Route("deleteAccount")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> DeleteUserConfirmed([FromBody] LoginModel model)
+        {
+            var user = await userManager.FindByNameAsync(model.Username);
+            var rolesForUser = await userManager.GetRolesAsync(user);
+
+            if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
+            {
+                if (await userManager.IsInRoleAsync(user, UserRoles.teacher))
+                {
+                    await userManager.RemoveFromRoleAsync(user, UserRoles.teacher);
+                }
+                await userManager.DeleteAsync(user);
+            }
+            else
+                return BadRequest(new Response { Status="Error", Message=msgDeleteUserFail});
+
+            return Ok(new Response { Status = "Success", Message=msgDeleteUserSuccess });
         }
     }
 }
