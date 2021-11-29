@@ -33,6 +33,10 @@ namespace Feedback_App_XAML.RestClient
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             string debugContentJson = await content.ReadAsStringAsync();
             var result = await client.PostAsync(LoginWebServiceUrl, content).ConfigureAwait(false);
+
+            string responseString = await result.Content.ReadAsStringAsync();
+            TokenModel token = JsonConvert.DeserializeObject<TokenModel>(responseString);
+            
             return result.IsSuccessStatusCode;
 
 
