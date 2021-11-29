@@ -13,9 +13,10 @@ namespace Feedback_App_XAML.RestClient
 {
     public class RestClient<T>
     {
-        //private const string MainWebServiceUrl = "https://localhost:5001/"; // LocalHost
-        private const string MainWebServiceUrl = "https://10.0.2.2:5001"; // For ANDROID EMULATOR
+        //private const string MainWebServiceUrl = "https://localhost:5001/"; // LOCALHOST
+        private const string MainWebServiceUrl = "https://10.0.2.2:5001"; // FOR ANDROID EMULATOR
         private const string LoginWebServiceUrl = MainWebServiceUrl + "/api/login";
+
 
         public async Task<bool> checkLogin(string userName, string password)
         {
@@ -36,22 +37,7 @@ namespace Feedback_App_XAML.RestClient
 
             string responseString = await result.Content.ReadAsStringAsync();
             TokenModel token = JsonConvert.DeserializeObject<TokenModel>(responseString);
-            
             return result.IsSuccessStatusCode;
-
-
-
-
-            
-
-
-            //var client = new HttpClient();
-            //client.BaseAddress = new Uri("localhost:8080");
-            //string jsonData = @"{""username"" : ""myusername"", ""password"" : ""mypassword""}"
-            //var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            //HttpResponseMessage response = await client.PostAsync("/foo/login", content);
-            //// this result string should be something like: "{"token":"rgh2ghgdsfds"}"
-            //var result = await response.Content.ReadAsStringAsync();
         }
     }
 }

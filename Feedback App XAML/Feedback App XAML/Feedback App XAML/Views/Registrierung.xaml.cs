@@ -25,7 +25,7 @@ namespace Feedback_App_XAML.Views
                 (string.IsNullOrWhiteSpace(EntryEmail.Text)) ||
                 (string.IsNullOrWhiteSpace(EntryPassword.Text)))
             {
-                await DisplayAlert("Eingabefehler!", "Daten eingeben.", "Okay");
+                await DisplayAlert("Error!", "Benutzer erstellen fehlgeschlagen! Bitte Eingaben überprüfen und erneut versuchen.", "Okay");
             }
             else
             {
@@ -34,7 +34,11 @@ namespace Feedback_App_XAML.Views
                 
                 if(response)
                 {
-                    await DisplayAlert("Gratulation!", "Sie sind registriert.", "Okay");
+                    await DisplayAlert("Success!", "Benutzer erfolgreich erstellt.", "Okay");
+                }
+                else
+                {
+                    await DisplayAlert("Error!", "Benutzer erstellen fehlgeschlagen! Bitte Eingaben überprüfen und erneut versuchen oder Benutzer exestiert bereits!", "Okay");
                 }
             };
 

@@ -25,23 +25,23 @@ namespace Feedback_App_XAML.Views
 
         private async void ButtonAnmelden_Clicked(object sender, EventArgs e)
         {
-            if ((string.IsNullOrWhiteSpace(EntryUsername.Text)) ||
-                (string.IsNullOrWhiteSpace(EntryPassword.Text)))
-            {
-                await DisplayAlert("Eingabefehler!", "Daten eingeben.", "Okay");
-            };
+            //if ((string.IsNullOrWhiteSpace(EntryUsername.Text)) ||
+            //    (string.IsNullOrWhiteSpace(EntryPassword.Text)))
+            //{
+            //    await DisplayAlert("Error!", "Benutzer anmelden fehlgeschlagen! Bitte Eingaben überprüfen und erneut versuchen.", "Okay");
+            //};
 
             LoginService services = new LoginService();
             var getLoginDetails = await services.CheckLoginIfExists(EntryUsername.Text, EntryPassword.Text);
 
             if (getLoginDetails is true)
             {
-                await DisplayAlert("Gratulation!", "Sie sind angemeldet.", "Okay");
+                await DisplayAlert("Success!", "Benutzer erfolgreich angemeldet.", "Okay");
                 await Navigation.PushAsync(new HomePage());
             }
             else
             {
-                await DisplayAlert("Anmeldung fehlgeschlagen!", "Benutzername oder Passwort ist falsch oder existiert nicht.", "Okay");
+                await DisplayAlert("Error!", "Benutzer anmelden fehlgeschlagen! Bitte Eingaben überprüfen und erneut versuchen.", "Okay");
             }
         }
 

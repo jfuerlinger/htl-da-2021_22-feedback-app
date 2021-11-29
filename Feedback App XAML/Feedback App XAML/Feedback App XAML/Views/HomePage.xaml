@@ -7,7 +7,7 @@
             <Label Text="Welcome to FeedbackApp!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
-            <Button Text="TestDaten" TextColor="Black" x:Name="Button_TestDaten" Clicked="Button_TestDaten_Clicked"/>
+            <Button Text="TestDaten" TextColor="Black" x:Name="Button_TestDaten" Clicked="Button_TestDaten_Clicked" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
