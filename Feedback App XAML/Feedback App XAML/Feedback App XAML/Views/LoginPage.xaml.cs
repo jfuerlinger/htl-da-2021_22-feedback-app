@@ -12,6 +12,7 @@ using Feedback_App_XAML.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Net.Http.Headers;
+using Xamarin.Essentials;
 
 namespace Feedback_App_XAML.Views
 {
@@ -25,17 +26,21 @@ namespace Feedback_App_XAML.Views
 
         private async void ButtonAnmelden_Clicked(object sender, EventArgs e)
         {
-            //if ((string.IsNullOrWhiteSpace(EntryUsername.Text)) ||
-            //    (string.IsNullOrWhiteSpace(EntryPassword.Text)))
-            //{
-            //    await DisplayAlert("Error!", "Benutzer anmelden fehlgeschlagen! Bitte Eingaben überprüfen und erneut versuchen.", "Okay");
-            //};
-
             LoginService services = new LoginService();
             var getLoginDetails = await services.CheckLoginIfExists(EntryUsername.Text, EntryPassword.Text);
 
             if (getLoginDetails is true)
             {
+                try
+                {
+                    await SecureStorage.SetAsync("token", EntryPassword.Text);
+                }
+                catch (Exception ex)
+
+                {
+
+                }
+
                 await DisplayAlert("Success!", "Benutzer erfolgreich angemeldet.", "Okay");
                 await Navigation.PushAsync(new HomePage());
             }
