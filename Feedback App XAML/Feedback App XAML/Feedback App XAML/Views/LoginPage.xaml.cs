@@ -31,15 +31,15 @@ namespace Feedback_App_XAML.Views
 
             if (getLoginDetails is true)
             {
-                try
-                {
-                    await SecureStorage.SetAsync("token", EntryPassword.Text);
-                }
-                catch (Exception ex)
+                //try
+                //{
+                //    await SecureStorage.SetAsync("token", EntryPassword.Text);
+                //}
+                //catch (Exception ex)
 
-                {
+                //{
 
-                }
+                //}
 
                 await DisplayAlert("Success!", "Benutzer erfolgreich angemeldet.", "Okay");
                 await Navigation.PushAsync(new HomePage());
