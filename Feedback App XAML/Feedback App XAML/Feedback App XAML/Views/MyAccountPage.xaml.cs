@@ -15,12 +15,11 @@ using Newtonsoft.Json;
 namespace Feedback_App_XAML.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class HomePage : ContentPage
+    public partial class MyAccountPage : ContentPage
     {
-        public HomePage()
+        public MyAccountPage()
         {
             InitializeComponent();
-            MainListView.ItemsSource = names;
         }
 
         List<string> names = new List<string>
@@ -34,17 +33,14 @@ namespace Feedback_App_XAML.Views
            "Syp 4.Sem"
         };
 
-        private void MainSearchBar_SearchButtonPressed(object sender, EventArgs e)
+        private void ButtonSave_Clicked(object sender, EventArgs e)
         {
-            var keyword = MainSearchBar.Text;
-            MainListView.ItemsSource =
-            names.Where(name => name.ToLower().Contains(keyword.ToLower()));
+
         }
 
-        private async void ButtonMyAcc_Clicked(object sender, EventArgs e)
+        private void ButtonEdit_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new MyAccountPage());
-        }
 
+        }
     }
 }

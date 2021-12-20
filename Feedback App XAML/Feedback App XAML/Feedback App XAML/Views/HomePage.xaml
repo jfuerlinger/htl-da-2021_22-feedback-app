@@ -3,11 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Feedback_App_XAML.Views.HomePage">
     <ContentPage.Content>
+
+        
         <StackLayout>
-            <Label Text="Welcome to FeedbackApp!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-            <Button Text="TestDaten" TextColor="Black" x:Name="Button_TestDaten" Clicked="Button_TestDaten_Clicked" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+
+            <StackLayout Padding="0" Margin="20,10,10,0" HorizontalOptions="EndAndExpand" VerticalOptions="End">
+                <Button Text="Mein Konto" TextColor="White" BackgroundColor="Black" x:Name="ButtonMyAcc" Clicked="ButtonMyAcc_Clicked" CornerRadius="20"/>
+            </StackLayout>
+            
+            <Label x:Name="MainLabel" Text="Feedback finden" Font="40" TextColor="Black" HorizontalOptions="CenterAndExpand" FontSize="Large" Margin="0,80,10,10"/>
+            <SearchBar x:Name="MainSearchBar" SearchButtonPressed="MainSearchBar_SearchButtonPressed"/>
+            <ListView x:Name="MainListView" HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Label Text="{Binding .}" TextColor="Black" FontSize="25" Padding="10" Margin="40,0,0,0"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
