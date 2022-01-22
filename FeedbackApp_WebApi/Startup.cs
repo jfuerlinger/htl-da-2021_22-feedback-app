@@ -1,5 +1,6 @@
 using FeedbackApp_WebApi.Authentication;
 using FeedbackApp_WebApi.MariaDbServices;
+using FeedbackApp_WebApi.Persistance;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,7 +37,7 @@ namespace FeedbackApp_WebApi
 
             services.AddControllers();
 
-            // For MariaDb
+            // For MariaDb (only for Test, DB changed to EF)
             services.AddDbContext<MariaDbContext>(
             dbContextOptions => dbContextOptions
                 .UseMySql(Configuration.GetConnectionString("MariaDbConnectionString"), 
@@ -44,10 +45,16 @@ namespace FeedbackApp_WebApi
 
             services.AddScoped<ITestDataService, TestDataService>();
 
-            // For Entity Framework
+            // For EF IdentyServer
             services.AddDbContext<ApplicationDbContext>
                 (
                     options => options.UseSqlServer(Configuration.GetConnectionString("ConnStr"))
+                );
+
+            // For EF FeedbackDB
+            services.AddDbContext<FeedbackDbContext>
+                (
+                    options => options.UseSqlServer(Configuration.GetConnectionString("FeedbackDbConnectionString"))
                 );
 
             // For Identity  

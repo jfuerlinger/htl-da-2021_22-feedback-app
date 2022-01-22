@@ -3,16 +3,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FeedbackApp_WebApi.Persistance.Models
 {
-    public class Teacher
+    public class Student
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+        [Required, MaxLength(50)]
         public string FirstName { get; set; }
-        [Required]
+        [Required, MaxLength(50)]
         public string LastName { get; set; }
-        public string Title { get; set; }
         public DateTime? Birthdate { get; set; }
+        [MaxLength(50)]
         public string School { get; set; }
     }
 }
