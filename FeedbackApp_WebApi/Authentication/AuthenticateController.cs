@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FeedbackApp_WebApi.FeedbackDB;
+using FeedbackApp_WebApi.FeedbackDB.Contracts;
+using FeedbackApp_WebApi.Persistance;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -21,19 +24,21 @@ namespace FeedbackApp_WebApi.Authentication
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IConfiguration _configuration;
+        private readonly IUnitOfWork _unitOfWork;
 
-        private string msgUserExists = "Benutzer exestiert bereits!";
-        private string msgCreateUserFail = "Benutzer erstellen fehlgeschlagen! Bitte Eingaben überprüfen und erneut versuchen.";
-        private string msgCreateUserSuccess = "Benutzer erfolgreich erstellt.";
-        private string msgDeleteUserFail = "Account löschen fehlgeschlagen! Bitte Eingaben überprüfen und erneut versuchen.";
-        private string msgDeleteUserSuccess = "Account erfolgreich gelöscht!";
+        private readonly string msgUserExists = "Benutzer exestiert bereits!";
+        private readonly string msgCreateUserFail = "Benutzer erstellen fehlgeschlagen! Bitte Eingaben überprüfen und erneut versuchen.";
+        private readonly string msgCreateUserSuccess = "Benutzer erfolgreich erstellt.";
+        private readonly string msgDeleteUserFail = "Account löschen fehlgeschlagen! Bitte Eingaben überprüfen und erneut versuchen.";
+        private readonly string msgDeleteUserSuccess = "Account erfolgreich gelöscht!";
 
         public AuthenticateController(UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+            RoleManager<IdentityRole> roleManager, IUnitOfWork unitOfWork,IConfiguration configuration)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
             _configuration = configuration;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpPost]
@@ -89,7 +94,7 @@ namespace FeedbackApp_WebApi.Authentication
                     new Response { Status = "Error", Message = msgUserExists });
             }
 
-            ApplicationUser user = new ApplicationUser()
+            ApplicationUser user = new()
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
@@ -97,13 +102,15 @@ namespace FeedbackApp_WebApi.Authentication
             };
 
             var result = await userManager.CreateAsync(user, model.Password);
+            
 
             if (!result.Succeeded)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, 
                     new Response { Status = "Error", Message = msgCreateUserFail });
             }
-
+            await _unitOfWork.StudentRepository.CreateStudentAsync(user.Id);
+            await _unitOfWork.SaveChangesAsync();
             return Ok(new Response { Status = "Success", Message = msgCreateUserSuccess });
         }
 
@@ -116,7 +123,7 @@ namespace FeedbackApp_WebApi.Authentication
                 return StatusCode(StatusCodes.Status500InternalServerError, 
                     new Response { Status = "Error", Message = msgUserExists });
 
-            ApplicationUser user = new ApplicationUser()
+            ApplicationUser user = new()
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),

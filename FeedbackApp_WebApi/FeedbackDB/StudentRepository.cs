@@ -31,5 +31,11 @@ namespace FeedbackApp_WebApi.FeedbackDB
         {
             return await _dbContext.Students.SingleOrDefaultAsync(p => p.Id == id);
         }
+
+        public async Task CreateStudentAsync(string identityId)
+        {
+            Student student = new() { IdentityId = identityId };
+            await _dbContext.Students.AddAsync(student);
+        }
     }
 }

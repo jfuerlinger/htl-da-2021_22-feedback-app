@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FeedbackApp_WebApi.Persistance.Models
 {
@@ -7,9 +8,11 @@ namespace FeedbackApp_WebApi.Persistance.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required, MaxLength(50)]
+        [Required]
+        public string IdentityId { get; set; }
+        [MaxLength(50)]
         public string FirstName { get; set; }
-        [Required, MaxLength(50)]
+        [MaxLength(50)]
         public string LastName { get; set; }
         public DateTime? Birthdate { get; set; }
         [MaxLength(50)]

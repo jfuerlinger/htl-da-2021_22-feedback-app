@@ -7,9 +7,11 @@ namespace FeedbackApp_WebApi.Persistance.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required, MaxLength(50)]
+        [Required]
+        public string IdentityId { get; set; }
+        [MaxLength(50)]
         public string FirstName { get; set; }
-        [Required, MaxLength(50)]
+        [MaxLength(50)]
         public string LastName { get; set; }
         [MaxLength(30)]
         public string Title { get; set; }
