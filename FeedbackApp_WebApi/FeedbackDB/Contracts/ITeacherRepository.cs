@@ -9,5 +9,8 @@ namespace FeedbackApp_WebApi.FeedbackDB.Contracts
         Task<int> CountAsync();
         Task<List<Teacher>> GetAllAsync();
         Task<Teacher> GetByIdAsync(int id);
+        Task CreateTeacherAsync(string identityId);
+        Task DeleteTeacherByIdentityIdAsync(string identityId);
+        Task<Teacher> GetByIdentityIdAsync(string identityId);
     }
 }

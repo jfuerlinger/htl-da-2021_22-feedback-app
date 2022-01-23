@@ -31,10 +31,21 @@ namespace FeedbackApp_WebApi.FeedbackDB
             return await _dbContext.Teachers.SingleOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task CreateTeacher(string identityId)
+        public async Task CreateTeacherAsync(string identityId)
         {
             Teacher teacher = new() { IdentityId = identityId };
             await _dbContext.Teachers.AddAsync(teacher);
+        }
+
+        public async Task DeleteTeacherByIdentityIdAsync(string identityId)
+        {
+            Teacher teacher = await GetByIdentityIdAsync(identityId);
+            _dbContext.Teachers.Remove(teacher);
+        }
+
+        public async Task<Teacher> GetByIdentityIdAsync(string identityId)
+        {
+            return await _dbContext.Teachers.SingleOrDefaultAsync(p => p.IdentityId == identityId);
         }
     }
 }

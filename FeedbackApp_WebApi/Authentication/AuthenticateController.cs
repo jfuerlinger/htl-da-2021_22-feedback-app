@@ -145,7 +145,8 @@ namespace FeedbackApp_WebApi.Authentication
             {
                 await userManager.AddToRoleAsync(user, UserRoles.teacher);
             }
-
+            await _unitOfWork.TeacherRepository.CreateTeacherAsync(user.Id);
+            await _unitOfWork.SaveChangesAsync();
             return Ok(new Response { Status = "Success", Message = msgCreateUserSuccess });
         }
 
@@ -156,17 +157,24 @@ namespace FeedbackApp_WebApi.Authentication
         {
             var user = await userManager.FindByNameAsync(model.Username);
             var rolesForUser = await userManager.GetRolesAsync(user);
+            bool isTeacher = false;
 
             if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
             {
                 if (await userManager.IsInRoleAsync(user, UserRoles.teacher))
                 {
                     await userManager.RemoveFromRoleAsync(user, UserRoles.teacher);
+                    isTeacher = true;
                 }
                 await userManager.DeleteAsync(user);
             }
             else
                 return BadRequest(new Response { Status="Error", Message=msgDeleteUserFail});
+
+            if (isTeacher && user != null)
+                await _unitOfWork.TeacherRepository.DeleteTeacherByIdentityIdAsync(user.Id);
+            await _unitOfWork.StudentRepository.DeleteStudentByIdentityIdAsync(user.Id);
+            await _unitOfWork.SaveChangesAsync();
 
             return Ok(new Response { Status = "Success", Message=msgDeleteUserSuccess });
         }
