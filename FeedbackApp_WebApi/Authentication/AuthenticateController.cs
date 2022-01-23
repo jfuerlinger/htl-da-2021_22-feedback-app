@@ -73,10 +73,18 @@ namespace FeedbackApp_WebApi.Authentication
                         signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
 
+                string role = "student";
+                var roles = userRoles.ToArray();
+                if (roles.Count() != 0)
+                {
+                    role = "teacher";
+                }
+
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo
+                    expiration = token.ValidTo,
+                    Role = role
                 });
             }
             return Unauthorized();
