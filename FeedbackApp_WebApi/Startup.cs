@@ -52,10 +52,7 @@ namespace FeedbackApp_WebApi
                 );
 
             // For EF FeedbackDB
-            services.AddDbContext<FeedbackDbContext>
-                (
-                    options => options.UseSqlServer(Configuration.GetConnectionString("FeedbackDbConnectionString"))
-                );
+            services.AddDbContext<FeedbackDbContext>();
 
             // For Identity  
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
