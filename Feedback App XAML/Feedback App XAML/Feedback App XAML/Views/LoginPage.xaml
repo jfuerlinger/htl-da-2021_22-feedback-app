@@ -49,6 +49,7 @@
                             <StackLayout Padding="0" Margin="100,0">
                                 <Button Text="Anmelden" TextColor="White" BackgroundColor="Black" x:Name="ButtonAnmelden" Clicked="ButtonAnmelden_Clicked" CornerRadius="30"/>
                                 <Button Text="Registrieren" BackgroundColor="White" TextColor="Black" x:Name="ButtonRegistrierung" Clicked="ButtonRegistrierung_Clicked" CornerRadius="50"/>
+                                <Button Text="Anmeldung für Lehrer" BackgroundColor="White" TextColor="Black" x:Name="LehrerAnmeldung" Clicked="LehrerAnmeldung_Clicked"/>
                             </StackLayout>
                         </StackLayout>
                     </Frame>

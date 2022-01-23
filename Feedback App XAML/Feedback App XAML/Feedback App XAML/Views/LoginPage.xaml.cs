@@ -55,5 +55,9 @@ namespace Feedback_App_XAML.Views
             await Navigation.PushAsync(new Registrierung());
         }
 
+        private void LehrerAnmeldung_Clicked(object sender, EventArgs e)
+        {
+
+        }
     }
 }
