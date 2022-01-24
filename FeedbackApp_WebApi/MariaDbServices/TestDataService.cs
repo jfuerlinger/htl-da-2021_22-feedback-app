@@ -1,10 +1,8 @@
-﻿using FeedbackApp_WebApi.DataModels;
+﻿using FeedbackApp.WebApi.MariaDbModels;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace FeedbackApp_WebApi.MariaDbServices
+namespace FeedbackApp.WebApi.MariaDbServices
 {
     public class TestDataService : ITestDataService
     {

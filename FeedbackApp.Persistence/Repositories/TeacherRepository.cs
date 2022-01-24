@@ -1,12 +1,8 @@
-﻿using FeedbackApp_WebApi.FeedbackDB.Contracts;
-using FeedbackApp_WebApi.Persistance;
-using FeedbackApp_WebApi.Persistance.Models;
+﻿using FeedbackApp.Core.Contracts.Persistence;
+using FeedbackApp.Core.Model;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace FeedbackApp_WebApi.FeedbackDB
+namespace FeedbackApp.Persistence.Repositories
 {
     public class TeacherRepository : ITeacherRepository
     {

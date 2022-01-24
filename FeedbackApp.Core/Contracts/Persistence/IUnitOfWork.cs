@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace FeedbackApp_WebApi.FeedbackDB.Contracts
+namespace FeedbackApp.Core.Contracts.Persistence
 {
     public interface IUnitOfWork : IAsyncDisposable, IDisposable
     {

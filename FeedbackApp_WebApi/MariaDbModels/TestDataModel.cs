@@ -1,4 +1,4 @@
-﻿namespace FeedbackApp_WebApi.DataModels
+﻿namespace FeedbackApp.WebApi.MariaDbModels
 {
     public class TestDataModel
     {

@@ -1,7 +1,7 @@
-﻿using FeedbackApp_WebApi.DataModels;
+﻿using FeedbackApp.WebApi.MariaDbModels;
 using Microsoft.EntityFrameworkCore;
 
-namespace FeedbackApp_WebApi
+namespace FeedbackApp.WebApi
 {
     public class MariaDbContext : DbContext
     {

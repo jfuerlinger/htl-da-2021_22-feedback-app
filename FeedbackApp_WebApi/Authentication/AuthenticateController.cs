@@ -1,6 +1,4 @@
-﻿using FeedbackApp_WebApi.FeedbackDB;
-using FeedbackApp_WebApi.FeedbackDB.Contracts;
-using FeedbackApp_WebApi.Persistance;
+﻿using FeedbackApp.Core.Contracts.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -15,7 +13,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FeedbackApp_WebApi.Authentication
+namespace FeedbackApp.WebApi.Authentication
 {
     [Route("api")]
     [ApiController]
@@ -33,7 +31,7 @@ namespace FeedbackApp_WebApi.Authentication
         private readonly string msgDeleteUserSuccess = "Account erfolgreich gelöscht!";
 
         public AuthenticateController(UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole> roleManager, IUnitOfWork unitOfWork,IConfiguration configuration)
+            RoleManager<IdentityRole> roleManager, IUnitOfWork unitOfWork, IConfiguration configuration)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
@@ -98,7 +96,7 @@ namespace FeedbackApp_WebApi.Authentication
 
             if (userExists != null)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, 
+                return StatusCode(StatusCodes.Status500InternalServerError,
                     new Response { Status = "Error", Message = msgUserExists });
             }
 
@@ -110,11 +108,11 @@ namespace FeedbackApp_WebApi.Authentication
             };
 
             var result = await userManager.CreateAsync(user, model.Password);
-            
+
 
             if (!result.Succeeded)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, 
+                return StatusCode(StatusCodes.Status500InternalServerError,
                     new Response { Status = "Error", Message = msgCreateUserFail });
             }
             await _unitOfWork.StudentRepository.CreateStudentAsync(user.Id);
@@ -128,7 +126,7 @@ namespace FeedbackApp_WebApi.Authentication
         {
             var userExists = await userManager.FindByNameAsync(model.UserName);
             if (userExists != null)
-                return StatusCode(StatusCodes.Status500InternalServerError, 
+                return StatusCode(StatusCodes.Status500InternalServerError,
                     new Response { Status = "Error", Message = msgUserExists });
 
             ApplicationUser user = new()
@@ -139,7 +137,7 @@ namespace FeedbackApp_WebApi.Authentication
             };
             var result = await userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError, 
+                return StatusCode(StatusCodes.Status500InternalServerError,
                     new Response { Status = "Error", Message = msgCreateUserFail });
 
             if (!await roleManager.RoleExistsAsync(UserRoles.admin))
@@ -177,14 +175,14 @@ namespace FeedbackApp_WebApi.Authentication
                 await userManager.DeleteAsync(user);
             }
             else
-                return BadRequest(new Response { Status="Error", Message=msgDeleteUserFail});
+                return BadRequest(new Response { Status = "Error", Message = msgDeleteUserFail });
 
             if (isTeacher && user != null)
                 await _unitOfWork.TeacherRepository.DeleteTeacherByIdentityIdAsync(user.Id);
             await _unitOfWork.StudentRepository.DeleteStudentByIdentityIdAsync(user.Id);
             await _unitOfWork.SaveChangesAsync();
 
-            return Ok(new Response { Status = "Success", Message=msgDeleteUserSuccess });
+            return Ok(new Response { Status = "Success", Message = msgDeleteUserSuccess });
         }
     }
 }

@@ -1,15 +1,11 @@
-﻿using FeedbackApp_WebApi.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace FeedbackApp_WebApi.AccountManagement
+namespace FeedbackApp.WebApi.AccountManagement
 {
     [Route("api/[controller]")]
     [ApiController]
     public class UserAccountController : ControllerBase
     {
-        
+
     }
 }

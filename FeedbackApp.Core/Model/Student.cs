@@ -1,8 +1,6 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace FeedbackApp_WebApi.Persistance.Models
+namespace FeedbackApp.Core.Model
 {
     public class Student
     {

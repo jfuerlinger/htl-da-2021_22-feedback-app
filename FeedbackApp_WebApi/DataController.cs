@@ -1,15 +1,11 @@
-﻿using FeedbackApp_WebApi.Authentication;
-using FeedbackApp_WebApi.MariaDbServices;
+﻿using FeedbackApp.WebApi.Authentication;
+using FeedbackApp.WebApi.MariaDbServices;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace FeedbackApp_WebApi
+namespace FeedbackApp.WebApi
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -23,7 +19,7 @@ namespace FeedbackApp_WebApi
             _logger = logger;
             _testDataService = testDataService;
         }
-        
+
         [HttpGet]
         [Authorize(AuthenticationSchemes = "Bearer")]
         [Route("testdata")]

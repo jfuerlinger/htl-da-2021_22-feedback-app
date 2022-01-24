@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace FeedbackApp_WebApi.Persistance.Models
+namespace FeedbackApp.Core.Model
 {
     public class Teacher
     {

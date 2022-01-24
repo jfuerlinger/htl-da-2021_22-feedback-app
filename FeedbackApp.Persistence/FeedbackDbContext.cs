@@ -1,10 +1,7 @@
-﻿using FeedbackApp_WebApi.Persistance.Models;
+﻿using FeedbackApp.Core.Model;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Diagnostics;
 
-namespace FeedbackApp_WebApi.Persistance
+namespace FeedbackApp.Persistence
 {
     public class FeedbackDbContext : DbContext
     {

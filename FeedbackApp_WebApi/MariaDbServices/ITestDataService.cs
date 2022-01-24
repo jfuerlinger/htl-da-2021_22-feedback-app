@@ -1,8 +1,7 @@
-﻿using FeedbackApp_WebApi.DataModels;
-using System.Collections.Generic;
+﻿using FeedbackApp.WebApi.MariaDbModels;
 using System.Threading.Tasks;
 
-namespace FeedbackApp_WebApi.MariaDbServices
+namespace FeedbackApp.WebApi.MariaDbServices
 {
     public interface ITestDataService
     {

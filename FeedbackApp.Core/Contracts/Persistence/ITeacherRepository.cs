@@ -1,8 +1,6 @@
-﻿using FeedbackApp_WebApi.Persistance.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using FeedbackApp.Core.Model;
 
-namespace FeedbackApp_WebApi.FeedbackDB.Contracts
+namespace FeedbackApp.Core.Contracts.Persistence
 {
     public interface ITeacherRepository
     {

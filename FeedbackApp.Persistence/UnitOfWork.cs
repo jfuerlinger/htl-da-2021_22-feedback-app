@@ -1,10 +1,8 @@
-﻿using FeedbackApp_WebApi.FeedbackDB.Contracts;
-using FeedbackApp_WebApi.Persistance;
+﻿using FeedbackApp.Core.Contracts.Persistence;
+using FeedbackApp.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Threading.Tasks;
 
-namespace FeedbackApp_WebApi.FeedbackDB
+namespace FeedbackApp.Persistence
 {
     public class UnitOfWork : IUnitOfWork
     {
