@@ -51,7 +51,9 @@ namespace FeedbackApp.WebApi.Authentication
 
                 var authClaims = new List<Claim>
                 {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id),
                     new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.Email, user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
 
@@ -71,18 +73,18 @@ namespace FeedbackApp.WebApi.Authentication
                         signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
 
-                string role = "student";
-                var roles = userRoles.ToArray();
-                if (roles.Count() != 0)
-                {
-                    role = "teacher";
-                }
+                //string role = "student";
+                //var roles = userRoles.ToArray();
+                //if (roles.Length != 0)
+                //{
+                //    role = "teacher";
+                //}
 
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expiration = token.ValidTo,
-                    Role = role
+                    //Role = role
                 });
             }
             return Unauthorized();
@@ -108,13 +110,26 @@ namespace FeedbackApp.WebApi.Authentication
             };
 
             var result = await userManager.CreateAsync(user, model.Password);
-
-
             if (!result.Succeeded)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     new Response { Status = "Error", Message = msgCreateUserFail });
             }
+
+            //if (!await roleManager.RoleExistsAsync(UserRoles.admin))
+            //    await roleManager.CreateAsync(new IdentityRole(UserRoles.admin));
+            //if (!await roleManager.RoleExistsAsync(UserRoles.pupil))
+            //    await roleManager.CreateAsync(new IdentityRole(UserRoles.pupil));
+            //if (!await roleManager.RoleExistsAsync(UserRoles.teacher))
+            //    await roleManager.CreateAsync(new IdentityRole(UserRoles.teacher));
+
+            await InsertRolesIfNotExists();
+
+            if (await roleManager.RoleExistsAsync(UserRoles.pupil))
+            {
+                await userManager.AddToRoleAsync(user, UserRoles.pupil);
+            }
+            
             await _unitOfWork.StudentRepository.CreateStudentAsync(user.Id);
             await _unitOfWork.SaveChangesAsync();
             return Ok(new Response { Status = "Success", Message = msgCreateUserSuccess });
@@ -140,12 +155,14 @@ namespace FeedbackApp.WebApi.Authentication
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     new Response { Status = "Error", Message = msgCreateUserFail });
 
-            if (!await roleManager.RoleExistsAsync(UserRoles.admin))
-                await roleManager.CreateAsync(new IdentityRole(UserRoles.admin));
-            if (!await roleManager.RoleExistsAsync(UserRoles.pupil))
-                await roleManager.CreateAsync(new IdentityRole(UserRoles.pupil));
-            if (!await roleManager.RoleExistsAsync(UserRoles.teacher))
-                await roleManager.CreateAsync(new IdentityRole(UserRoles.teacher));
+            //if (!await roleManager.RoleExistsAsync(UserRoles.admin))
+            //    await roleManager.CreateAsync(new IdentityRole(UserRoles.admin));
+            //if (!await roleManager.RoleExistsAsync(UserRoles.pupil))
+            //    await roleManager.CreateAsync(new IdentityRole(UserRoles.pupil));
+            //if (!await roleManager.RoleExistsAsync(UserRoles.teacher))
+            //    await roleManager.CreateAsync(new IdentityRole(UserRoles.teacher));
+
+            await InsertRolesIfNotExists();
 
             if (await roleManager.RoleExistsAsync(UserRoles.teacher))
             {
@@ -183,6 +200,16 @@ namespace FeedbackApp.WebApi.Authentication
             await _unitOfWork.SaveChangesAsync();
 
             return Ok(new Response { Status = "Success", Message = msgDeleteUserSuccess });
+        }
+
+        private async Task InsertRolesIfNotExists()
+        {
+            if (!await roleManager.RoleExistsAsync(UserRoles.admin))
+                await roleManager.CreateAsync(new IdentityRole(UserRoles.admin));
+            if (!await roleManager.RoleExistsAsync(UserRoles.pupil))
+                await roleManager.CreateAsync(new IdentityRole(UserRoles.pupil));
+            if (!await roleManager.RoleExistsAsync(UserRoles.teacher))
+                await roleManager.CreateAsync(new IdentityRole(UserRoles.teacher));
         }
     }
 }

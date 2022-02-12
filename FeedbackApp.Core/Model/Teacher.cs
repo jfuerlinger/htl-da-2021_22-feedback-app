@@ -8,15 +8,15 @@ namespace FeedbackApp.Core.Model
         [Key]
         public int Id { get; set; }
         [Required]
-        public string IdentityId { get; set; }
+        public string IdentityId { get; set; } = string.Empty;
         [MaxLength(50)]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
         [MaxLength(50)]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
         [MaxLength(30)]
-        public string Title { get; set; }
+        public string? Title { get; set; }
         public DateTime? Birthdate { get; set; }
         [MaxLength(50)]
-        public string School { get; set; }
+        public string? School { get; set; }
     }
 }

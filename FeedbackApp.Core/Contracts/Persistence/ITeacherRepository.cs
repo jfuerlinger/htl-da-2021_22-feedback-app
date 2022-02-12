@@ -10,5 +10,6 @@ namespace FeedbackApp.Core.Contracts.Persistence
         Task CreateTeacherAsync(string identityId);
         Task DeleteTeacherByIdentityIdAsync(string identityId);
         Task<Teacher> GetByIdentityIdAsync(string identityId);
+        //Task UpdateTeacher(string identitystring, string? firstName, string? LastName, DateTime? birthdate, string? school);
     }
 }
