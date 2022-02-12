@@ -29,6 +29,9 @@ namespace FeedbackApp.WebApi.Authentication
         private readonly string msgCreateUserSuccess = "Benutzer erfolgreich erstellt.";
         private readonly string msgDeleteUserFail = "Account löschen fehlgeschlagen! Bitte Eingaben überprüfen und erneut versuchen.";
         private readonly string msgDeleteUserSuccess = "Account erfolgreich gelöscht!";
+        private readonly string msgUserNotFound = "Benutzer wurde nicht gefunden!";
+        private readonly string msgUserPwChangeSuccess = "Das Passwort wurde erfolgreich geändert.";
+        private readonly string msgUserPwNotCorrect = "Das Passwort ist nicht korrekt.";
 
         public AuthenticateController(UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager, IUnitOfWork unitOfWork, IConfiguration configuration)
@@ -179,7 +182,6 @@ namespace FeedbackApp.WebApi.Authentication
         public async Task<IActionResult> DeleteUserConfirmed([FromBody] LoginModel model)
         {
             var user = await userManager.FindByNameAsync(model.Username);
-            var rolesForUser = await userManager.GetRolesAsync(user);
             bool isTeacher = false;
 
             if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
@@ -189,12 +191,21 @@ namespace FeedbackApp.WebApi.Authentication
                     await userManager.RemoveFromRoleAsync(user, UserRoles.teacher);
                     isTeacher = true;
                 }
+                if (await userManager.IsInRoleAsync(user, UserRoles.pupil))
+                {
+                    await userManager.RemoveFromRoleAsync(user, UserRoles.pupil);
+                }
                 await userManager.DeleteAsync(user);
             }
             else
-                return BadRequest(new Response { Status = "Error", Message = msgDeleteUserFail });
+            {
+                if (user == null)
+                    return NotFound(new Response { Status = "Not Found", Message = msgUserNotFound });
+                else
+                    return BadRequest(new Response { Status = "Error", Message = msgDeleteUserFail });
+            }
 
-            if (isTeacher && user != null)
+            if (isTeacher)
                 await _unitOfWork.TeacherRepository.DeleteTeacherByIdentityIdAsync(user.Id);
             await _unitOfWork.StudentRepository.DeleteStudentByIdentityIdAsync(user.Id);
             await _unitOfWork.SaveChangesAsync();
@@ -202,6 +213,10 @@ namespace FeedbackApp.WebApi.Authentication
             return Ok(new Response { Status = "Success", Message = msgDeleteUserSuccess });
         }
 
+        /// <summary>
+        /// Insert Roles if not exists
+        /// </summary>
+        /// <returns></returns>
         private async Task InsertRolesIfNotExists()
         {
             if (!await roleManager.RoleExistsAsync(UserRoles.admin))
@@ -210,6 +225,21 @@ namespace FeedbackApp.WebApi.Authentication
                 await roleManager.CreateAsync(new IdentityRole(UserRoles.pupil));
             if (!await roleManager.RoleExistsAsync(UserRoles.teacher))
                 await roleManager.CreateAsync(new IdentityRole(UserRoles.teacher));
+        }
+
+        [HttpPost]
+        [Route("changePw")]
+        public async Task<IActionResult> ChangeUserPassword([FromBody] ChangePwModel model)
+        {
+            var user = await userManager.FindByNameAsync(model.Username);
+
+            if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
+            {
+                await userManager.ChangePasswordAsync(user, model.Password, model.NewPassword);
+                return Ok(new Response { Status = "Success", Message = msgUserPwChangeSuccess });
+            }
+            else
+                return BadRequest(new Response { Status = "Error", Message = msgUserPwNotCorrect});
         }
     }
 }
