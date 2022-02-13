@@ -45,6 +45,16 @@ namespace FeedbackApp.Persistence.Repositories
             return await _dbContext.Students.SingleOrDefaultAsync(p => p.IdentityId == identityId);
         }
 
-        
+        public async Task UpdateStudentAsync(string identityId, string firstName, string lastName, DateTime? birthdate, string school)
+        {
+            var student = await _dbContext.Students.SingleOrDefaultAsync(p => p.IdentityId == identityId);
+
+            student.FirstName = firstName;
+            student.LastName = lastName;
+            student.Birthdate = birthdate;
+            student.School = school;
+
+            _dbContext.Students.Update(student);
+        }
     }
 }

@@ -26,6 +26,10 @@ namespace FeedbackApp.WebApi.AccountManagement
             {
                 var user = await _unitOfWork.StudentRepository.GetByIdentityIdAsync(model.IdentityId);
 
+                if (user == null)
+                {
+                    return NotFound();
+                }
                 return Ok(new
                 {
                     firstName = user.FirstName,
@@ -37,7 +41,11 @@ namespace FeedbackApp.WebApi.AccountManagement
             if (model.Role == UserRoles.teacher)
             {
                 var user = await _unitOfWork.TeacherRepository.GetByIdentityIdAsync(model.IdentityId);
-                
+
+                if (user == null)
+                {
+                    return NotFound();
+                }
                 return Ok(new
                 {
                     firstName = user.FirstName,
@@ -49,5 +57,19 @@ namespace FeedbackApp.WebApi.AccountManagement
             return BadRequest();
         }
 
+        [HttpPost]
+        [Route("modifierData")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> GetUserData([FromBody] ModifierUserDataModel model)
+        {
+            if (model.Role == UserRoles.pupil)
+            {
+                await _unitOfWork.StudentRepository.UpdateStudentAsync
+                    (model.IdentityId, model.FirstName, model.LastName, model.Birthdate, model.School);
+                await _unitOfWork.SaveChangesAsync();
+                return Ok();
+            }
+            return BadRequest();
+        }
     }
 }
