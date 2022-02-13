@@ -10,7 +10,7 @@ namespace Feedback_App_XAML
         public App()
         {
             InitializeComponent();
-            MainPage = new NavigationPage(new HomePageLehrer());
+            MainPage = new NavigationPage(new HomePage());
         }
 
         protected override void OnStart()
