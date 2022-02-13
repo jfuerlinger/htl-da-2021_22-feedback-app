@@ -213,20 +213,6 @@ namespace FeedbackApp.WebApi.Authentication
             return Ok(new Response { Status = "Success", Message = msgDeleteUserSuccess });
         }
 
-        /// <summary>
-        /// Insert Roles if not exists
-        /// </summary>
-        /// <returns></returns>
-        private async Task InsertRolesIfNotExists()
-        {
-            if (!await roleManager.RoleExistsAsync(UserRoles.admin))
-                await roleManager.CreateAsync(new IdentityRole(UserRoles.admin));
-            if (!await roleManager.RoleExistsAsync(UserRoles.pupil))
-                await roleManager.CreateAsync(new IdentityRole(UserRoles.pupil));
-            if (!await roleManager.RoleExistsAsync(UserRoles.teacher))
-                await roleManager.CreateAsync(new IdentityRole(UserRoles.teacher));
-        }
-
         [HttpPost]
         [Route("changePw")]
         public async Task<IActionResult> ChangeUserPassword([FromBody] ChangePwModel model)
@@ -240,6 +226,37 @@ namespace FeedbackApp.WebApi.Authentication
             }
             else
                 return BadRequest(new Response { Status = "Error", Message = msgUserPwNotCorrect});
+        }
+
+        [HttpPost]
+        [Route("changeEmail")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> ChangeUserEmail([FromBody] ChangeEmailModel model)
+        {
+            var user = await userManager.FindByNameAsync(model.Username);
+
+            if (user != null)
+            {
+                string token = await userManager.GenerateChangeEmailTokenAsync(user, model.NewEmail);
+                await userManager.ChangeEmailAsync(user, model.NewEmail, token);
+                return Ok();
+            }
+            else
+                return BadRequest();
+        }
+
+        /// <summary>
+        /// Insert Roles if not exists
+        /// </summary>
+        /// <returns></returns>
+        private async Task InsertRolesIfNotExists()
+        {
+            if (!await roleManager.RoleExistsAsync(UserRoles.admin))
+                await roleManager.CreateAsync(new IdentityRole(UserRoles.admin));
+            if (!await roleManager.RoleExistsAsync(UserRoles.pupil))
+                await roleManager.CreateAsync(new IdentityRole(UserRoles.pupil));
+            if (!await roleManager.RoleExistsAsync(UserRoles.teacher))
+                await roleManager.CreateAsync(new IdentityRole(UserRoles.teacher));
         }
     }
 }

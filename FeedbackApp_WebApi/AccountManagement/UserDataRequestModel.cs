@@ -1,0 +1,8 @@
+﻿namespace FeedbackApp.WebApi.AccountManagement
+{
+    public class UserDataRequestModel
+    {
+        public string IdentityId { get; set; }
+        public string Role { get; set; }
+    }
+}
