@@ -76,19 +76,17 @@ namespace FeedbackApp.WebApi.Authentication
                         signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
 
-                //string role = "student";
-                //var roles = userRoles.ToArray();
-                //if (roles.Length != 0)
-                //{
-                //    role = "teacher";
-                //}
-
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expiration = token.ValidTo,
-                    //Role = role
-                });
+
+                    //Klartext für Entwicklungszwecke Xamarin!!!
+                    identityId = user.Id,
+                    role = userRoles.FirstOrDefault(),
+                    username = user.UserName,
+                    email = user.Email
+                }) ;
             }
             return Unauthorized();
         }
