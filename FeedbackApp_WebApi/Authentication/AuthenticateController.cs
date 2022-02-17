@@ -202,7 +202,8 @@ namespace FeedbackApp.WebApi.Authentication
         /// <returns></returns>
         /// <response code="200">Account successfully removed</response>
         /// <response code="404">Account not found, check LoginModel Data</response>
-        /// <response code="401">Something went wrong in account deletion</response>
+        /// <response code="500">Something went wrong in account deletion</response>
+        /// <response code="401">Incorrect token</response>
         [HttpPost]
         [Route("deleteAccount")]
         [Authorize(AuthenticationSchemes = "Bearer")]
@@ -229,7 +230,8 @@ namespace FeedbackApp.WebApi.Authentication
                 if (user == null)
                     return NotFound(new Response { Status = "Not Found", Message = msgUserNotFound });
                 else
-                    return BadRequest(new Response { Status = "Error", Message = msgDeleteUserFail });
+                    return StatusCode(StatusCodes.Status500InternalServerError,
+                    new Response { Status = "Error", Message = msgDeleteUserFail }); ;
             }
 
             if (isTeacher)
@@ -246,7 +248,8 @@ namespace FeedbackApp.WebApi.Authentication
         /// <param name="model"></param>
         /// <returns></returns>
         /// <response code="200">Password successfully changed</response>
-        /// <response code="401">Something went wrong in password change process</response>
+        /// <response code="400">Something went wrong in password change process</response>
+        /// <response code="401">Incorrect Token</response>
         [HttpPost]
         [Route("changePw")]
         public async Task<IActionResult> ChangeUserPassword([FromBody] ChangePwModel model)
@@ -268,7 +271,8 @@ namespace FeedbackApp.WebApi.Authentication
         /// <param name="model"></param>
         /// <returns></returns>
         /// /// <response code="200">e-mail successfully changed</response>
-        /// <response code="401">Something went wrong in e-mail change process</response>
+        /// <response code="400">Something went wrong in e-mail change process</response>
+        /// <response code="401">Incorrect Token</response>
         [HttpPost]
         [Route("changeEmail")]
         [Authorize(AuthenticationSchemes = "Bearer")]

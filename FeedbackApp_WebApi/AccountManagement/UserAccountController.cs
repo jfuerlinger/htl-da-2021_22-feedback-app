@@ -26,7 +26,8 @@ namespace FeedbackApp.WebApi.AccountManagement
         /// <param name="model"></param>
         /// <returns>additional user data (firstname, lastname, birthdate, school)</returns>
         /// /// <response code="200">User data sucessfully sent</response>
-        /// <response code="401">Somethin went wrong in get data process</response>
+        /// <response code="400">Somethin went wrong in get data process</response>
+        /// <response code="401">Incorrect Token</response>
         [HttpPost]
         [Route("getData")]
         [Authorize(AuthenticationSchemes = "Bearer")]
@@ -73,7 +74,8 @@ namespace FeedbackApp.WebApi.AccountManagement
         /// <param name="model"></param>
         /// <returns></returns>
         /// <response code="200">User data sucessfully modified</response>
-        /// <response code="401">Somethin went wrong in modify process</response>
+        /// <response code="400">Somethin went wrong in modify process</response>
+        /// <response code="401">Incorrect Token</response>
         [HttpPost]
         [Route("modifierData")]
         [Authorize(AuthenticationSchemes = "Bearer")]
