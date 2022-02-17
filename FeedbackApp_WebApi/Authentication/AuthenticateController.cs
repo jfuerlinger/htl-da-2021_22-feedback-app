@@ -42,6 +42,11 @@ namespace FeedbackApp.WebApi.Authentication
             _unitOfWork = unitOfWork;
         }
 
+        /// <summary>
+        /// Get a login Token
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>Token and additional information</returns>
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
@@ -91,6 +96,11 @@ namespace FeedbackApp.WebApi.Authentication
             return Unauthorized();
         }
 
+        /// <summary>
+        /// register a student
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
@@ -136,6 +146,11 @@ namespace FeedbackApp.WebApi.Authentication
             return Ok(new Response { Status = "Success", Message = msgCreateUserSuccess });
         }
 
+        /// <summary>
+        /// register a teacher
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("register-teacher")]
         public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
@@ -174,6 +189,11 @@ namespace FeedbackApp.WebApi.Authentication
             return Ok(new Response { Status = "Success", Message = msgCreateUserSuccess });
         }
 
+        /// <summary>
+        /// deletes a student or teacher account
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("deleteAccount")]
         [Authorize(AuthenticationSchemes = "Bearer")]
@@ -211,6 +231,11 @@ namespace FeedbackApp.WebApi.Authentication
             return Ok(new Response { Status = "Success", Message = msgDeleteUserSuccess });
         }
 
+        /// <summary>
+        /// change the password of a student or teacher
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("changePw")]
         public async Task<IActionResult> ChangeUserPassword([FromBody] ChangePwModel model)
@@ -226,6 +251,11 @@ namespace FeedbackApp.WebApi.Authentication
                 return BadRequest(new Response { Status = "Error", Message = msgUserPwNotCorrect});
         }
 
+        /// <summary>
+        /// change the e-mail adress of a student or teacher 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("changeEmail")]
         [Authorize(AuthenticationSchemes = "Bearer")]

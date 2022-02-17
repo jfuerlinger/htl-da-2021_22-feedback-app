@@ -12,6 +12,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
+using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace FeedbackApp.WebApi
@@ -86,10 +88,24 @@ namespace FeedbackApp.WebApi
                 };
             });
 
+            string swaggerDescription =
+            $"HTL-Leonding Diplomprojekt 2022. " +
+            $"An ASP.NET Core Web API for managing user accounts and feedback-units.";
 
-            services.AddSwaggerGen(c =>
+            var contact = new OpenApiContact
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "FeedbackApp_WebApi", Version = "v1" });
+                Name = "Stefano Pyringer",
+                Url = new Uri("https://github.com/spyringer")
+            };
+
+        services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "FeedbackApp Web Api", Version = "development", 
+                    Description = swaggerDescription, Contact = contact });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
         }
 
