@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace FeedbackApp.WebApi.AccountManagement
 {
     /// <summary>
-    /// User Account Management
+    /// Additional User Account Management
     /// </summary>
     [Route("api/user")]
     [ApiController]

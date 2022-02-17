@@ -15,6 +15,9 @@ using System.Threading.Tasks;
 
 namespace FeedbackApp.WebApi.Authentication
 {
+    /// <summary>
+    /// Main User Account Management
+    /// </summary>
     [Route("api")]
     [ApiController]
     public class AuthenticateController : ControllerBase
