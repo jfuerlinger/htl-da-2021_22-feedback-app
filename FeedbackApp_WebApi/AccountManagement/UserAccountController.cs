@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace FeedbackApp.WebApi.AccountManagement
 {
+    /// <summary>
+    /// User Account Management
+    /// </summary>
     [Route("api/user")]
     [ApiController]
     public class UserAccountController : ControllerBase
@@ -17,6 +20,13 @@ namespace FeedbackApp.WebApi.AccountManagement
             _unitOfWork = unitOfWork;
         }
 
+        /// <summary>
+        /// get the additional user data
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>additional user data (firstname, lastname, birthdate, school)</returns>
+        /// /// <response code="200">User data sucessfully sent</response>
+        /// <response code="401">Somethin went wrong in get data process</response>
         [HttpPost]
         [Route("getData")]
         [Authorize(AuthenticationSchemes = "Bearer")]
@@ -57,6 +67,13 @@ namespace FeedbackApp.WebApi.AccountManagement
             return BadRequest();
         }
 
+        /// <summary>
+        /// modify the additional user data
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        /// <response code="200">User data sucessfully modified</response>
+        /// <response code="401">Somethin went wrong in modify process</response>
         [HttpPost]
         [Route("modifierData")]
         [Authorize(AuthenticationSchemes = "Bearer")]

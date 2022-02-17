@@ -33,14 +33,6 @@ namespace FeedbackApp.WebApi
 
             services.AddControllers();
 
-            // For MariaDb (only for Test, DB changed to EF)
-            //services.AddDbContext<MariaDbContext>(
-            //dbContextOptions => dbContextOptions
-            //    .UseMySql(Configuration.GetConnectionString("MariaDbConnectionString"), 
-            //        ServerVersion.AutoDetect(Configuration.GetConnectionString("MariaDbConnectionString"))));
-
-            //services.AddScoped<ITestDataService, TestDataService>();
-
             // For EF IdentyServer
             services.AddDbContext<ApplicationDbContext>
                 (

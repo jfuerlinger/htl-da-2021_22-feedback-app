@@ -43,10 +43,12 @@ namespace FeedbackApp.WebApi.Authentication
         }
 
         /// <summary>
-        /// Get a login Token
+        /// Get a login token
         /// </summary>
         /// <param name="model"></param>
         /// <returns>Token and additional information</returns>
+        /// <response code="200">Returns the generated token with additional information</response>
+        /// <response code="401">If the login data is incorrect</response>
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
@@ -101,6 +103,8 @@ namespace FeedbackApp.WebApi.Authentication
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        /// <response code="200">Student account sucessfully created</response>
+        /// <response code="500">Somethin went wrong in creation process</response>
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
@@ -151,6 +155,8 @@ namespace FeedbackApp.WebApi.Authentication
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        /// <response code="200">Teacher account sucessfully created</response>
+        /// <response code="500">Somethin went wrong in account creation</response>
         [HttpPost]
         [Route("register-teacher")]
         public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
@@ -194,6 +200,9 @@ namespace FeedbackApp.WebApi.Authentication
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        /// <response code="200">Account successfully removed</response>
+        /// <response code="404">Account not found, check LoginModel Data</response>
+        /// <response code="401">Something went wrong in account deletion</response>
         [HttpPost]
         [Route("deleteAccount")]
         [Authorize(AuthenticationSchemes = "Bearer")]
@@ -236,6 +245,8 @@ namespace FeedbackApp.WebApi.Authentication
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        /// <response code="200">Password successfully changed</response>
+        /// <response code="401">Something went wrong in password change process</response>
         [HttpPost]
         [Route("changePw")]
         public async Task<IActionResult> ChangeUserPassword([FromBody] ChangePwModel model)
@@ -256,6 +267,8 @@ namespace FeedbackApp.WebApi.Authentication
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        /// /// <response code="200">e-mail successfully changed</response>
+        /// <response code="401">Something went wrong in e-mail change process</response>
         [HttpPost]
         [Route("changeEmail")]
         [Authorize(AuthenticationSchemes = "Bearer")]
