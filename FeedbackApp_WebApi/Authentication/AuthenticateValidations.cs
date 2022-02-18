@@ -2,14 +2,14 @@
 
 namespace FeedbackApp.WebApi.Authentication
 {
-    internal static class AuthenticateValidations
+    public static class AuthenticateValidations
     {
         /// <summary>
         /// Check password Requirements
         /// </summary>
         /// <param name="password"></param>
         /// <returns>true when password meet requirements</returns>
-        internal static bool CheckPwRequirements(string password)
+        public static bool CheckPwRequirements(string password)
         {
             bool containsUpper = false;
             bool containsLower = false;
@@ -33,21 +33,18 @@ namespace FeedbackApp.WebApi.Authentication
             else return false;
         }
 
-        internal static bool CheckUsernameRequirements(string userName)
+        public static bool CheckUsernameRequirements(string userName)
         {
             bool containsWhiteSpace = false;
             bool containsNotAllowedChars = false;
 
             if (string.IsNullOrEmpty(userName)) return false;
-            if (userName.Length < 6) return false;
+            if (userName.Length < 6 || userName.Length > 26) return false;
 
             foreach (char character in userName)
             {
                 if (char.IsWhiteSpace(character)) containsWhiteSpace = true;
-                if (!char.IsLetterOrDigit(character) && 
-                    character != '@' && character != '+' && character != '-' &&
-                    character != '_' && character != '.') 
-                        containsNotAllowedChars = true;
+                if (!char.IsLetterOrDigit(character)) containsNotAllowedChars = true;
             }
 
             if (!containsWhiteSpace && !containsNotAllowedChars)
