@@ -49,8 +49,19 @@ namespace FeedbackApp.WebApi
             // For Identity  
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
                 {
+                    // Username settings
                     var allowed = options.User.AllowedUserNameCharacters + "äüöÄÜÖ";
                     options.User.AllowedUserNameCharacters = allowed;
+                    options.User.RequireUniqueEmail = true;
+                    // Username Lenght = 6 --> AuthenticateValidations.cs
+                    
+                    // Password settings
+                    options.Password.RequireDigit = true;
+                    options.Password.RequireLowercase = true;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequiredUniqueChars = 0;
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();

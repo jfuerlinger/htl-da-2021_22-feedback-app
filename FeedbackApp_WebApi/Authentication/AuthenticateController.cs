@@ -36,6 +36,8 @@ namespace FeedbackApp.WebApi.Authentication
         private readonly string msgUserPwChangeSuccess = "Das Passwort wurde erfolgreich geändert.";
         private readonly string msgUserPwNotCorrect = "Das Passwort ist nicht korrekt.";
         private readonly string msgSomethingWentWrong = "Etwas ist schiefgelaufen.";
+        private readonly string msgPwRequirements = "Das Passwort erfüllt die Mindestanforderungen nicht.";
+        private readonly string msgUsernameRequirements = "Der Username erfüllt die Mindestanforderungen nicht.";
 
         public AuthenticateController(UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager, IUnitOfWork unitOfWork, IConfiguration configuration)
@@ -115,8 +117,8 @@ namespace FeedbackApp.WebApi.Authentication
         /// <param name="model"></param>
         /// <returns></returns>
         /// <response code="201">Student account sucessfully created</response>
-        /// <response code="400">Student account already exists</response>
-        /// <response code="500">Somethin went wrong (DB Server)</response>
+        /// <response code="400">Student account already exists or PW, Username doesnt meet requirements.</response>
+        /// <response code="500">Something went wrong (DB Server)</response>
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
@@ -129,7 +131,21 @@ namespace FeedbackApp.WebApi.Authentication
                     new Response { Status = "Error", Message = msgUserExists });
             }
 
-            //To-Do: Username und PW Validierung
+            // Username und PW Validierung
+            bool isUsernameValid = AuthenticateValidations.CheckUsernameRequirements(model.UserName);
+            bool isPwValid = AuthenticateValidations.CheckPwRequirements(model.Password);
+
+            if (!isUsernameValid)
+            {
+                return BadRequest(
+                    new Response { Status = "username", Message =  msgUsernameRequirements});
+            }
+
+            if (!isPwValid)
+            {
+                return BadRequest(
+                    new Response { Status = "password", Message = msgPwRequirements });
+            }
 
             ApplicationUser user = new()
             {
@@ -163,8 +179,8 @@ namespace FeedbackApp.WebApi.Authentication
         /// <param name="model"></param>
         /// <returns></returns>
         /// <response code="201">Teacher account sucessfully created</response>
-        /// <response code="400">Student account already exists</response>
-        /// <response code="500">Somethin went wrong (DB Server)</response>
+        /// <response code="400">Teacher account already exists or PW, Username doesnt meet requirements.</response>
+        /// <response code="500">Something went wrong (DB Server)</response>
         [HttpPost]
         [Route("register-teacher")]
         public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
@@ -174,7 +190,21 @@ namespace FeedbackApp.WebApi.Authentication
                 return BadRequest(
                     new Response { Status = "Error", Message = msgUserExists });
 
-            //To-Do: Username und PW Validierung
+            // Username und PW Validierung
+            bool isUsernameValid = AuthenticateValidations.CheckUsernameRequirements(model.UserName);
+            bool isPwValid = AuthenticateValidations.CheckPwRequirements(model.Password);
+
+            if (!isUsernameValid)
+            {
+                return BadRequest(
+                    new Response { Status = "username", Message = msgUsernameRequirements });
+            }
+
+            if (!isPwValid)
+            {
+                return BadRequest(
+                    new Response { Status = "password", Message = msgPwRequirements });
+            }
 
             ApplicationUser user = new()
             {
@@ -253,6 +283,7 @@ namespace FeedbackApp.WebApi.Authentication
         /// <response code="200">Password successfully changed</response>
         /// <response code="500">Something went wrong (API)</response>
         /// <response code="401">Incorrect Token</response>
+        /// <response code="400">Wrong Password</response>
         /// <response code="404">User not found. Check request model</response>
         [HttpPost]
         [Route("changePw")]
@@ -270,6 +301,11 @@ namespace FeedbackApp.WebApi.Authentication
             if (user == null)
             {
                 return NotFound(new Response { Status="Not Found", Message = msgUserNotFound});
+            }
+            if (await userManager.CheckPasswordAsync(user, model.Password) == false)
+            {
+                return BadRequest(
+                    new Response { Status="Wrong Password", Message = msgUserPwNotCorrect});
             }
             else
                 return StatusCode(StatusCodes.Status500InternalServerError,
