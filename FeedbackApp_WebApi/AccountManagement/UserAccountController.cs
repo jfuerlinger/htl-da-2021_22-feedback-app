@@ -1,6 +1,7 @@
 ﻿using FeedbackApp.Core.Contracts.Persistence;
 using FeedbackApp.WebApi.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -26,8 +27,9 @@ namespace FeedbackApp.WebApi.AccountManagement
         /// <param name="model"></param>
         /// <returns>additional user data (firstname, lastname, birthdate, school)</returns>
         /// /// <response code="200">User data sucessfully sent</response>
-        /// <response code="400">Somethin went wrong in get data process</response>
+        /// <response code="500">Somethin went wrong (DB Server)</response>
         /// <response code="401">Incorrect Token</response>
+        /// <response code="404">User Data not found. Check Request model</response>
         [HttpPost]
         [Route("getData")]
         [Authorize(AuthenticationSchemes = "Bearer")]
@@ -65,7 +67,8 @@ namespace FeedbackApp.WebApi.AccountManagement
                     school = user.School,
                 });
             }
-            return BadRequest();
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                    new Response { Status = "Error" }); ;
         }
 
         /// <summary>
@@ -74,7 +77,7 @@ namespace FeedbackApp.WebApi.AccountManagement
         /// <param name="model"></param>
         /// <returns></returns>
         /// <response code="200">User data sucessfully modified</response>
-        /// <response code="400">Somethin went wrong in modify process</response>
+        /// <response code="500">Something went wrong (DB Server)</response>
         /// <response code="401">Incorrect Token</response>
         [HttpPost]
         [Route("modifierData")]
@@ -88,7 +91,8 @@ namespace FeedbackApp.WebApi.AccountManagement
                 await _unitOfWork.SaveChangesAsync();
                 return Ok();
             }
-            return BadRequest();
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                    new Response { Status = "Error" });
         }
     }
 }

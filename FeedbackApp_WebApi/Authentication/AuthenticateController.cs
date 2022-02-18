@@ -35,6 +35,7 @@ namespace FeedbackApp.WebApi.Authentication
         private readonly string msgUserNotFound = "Benutzer wurde nicht gefunden!";
         private readonly string msgUserPwChangeSuccess = "Das Passwort wurde erfolgreich geändert.";
         private readonly string msgUserPwNotCorrect = "Das Passwort ist nicht korrekt.";
+        private readonly string msgSomethingWentWrong = "Etwas ist schiefgelaufen.";
 
         public AuthenticateController(UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager, IUnitOfWork unitOfWork, IConfiguration configuration)
@@ -46,12 +47,13 @@ namespace FeedbackApp.WebApi.Authentication
         }
 
         /// <summary>
-        /// Get a login token
+        /// get a login token
         /// </summary>
         /// <param name="model"></param>
         /// <returns>Token and additional information</returns>
-        /// <response code="200">Returns the generated token with additional information</response>
-        /// <response code="401">If the login data is incorrect</response>
+        /// <response code="201">Returns the generated token with additional information</response>
+        /// <response code="401">Login data incorrect</response>
+        /// <response code="500">Something went wrong (API)</response>
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
@@ -86,7 +88,7 @@ namespace FeedbackApp.WebApi.Authentication
                         signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
 
-                return Ok(new
+                return CreatedAtAction("", new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expiration = token.ValidTo,
@@ -96,9 +98,15 @@ namespace FeedbackApp.WebApi.Authentication
                     role = userRoles.FirstOrDefault(),
                     username = user.UserName,
                     email = user.Email
-                }) ;
+                });
             }
-            return Unauthorized();
+
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                    new Response { Status = "Error", Message = msgSomethingWentWrong });
         }
 
         /// <summary>
@@ -106,8 +114,9 @@ namespace FeedbackApp.WebApi.Authentication
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        /// <response code="200">Student account sucessfully created</response>
-        /// <response code="500">Somethin went wrong in creation process</response>
+        /// <response code="201">Student account sucessfully created</response>
+        /// <response code="400">Student account already exists</response>
+        /// <response code="500">Somethin went wrong (DB Server)</response>
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
@@ -116,9 +125,11 @@ namespace FeedbackApp.WebApi.Authentication
 
             if (userExists != null)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
+                return BadRequest(
                     new Response { Status = "Error", Message = msgUserExists });
             }
+
+            //To-Do: Username und PW Validierung
 
             ApplicationUser user = new()
             {
@@ -133,13 +144,6 @@ namespace FeedbackApp.WebApi.Authentication
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     new Response { Status = "Error", Message = msgCreateUserFail });
             }
-
-            //if (!await roleManager.RoleExistsAsync(UserRoles.admin))
-            //    await roleManager.CreateAsync(new IdentityRole(UserRoles.admin));
-            //if (!await roleManager.RoleExistsAsync(UserRoles.pupil))
-            //    await roleManager.CreateAsync(new IdentityRole(UserRoles.pupil));
-            //if (!await roleManager.RoleExistsAsync(UserRoles.teacher))
-            //    await roleManager.CreateAsync(new IdentityRole(UserRoles.teacher));
 
             await InsertRolesIfNotExists();
 
@@ -150,7 +154,7 @@ namespace FeedbackApp.WebApi.Authentication
             
             await _unitOfWork.StudentRepository.CreateStudentAsync(user.Id);
             await _unitOfWork.SaveChangesAsync();
-            return Ok(new Response { Status = "Success", Message = msgCreateUserSuccess });
+            return CreatedAtAction("",new Response { Status = "Success", Message = msgCreateUserSuccess });
         }
 
         /// <summary>
@@ -158,16 +162,19 @@ namespace FeedbackApp.WebApi.Authentication
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        /// <response code="200">Teacher account sucessfully created</response>
-        /// <response code="500">Somethin went wrong in account creation</response>
+        /// <response code="201">Teacher account sucessfully created</response>
+        /// <response code="400">Student account already exists</response>
+        /// <response code="500">Somethin went wrong (DB Server)</response>
         [HttpPost]
         [Route("register-teacher")]
         public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
         {
             var userExists = await userManager.FindByNameAsync(model.UserName);
             if (userExists != null)
-                return StatusCode(StatusCodes.Status500InternalServerError,
+                return BadRequest(
                     new Response { Status = "Error", Message = msgUserExists });
+
+            //To-Do: Username und PW Validierung
 
             ApplicationUser user = new()
             {
@@ -180,13 +187,6 @@ namespace FeedbackApp.WebApi.Authentication
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     new Response { Status = "Error", Message = msgCreateUserFail });
 
-            //if (!await roleManager.RoleExistsAsync(UserRoles.admin))
-            //    await roleManager.CreateAsync(new IdentityRole(UserRoles.admin));
-            //if (!await roleManager.RoleExistsAsync(UserRoles.pupil))
-            //    await roleManager.CreateAsync(new IdentityRole(UserRoles.pupil));
-            //if (!await roleManager.RoleExistsAsync(UserRoles.teacher))
-            //    await roleManager.CreateAsync(new IdentityRole(UserRoles.teacher));
-
             await InsertRolesIfNotExists();
 
             if (await roleManager.RoleExistsAsync(UserRoles.teacher))
@@ -195,7 +195,7 @@ namespace FeedbackApp.WebApi.Authentication
             }
             await _unitOfWork.TeacherRepository.CreateTeacherAsync(user.Id);
             await _unitOfWork.SaveChangesAsync();
-            return Ok(new Response { Status = "Success", Message = msgCreateUserSuccess });
+            return CreatedAtAction("", new Response { Status = "Success", Message = msgCreateUserSuccess });
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace FeedbackApp.WebApi.Authentication
         /// <returns></returns>
         /// <response code="200">Account successfully removed</response>
         /// <response code="404">Account not found, check LoginModel Data</response>
-        /// <response code="500">Something went wrong in account deletion</response>
+        /// <response code="500">Something went wrong (DB Server)</response>
         /// <response code="401">Incorrect token</response>
         [HttpPost]
         [Route("deleteAccount")]
@@ -251,21 +251,29 @@ namespace FeedbackApp.WebApi.Authentication
         /// <param name="model"></param>
         /// <returns></returns>
         /// <response code="200">Password successfully changed</response>
-        /// <response code="400">Something went wrong in password change process</response>
+        /// <response code="500">Something went wrong (API)</response>
         /// <response code="401">Incorrect Token</response>
+        /// <response code="404">User not found. Check request model</response>
         [HttpPost]
         [Route("changePw")]
         public async Task<IActionResult> ChangeUserPassword([FromBody] ChangePwModel model)
         {
             var user = await userManager.FindByNameAsync(model.Username);
 
+            //To-Do: Username und PW Validierung
+
             if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
             {
                 await userManager.ChangePasswordAsync(user, model.Password, model.NewPassword);
                 return Ok(new Response { Status = "Success", Message = msgUserPwChangeSuccess });
             }
+            if (user == null)
+            {
+                return NotFound(new Response { Status="Not Found", Message = msgUserNotFound});
+            }
             else
-                return BadRequest(new Response { Status = "Error", Message = msgUserPwNotCorrect});
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    new Response { Status = "Error", Message = msgSomethingWentWrong });
         }
 
         /// <summary>
@@ -274,8 +282,9 @@ namespace FeedbackApp.WebApi.Authentication
         /// <param name="model"></param>
         /// <returns></returns>
         /// /// <response code="200">e-mail successfully changed</response>
-        /// <response code="400">Something went wrong in e-mail change process</response>
+        /// <response code="500">Something went wrong (API)</response>
         /// <response code="401">Incorrect Token</response>
+        /// <response code="404">User not found. Check request model</response>
         [HttpPost]
         [Route("changeEmail")]
         [Authorize(AuthenticationSchemes = "Bearer")]
@@ -289,8 +298,13 @@ namespace FeedbackApp.WebApi.Authentication
                 await userManager.ChangeEmailAsync(user, model.NewEmail, token);
                 return Ok();
             }
+            if (user == null)
+            {
+                return NotFound(new Response { Status = "Not Found", Message = msgUserNotFound });
+            }
             else
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    new Response { Status = "Error", Message = msgSomethingWentWrong });
         }
 
         /// <summary>
