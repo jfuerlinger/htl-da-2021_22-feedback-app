@@ -1,10 +1,15 @@
+using FeedbackApp.Core.Contracts.Persistence;
+using FeedbackApp.Persistence;
 using FeedbackApp.WebApi.Authentication;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace WebApi.Tests
 {
     [TestClass]
-    public class PasswordValidationTests
+    public class AuthenticateTests
     {
         [TestMethod]
         public void PwMeetRequirements_ShouldReturnTrue()
