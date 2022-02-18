@@ -53,7 +53,7 @@ namespace FeedbackApp.WebApi.Authentication
         /// </summary>
         /// <param name="model"></param>
         /// <returns>Token and additional information</returns>
-        /// <response code="201">Returns the generated token with additional information</response>
+        /// <response code="200">Returns the generated token with additional information</response>
         /// <response code="401">Login data incorrect</response>
         /// <response code="500">Something went wrong (API)</response>
         [HttpPost]
@@ -90,7 +90,7 @@ namespace FeedbackApp.WebApi.Authentication
                         signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
 
-                return CreatedAtAction("", new
+                return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expiration = token.ValidTo,
@@ -116,7 +116,7 @@ namespace FeedbackApp.WebApi.Authentication
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        /// <response code="201">Student account sucessfully created</response>
+        /// <response code="200">Student account sucessfully created</response>
         /// <response code="400">Student account already exists or PW, Username doesnt meet requirements.</response>
         /// <response code="500">Something went wrong (DB Server)</response>
         [HttpPost]
@@ -170,7 +170,7 @@ namespace FeedbackApp.WebApi.Authentication
             
             await _unitOfWork.StudentRepository.CreateStudentAsync(user.Id);
             await _unitOfWork.SaveChangesAsync();
-            return CreatedAtAction("",new Response { Status = "Success", Message = msgCreateUserSuccess });
+            return Ok(new Response { Status = "Success", Message = msgCreateUserSuccess });
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace FeedbackApp.WebApi.Authentication
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        /// <response code="201">Teacher account sucessfully created</response>
+        /// <response code="200">Teacher account sucessfully created</response>
         /// <response code="400">Teacher account already exists or PW, Username doesnt meet requirements.</response>
         /// <response code="500">Something went wrong (DB Server)</response>
         [HttpPost]
@@ -225,7 +225,7 @@ namespace FeedbackApp.WebApi.Authentication
             }
             await _unitOfWork.TeacherRepository.CreateTeacherAsync(user.Id);
             await _unitOfWork.SaveChangesAsync();
-            return CreatedAtAction("", new Response { Status = "Success", Message = msgCreateUserSuccess });
+            return Ok(new Response { Status = "Success", Message = msgCreateUserSuccess });
         }
 
         /// <summary>
@@ -282,8 +282,8 @@ namespace FeedbackApp.WebApi.Authentication
         /// <returns></returns>
         /// <response code="200">Password successfully changed</response>
         /// <response code="500">Something went wrong (API)</response>
+        /// /// <response code="400">Wrong Password, New Password not meeting the requirements</response>
         /// <response code="401">Incorrect Token</response>
-        /// <response code="400">Wrong Password</response>
         /// <response code="404">User not found. Check request model</response>
         [HttpPost]
         [Route("changePw")]
@@ -291,7 +291,13 @@ namespace FeedbackApp.WebApi.Authentication
         {
             var user = await userManager.FindByNameAsync(model.Username);
 
-            //To-Do: Username und PW Validierung
+            // PW Validierung
+            bool isPwValid = AuthenticateValidations.CheckPwRequirements(model.NewPassword);
+            if (!isPwValid)
+            {
+                return BadRequest(
+                    new Response { Status = "password", Message = msgPwRequirements });
+            }
 
             if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
             {
