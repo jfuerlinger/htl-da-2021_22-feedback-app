@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeedbackApp.Core", "..\Feed
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeedbackApp.Persistence", "..\FeedbackApp.Persistence\FeedbackApp.Persistence.csproj", "{F2C017A8-D928-4BD6-AF90-6B2F58E03002}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedbackApp.ApiTests", "..\WebApi.Tests\FeedbackApp.ApiTests.csproj", "{4712940C-041A-4CDD-9500-94B8ACBDE1CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeedbackApp.Tests", "..\WebApi.Tests\FeedbackApp.Tests.csproj", "{4712940C-041A-4CDD-9500-94B8ACBDE1CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
