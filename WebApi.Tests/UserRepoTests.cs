@@ -34,7 +34,7 @@ namespace FeedbackApp.Tests
 
             List<User> users = new List<User>
             {
-                new User { IdentityId = "001-001-001" , Role = UserRoles.pupil}
+                new User { IdentityId = "001-001-001" , Role = UserRoles.student}
             };
 
             foreach (User user in users)
@@ -60,11 +60,11 @@ namespace FeedbackApp.Tests
 
             List<User> users = new List<User>
             {
-                new User { IdentityId = "001-001-001" , Role = UserRoles.pupil},
+                new User { IdentityId = "001-001-001" , Role = UserRoles.student},
                 new User { IdentityId = "002-001-001" , Role = UserRoles.teacher},
                 new User { IdentityId = "003-001-001" , Role = UserRoles.teacher},
                 new User { IdentityId = "004-001-001" , Role = UserRoles.admin},
-                new User { IdentityId = "004-001-001" , Role = UserRoles.pupil}
+                new User { IdentityId = "004-001-001" , Role = UserRoles.student}
             };
 
             foreach (User user in users)
@@ -118,13 +118,13 @@ namespace FeedbackApp.Tests
 
             List<User> users = new List<User>
             {
-                new User { IdentityId = "001-001-001" , Role = UserRoles.pupil},
+                new User { IdentityId = "001-001-001" , Role = UserRoles.student},
                 new User { IdentityId = "002-001-001" , Role = UserRoles.teacher},
                 new User { IdentityId = "003-001-001" , Role = UserRoles.teacher},
                 new User { IdentityId = "004-001-001" , Role = UserRoles.admin},
-                new User { IdentityId = "005-001-001" , Role = UserRoles.pupil},
-                new User { IdentityId = "006-001-001" , Role = UserRoles.pupil},
-                new User { IdentityId = "007-001-001" , Role = UserRoles.pupil}
+                new User { IdentityId = "005-001-001" , Role = UserRoles.student},
+                new User { IdentityId = "006-001-001" , Role = UserRoles.student},
+                new User { IdentityId = "007-001-001" , Role = UserRoles.student}
             };
 
             foreach (User user in users)
@@ -150,13 +150,13 @@ namespace FeedbackApp.Tests
 
             List<User> users = new List<User>
             {
-                new User { IdentityId = "001-001-001" , Role = UserRoles.pupil},
+                new User { IdentityId = "001-001-001" , Role = UserRoles.student},
                 new User { IdentityId = "002-001-001" , Role = UserRoles.teacher},
                 new User { IdentityId = "003-001-001" , Role = UserRoles.teacher},
                 new User { IdentityId = "004-001-001" , Role = UserRoles.admin},
-                new User { IdentityId = "005-001-001" , Role = UserRoles.pupil},
-                new User { IdentityId = "006-001-001" , Role = UserRoles.pupil},
-                new User { IdentityId = "007-001-001" , Role = UserRoles.pupil}
+                new User { IdentityId = "005-001-001" , Role = UserRoles.student},
+                new User { IdentityId = "006-001-001" , Role = UserRoles.student},
+                new User { IdentityId = "007-001-001" , Role = UserRoles.student}
             };
 
             foreach (User user in users)
@@ -182,13 +182,13 @@ namespace FeedbackApp.Tests
 
             List<User> users = new List<User>
             {
-                new User { IdentityId = "001-001-001" , Role = UserRoles.pupil},
+                new User { IdentityId = "001-001-001" , Role = UserRoles.student},
                 new User { IdentityId = "002-001-001" , Role = UserRoles.teacher},
                 new User { IdentityId = "003-001-001" , Role = UserRoles.teacher},
                 new User { IdentityId = "004-001-001" , Role = UserRoles.admin},
-                new User { IdentityId = "005-001-001" , Role = UserRoles.pupil},
-                new User { IdentityId = "006-001-001" , Role = UserRoles.pupil},
-                new User { IdentityId = "007-001-001" , Role = UserRoles.pupil}
+                new User { IdentityId = "005-001-001" , Role = UserRoles.student},
+                new User { IdentityId = "006-001-001" , Role = UserRoles.student},
+                new User { IdentityId = "007-001-001" , Role = UserRoles.student}
             };
 
             foreach (User user in users)
@@ -214,13 +214,13 @@ namespace FeedbackApp.Tests
 
             List<User> users = new List<User>
             {
-                new User { IdentityId = "001-001-001" , Role = UserRoles.pupil},
+                new User { IdentityId = "001-001-001" , Role = UserRoles.student},
                 new User { IdentityId = "002-001-001" , Role = UserRoles.teacher},
                 new User { IdentityId = "003-001-001" , Role = UserRoles.teacher},
                 new User { IdentityId = "004-001-001" , Role = UserRoles.admin},
-                new User { IdentityId = "005-001-001" , Role = UserRoles.pupil},
-                new User { IdentityId = "006-001-001" , Role = UserRoles.pupil},
-                new User { IdentityId = "007-001-001" , Role = UserRoles.pupil}
+                new User { IdentityId = "005-001-001" , Role = UserRoles.student},
+                new User { IdentityId = "006-001-001" , Role = UserRoles.student},
+                new User { IdentityId = "007-001-001" , Role = UserRoles.student}
             };
 
             foreach (User user in users)
@@ -248,7 +248,7 @@ namespace FeedbackApp.Tests
 
             List<User> users = new List<User>
             {
-                new User { Id = id, IdentityId = identityId , Role = UserRoles.pupil}
+                new User { Id = id, IdentityId = identityId , Role = UserRoles.student}
             };
 
             foreach (User user in users)
@@ -277,7 +277,7 @@ namespace FeedbackApp.Tests
 
             List<User> users = new List<User>
             {
-                new User { Id = id, IdentityId = identityId , Role = UserRoles.pupil}
+                new User { Id = id, IdentityId = identityId , Role = UserRoles.student}
             };
 
             foreach (User user in users)
@@ -306,7 +306,7 @@ namespace FeedbackApp.Tests
 
             List<User> users = new List<User>
             {
-                new User { Id = id, IdentityId = identityId , Role = UserRoles.pupil}
+                new User { Id = id, IdentityId = identityId , Role = UserRoles.student}
             };
 
             foreach (User user in users)
@@ -338,7 +338,7 @@ namespace FeedbackApp.Tests
 
             List<User> users = new List<User>
             {
-                new User { Id = id, IdentityId = identityId , Role = UserRoles.pupil}
+                new User { Id = id, IdentityId = identityId , Role = UserRoles.student}
             };
 
             foreach (User user in users)
@@ -381,7 +381,7 @@ namespace FeedbackApp.Tests
 
             List<User> users = new List<User>
             {
-                new User { Id = id, IdentityId = identityId , Role = UserRoles.pupil}
+                new User { Id = id, IdentityId = identityId , Role = UserRoles.student}
             };
 
             foreach (User user in users)

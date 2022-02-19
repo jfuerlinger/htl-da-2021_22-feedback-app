@@ -36,7 +36,7 @@ namespace FeedbackApp.WebApi.AccountManagement
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> GetUserData([FromBody] UserDataRequestModel model)
         {
-            if (model.Role == UserRoles.pupil)
+            if (model.Role == UserRoles.student)
             {
                 var user = await _unitOfWork.StudentRepository.GetByIdentityIdAsync(model.IdentityId);
 
@@ -85,7 +85,7 @@ namespace FeedbackApp.WebApi.AccountManagement
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> GetUserData([FromBody] ModifierUserDataModel model)
         {
-            if (model.Role == UserRoles.pupil)
+            if (model.Role == UserRoles.student)
             {
                 await _unitOfWork.StudentRepository.UpdateStudentAsync
                     (model.IdentityId, model.FirstName, model.LastName, model.Birthdate, model.School);

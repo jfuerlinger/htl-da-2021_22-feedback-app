@@ -25,7 +25,7 @@ namespace FeedbackApp.Persistence.Repositories
 
         public async Task<int> CountStudentsAsync()
         {
-            return await _dbContext.Users.Where(x => x.Role == UserRoles.pupil).CountAsync();
+            return await _dbContext.Users.Where(x => x.Role == UserRoles.student).CountAsync();
         }
 
         public async Task<int> CountTeachersAsync()

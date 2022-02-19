@@ -164,9 +164,9 @@ namespace FeedbackApp.WebApi.Authentication
 
             await InsertRolesIfNotExists();
 
-            if (await roleManager.RoleExistsAsync(UserRoles.pupil))
+            if (await roleManager.RoleExistsAsync(UserRoles.student))
             {
-                await userManager.AddToRoleAsync(user, UserRoles.pupil);
+                await userManager.AddToRoleAsync(user, UserRoles.student);
             }
             
             await _unitOfWork.StudentRepository.CreateStudentAsync(user.Id);
@@ -253,9 +253,9 @@ namespace FeedbackApp.WebApi.Authentication
                     await userManager.RemoveFromRoleAsync(user, UserRoles.teacher);
                     isTeacher = true;
                 }
-                if (await userManager.IsInRoleAsync(user, UserRoles.pupil))
+                if (await userManager.IsInRoleAsync(user, UserRoles.student))
                 {
-                    await userManager.RemoveFromRoleAsync(user, UserRoles.pupil);
+                    await userManager.RemoveFromRoleAsync(user, UserRoles.student);
                 }
                 await userManager.DeleteAsync(user);
             }
@@ -358,8 +358,8 @@ namespace FeedbackApp.WebApi.Authentication
         {
             if (!await roleManager.RoleExistsAsync(UserRoles.admin))
                 await roleManager.CreateAsync(new IdentityRole(UserRoles.admin));
-            if (!await roleManager.RoleExistsAsync(UserRoles.pupil))
-                await roleManager.CreateAsync(new IdentityRole(UserRoles.pupil));
+            if (!await roleManager.RoleExistsAsync(UserRoles.student))
+                await roleManager.CreateAsync(new IdentityRole(UserRoles.student));
             if (!await roleManager.RoleExistsAsync(UserRoles.teacher))
                 await roleManager.CreateAsync(new IdentityRole(UserRoles.teacher));
         }
