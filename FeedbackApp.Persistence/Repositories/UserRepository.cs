@@ -18,9 +18,24 @@ namespace FeedbackApp.Persistence.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<int> CountAsync()
+        public async Task<int> CountAllAsync()
         {
             return await _dbContext.Users.CountAsync();
+        }
+
+        public Task<int> CountStudentsAsync()
+        {
+            return Task.FromResult(0);
+        }
+
+        public Task<int> CountTeachersAsync()
+        {
+            return Task.FromResult(0);
+        }
+
+        public Task<int> CountAdminsAsync()
+        {
+            return Task.FromResult(0);
         }
 
         public async Task<List<User>> GetAllAsync()

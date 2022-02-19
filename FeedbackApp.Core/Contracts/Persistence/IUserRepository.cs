@@ -6,7 +6,10 @@ namespace FeedbackApp.Core.Contracts.Persistence
 {
     public interface IUserRepository
     {
-        Task<int> CountAsync();
+        Task<int> CountAllAsync();
+        Task<int> CountStudentsAsync();
+        Task<int> CountTeachersAsync();
+        Task<int> CountAdminsAsync();
         Task<List<User>> GetAllAsync();
         Task<User> GetByIdAsync(int id);
         Task CreateUserAsync(User user);
