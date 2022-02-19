@@ -7,6 +7,7 @@ namespace FeedbackApp.Core.Contracts.Persistence
     {
         IStudentRepository StudentRepository { get; }
         ITeacherRepository TeacherRepository { get; }
+        IUserRepository UserRepository { get; }
 
         Task<int> SaveChangesAsync();
         Task DeleteDatabaseAsync();

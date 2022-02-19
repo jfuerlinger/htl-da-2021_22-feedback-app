@@ -15,11 +15,14 @@ namespace FeedbackApp.Persistence
             _dbContext = dbContext;
             StudentRepository = new StudentRepository(dbContext);
             TeacherRepository = new TeacherRepository(dbContext);
+            UserRepository = new UserRepository(dbContext);
         }
 
         public IStudentRepository StudentRepository { get; }
 
         public ITeacherRepository TeacherRepository { get; }
+
+        public IUserRepository UserRepository { get; }
 
         public async Task CreateDatabaseAsync()
         {
