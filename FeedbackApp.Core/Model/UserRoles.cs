@@ -1,4 +1,4 @@
-﻿namespace FeedbackApp.WebApi.Authentication
+﻿namespace FeedbackApp.Core.Model
 {
     public static class UserRoles
     {

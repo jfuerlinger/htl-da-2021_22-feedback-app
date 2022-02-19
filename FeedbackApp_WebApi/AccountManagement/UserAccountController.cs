@@ -1,4 +1,5 @@
 ﻿using FeedbackApp.Core.Contracts.Persistence;
+using FeedbackApp.Core.Model;
 using FeedbackApp.WebApi.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

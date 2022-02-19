@@ -28,7 +28,6 @@ namespace FeedbackApp.Tests
         [TestMethod]
         public async Task CreateOneUser()
         {
-            int userCount = 0;
             var feedbackDbContext = new FeedbackDbContext(dbContextOptions);
             UserRepository userRepository = new UserRepository(feedbackDbContext);
             UnitOfWork unitOfWork = new UnitOfWork(feedbackDbContext);
@@ -43,7 +42,7 @@ namespace FeedbackApp.Tests
                 await userRepository.CreateUserAsync(user);
             }
             await unitOfWork.SaveChangesAsync();
-            userCount = await userRepository.CountAllAsync();
+            int userCount = await userRepository.CountAllAsync();
 
             // ClearDB (Other tests will be not correct when not cleared)
             feedbackDbContext.Users.RemoveRange(users);
@@ -55,7 +54,6 @@ namespace FeedbackApp.Tests
         [TestMethod]
         public async Task CreateFiveUsers()
         {
-            int userCount = 0;
             var feedbackDbContext = new FeedbackDbContext(dbContextOptions);
             UserRepository userRepository = new UserRepository(feedbackDbContext);
             UnitOfWork unitOfWork = new UnitOfWork(feedbackDbContext);
@@ -74,7 +72,7 @@ namespace FeedbackApp.Tests
                 await userRepository.CreateUserAsync(user);
             }
             await unitOfWork.SaveChangesAsync();
-            userCount = await userRepository.CountAllAsync();
+            int userCount = await userRepository.CountAllAsync();
 
             // ClearDB (Other tests will be not correct when not cleared)
             feedbackDbContext.Users.RemoveRange(users);
@@ -86,7 +84,6 @@ namespace FeedbackApp.Tests
         [TestMethod]
         public async Task CreateUserWithData()
         {
-            int userCount = 0;
             var feedbackDbContext = new FeedbackDbContext(dbContextOptions);
             UserRepository userRepository = new UserRepository(feedbackDbContext);
             UnitOfWork unitOfWork = new UnitOfWork(feedbackDbContext);
@@ -103,7 +100,7 @@ namespace FeedbackApp.Tests
                 await userRepository.CreateUserAsync(user);
             }
             await unitOfWork.SaveChangesAsync();
-            userCount = await userRepository.CountAllAsync();
+            int userCount = await userRepository.CountAllAsync();
 
             // ClearDB (Other tests will be not correct when not cleared)
             feedbackDbContext.Users.RemoveRange(users);
@@ -115,7 +112,6 @@ namespace FeedbackApp.Tests
         [TestMethod]
         public async Task CountStudents()
         {
-            int userCount = 0;
             var feedbackDbContext = new FeedbackDbContext(dbContextOptions);
             UserRepository userRepository = new UserRepository(feedbackDbContext);
             UnitOfWork unitOfWork = new UnitOfWork(feedbackDbContext);
@@ -136,7 +132,7 @@ namespace FeedbackApp.Tests
                 await userRepository.CreateUserAsync(user);
             }
             await unitOfWork.SaveChangesAsync();
-            userCount = await userRepository.CountStudentsAsync();
+            int userCount = await userRepository.CountStudentsAsync();
 
             // ClearDB (Other tests will be not correct when not cleared)
             feedbackDbContext.Users.RemoveRange(users);
@@ -148,7 +144,6 @@ namespace FeedbackApp.Tests
         [TestMethod]
         public async Task CountAdmins()
         {
-            int userCount = 0;
             var feedbackDbContext = new FeedbackDbContext(dbContextOptions);
             UserRepository userRepository = new UserRepository(feedbackDbContext);
             UnitOfWork unitOfWork = new UnitOfWork(feedbackDbContext);
@@ -169,7 +164,7 @@ namespace FeedbackApp.Tests
                 await userRepository.CreateUserAsync(user);
             }
             await unitOfWork.SaveChangesAsync();
-            userCount = await userRepository.CountAdminsAsync();
+            int userCount = await userRepository.CountAdminsAsync();
 
             // ClearDB (Other tests will be not correct when not cleared)
             feedbackDbContext.Users.RemoveRange(users);
@@ -181,7 +176,6 @@ namespace FeedbackApp.Tests
         [TestMethod]
         public async Task CountTeachers()
         {
-            int userCount = 0;
             var feedbackDbContext = new FeedbackDbContext(dbContextOptions);
             UserRepository userRepository = new UserRepository(feedbackDbContext);
             UnitOfWork unitOfWork = new UnitOfWork(feedbackDbContext);
@@ -202,7 +196,7 @@ namespace FeedbackApp.Tests
                 await userRepository.CreateUserAsync(user);
             }
             await unitOfWork.SaveChangesAsync();
-            userCount = await userRepository.CountTeachersAsync();
+            int userCount = await userRepository.CountTeachersAsync();
 
             // ClearDB (Other tests will be not correct when not cleared)
             feedbackDbContext.Users.RemoveRange(users);
@@ -248,7 +242,6 @@ namespace FeedbackApp.Tests
         {
             int id = 1;
             string identityId = "001-111-001";
-            User user2 = null;
             var feedbackDbContext = new FeedbackDbContext(dbContextOptions);
             UserRepository userRepository = new UserRepository(feedbackDbContext);
             UnitOfWork unitOfWork = new UnitOfWork(feedbackDbContext);
@@ -264,7 +257,7 @@ namespace FeedbackApp.Tests
             }
             await unitOfWork.SaveChangesAsync();
 
-            user2 = await userRepository.GetByIdAsync(id);
+            User user2 = await userRepository.GetByIdAsync(id);
 
             // ClearDB (Other tests will be not correct when not cleared)
             feedbackDbContext.Users.RemoveRange(users);
@@ -278,7 +271,6 @@ namespace FeedbackApp.Tests
         {
             int id = 1;
             string identityId = "001-222-001";
-            User user2 = null;
             var feedbackDbContext = new FeedbackDbContext(dbContextOptions);
             UserRepository userRepository = new UserRepository(feedbackDbContext);
             UnitOfWork unitOfWork = new UnitOfWork(feedbackDbContext);
@@ -294,7 +286,7 @@ namespace FeedbackApp.Tests
             }
             await unitOfWork.SaveChangesAsync();
 
-            user2 = await userRepository.GetByIdentityIdAsync(identityId);
+            User user2 = await userRepository.GetByIdentityIdAsync(identityId);
 
             // ClearDB (Other tests will be not correct when not cleared)
             feedbackDbContext.Users.RemoveRange(users);
@@ -306,7 +298,6 @@ namespace FeedbackApp.Tests
         [TestMethod]
         public async Task DeleteUserByIdentityId()
         {
-            int userCount = 1;
             int id = 1;
             string identityId = "001-222-001";
             var feedbackDbContext = new FeedbackDbContext(dbContextOptions);
@@ -323,14 +314,10 @@ namespace FeedbackApp.Tests
                 await userRepository.CreateUserAsync(user);
             }
             await unitOfWork.SaveChangesAsync();
-
+            
             await userRepository.DeleteUserByIdentityIdAsync(identityId);
             await unitOfWork.SaveChangesAsync();
-            userCount = await userRepository.CountAllAsync();
-
-            // ClearDB (Other tests will be not correct when not cleared)
-            feedbackDbContext.Users.RemoveRange(users);
-            await unitOfWork.SaveChangesAsync();
+            int userCount = await userRepository.CountAllAsync();
 
             Assert.AreEqual(0, userCount, $"There should be no users");
         }
@@ -338,7 +325,6 @@ namespace FeedbackApp.Tests
         [TestMethod]
         public async Task UpdateUserDataWithBirthdate()
         {
-            int userCount = 1;
             int id = 1;
             string identityId = "001-222-001";
             string title = "Dr.";
@@ -346,8 +332,6 @@ namespace FeedbackApp.Tests
             string lastName = "Musterdoktor";
             DateTime birthdate = DateTime.Parse("01.02.1967");
             string school = "HTL-Muster";
-            User user2 = null;
-
             var feedbackDbContext = new FeedbackDbContext(dbContextOptions);
             UserRepository userRepository = new UserRepository(feedbackDbContext);
             UnitOfWork unitOfWork = new UnitOfWork(feedbackDbContext);
@@ -367,7 +351,7 @@ namespace FeedbackApp.Tests
                 (identityId, title, firstName, lastName, birthdate, school);
             await unitOfWork.SaveChangesAsync();
 
-            user2 = await userRepository.GetByIdentityIdAsync(identityId);
+            User user2 = await userRepository.GetByIdentityIdAsync(identityId);
 
             // ClearDB (Other tests will be not correct when not cleared)
             feedbackDbContext.Users.RemoveRange(users);
@@ -378,6 +362,49 @@ namespace FeedbackApp.Tests
             Assert.AreEqual(firstName, user2.FirstName, $"Firstname should be identical");
             Assert.AreEqual(lastName, user2.LastName, $"Lastname should be identical");
             Assert.AreEqual(birthdate, user2.Birthdate, $"Birthdate should be identical");
+            Assert.AreEqual(school, user2.School, $"School should be identical");
+        }
+
+        [TestMethod]
+        public async Task UpdateUserDataWithoutBirthdate()
+        {
+            int id = 1;
+            string identityId = "001-222-001";
+            string title = "Dr.";
+            string firstName = "Max";
+            string lastName = "Musterdoktor";
+            DateTime? birthdate = null;
+            string school = "HTL-Muster";
+            var feedbackDbContext = new FeedbackDbContext(dbContextOptions);
+            UserRepository userRepository = new UserRepository(feedbackDbContext);
+            UnitOfWork unitOfWork = new UnitOfWork(feedbackDbContext);
+
+            List<User> users = new List<User>
+            {
+                new User { Id = id, IdentityId = identityId , Role = UserRoles.pupil}
+            };
+
+            foreach (User user in users)
+            {
+                await userRepository.CreateUserAsync(user);
+            }
+            await unitOfWork.SaveChangesAsync();
+
+            await userRepository.UpdateUserAsync
+                (identityId, title, firstName, lastName, birthdate, school);
+            await unitOfWork.SaveChangesAsync();
+
+            User user2 = await userRepository.GetByIdentityIdAsync(identityId);
+
+            // ClearDB (Other tests will be not correct when not cleared)
+            feedbackDbContext.Users.RemoveRange(users);
+            await unitOfWork.SaveChangesAsync();
+
+            Assert.AreEqual(identityId, user2.IdentityId, $"IdentityId should be identical");
+            Assert.AreEqual(title, user2.Title, $"Title should be identical");
+            Assert.AreEqual(firstName, user2.FirstName, $"Firstname should be identical");
+            Assert.AreEqual(lastName, user2.LastName, $"Lastname should be identical");
+            Assert.AreEqual(null, user2.Birthdate, $"Birthdate should be null");
             Assert.AreEqual(school, user2.School, $"School should be identical");
         }
     }

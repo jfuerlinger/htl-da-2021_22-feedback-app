@@ -23,19 +23,19 @@ namespace FeedbackApp.Persistence.Repositories
             return await _dbContext.Users.CountAsync();
         }
 
-        public Task<int> CountStudentsAsync()
+        public async Task<int> CountStudentsAsync()
         {
-            return Task.FromResult(0);
+            return await _dbContext.Users.Where(x => x.Role == UserRoles.pupil).CountAsync();
         }
 
-        public Task<int> CountTeachersAsync()
+        public async Task<int> CountTeachersAsync()
         {
-            return Task.FromResult(0);
+            return await _dbContext.Users.Where(x => x.Role == UserRoles.teacher).CountAsync();
         }
 
-        public Task<int> CountAdminsAsync()
+        public async Task<int> CountAdminsAsync()
         {
-            return Task.FromResult(0);
+            return await _dbContext.Users.Where(x => x.Role == UserRoles.admin).CountAsync();
         }
 
         public async Task<List<User>> GetAllAsync()
