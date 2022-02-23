@@ -124,7 +124,7 @@ namespace FeedbackApp.WebApi.Authentication
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
-            var userExists = await userManager.FindByNameAsync(model.UserName);
+            var userExists = await userManager.FindByNameAsync(model.Username);
 
             if (userExists != null)
             {
@@ -133,7 +133,7 @@ namespace FeedbackApp.WebApi.Authentication
             }
 
             // Username und PW Validierung
-            bool isUsernameValid = AuthenticateValidations.CheckUsernameRequirements(model.UserName);
+            bool isUsernameValid = AuthenticateValidations.CheckUsernameRequirements(model.Username);
             bool isPwValid = AuthenticateValidations.CheckPwRequirements(model.Password);
 
             if (!isUsernameValid)
@@ -152,7 +152,7 @@ namespace FeedbackApp.WebApi.Authentication
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.UserName
+                UserName = model.Username
             };
 
             var result = await userManager.CreateAsync(user, model.Password);
@@ -188,13 +188,13 @@ namespace FeedbackApp.WebApi.Authentication
         [Route("register-teacher")]
         public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
         {
-            var userExists = await userManager.FindByNameAsync(model.UserName);
+            var userExists = await userManager.FindByNameAsync(model.Username);
             if (userExists != null)
                 return BadRequest(
                     new Response { Status = "Error", Message = msgUserExists });
 
             // Username und PW Validierung
-            bool isUsernameValid = AuthenticateValidations.CheckUsernameRequirements(model.UserName);
+            bool isUsernameValid = AuthenticateValidations.CheckUsernameRequirements(model.Username);
             bool isPwValid = AuthenticateValidations.CheckPwRequirements(model.Password);
 
             if (!isUsernameValid)
@@ -213,7 +213,7 @@ namespace FeedbackApp.WebApi.Authentication
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.UserName
+                UserName = model.Username
             };
             var result = await userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
@@ -284,8 +284,7 @@ namespace FeedbackApp.WebApi.Authentication
         /// <returns></returns>
         /// <response code="200">Password successfully changed</response>
         /// <response code="500">Something went wrong (API)</response>
-        /// /// <response code="400">Wrong Password, New Password not meeting the requirements</response>
-        /// <response code="401">Incorrect Token</response>
+        /// <response code="400">Wrong Password, New Password not meeting the requirements</response>
         /// <response code="404">User not found. Check request model</response>
         [HttpPost]
         [Route("changePw")]

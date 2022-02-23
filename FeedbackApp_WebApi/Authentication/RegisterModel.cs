@@ -5,7 +5,7 @@ namespace FeedbackApp.WebApi.Authentication
     public class RegisterModel
     {
         [Required(ErrorMessage = "Username ist erforderlich")]
-        public string UserName { get; set; }
+        public string Username { get; set; }
 
         [Required(ErrorMessage = "E-Mail ist erforderlich")]
         public string Email { get; set; }

@@ -76,6 +76,7 @@ namespace FeedbackApp.WebApi.AccountManagement
 
             return Ok(new
             {
+                title = user.Title,
                 firstName = user.FirstName,
                 lastName = user.LastName,
                 birthdate = user.Birthdate,
