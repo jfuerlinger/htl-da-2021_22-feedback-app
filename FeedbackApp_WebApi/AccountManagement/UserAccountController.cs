@@ -36,40 +36,51 @@ namespace FeedbackApp.WebApi.AccountManagement
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> GetUserData([FromBody] UserDataRequestModel model)
         {
-            if (model.Role == UserRoles.student)
-            {
-                var user = await _unitOfWork.StudentRepository.GetByIdentityIdAsync(model.IdentityId);
+            //if (model.Role == UserRoles.student)
+            //{
+            //    var user = await _unitOfWork.StudentRepository.GetByIdentityIdAsync(model.IdentityId);
 
-                if (user == null)
-                {
-                    return NotFound();
-                }
-                return Ok(new
-                {
-                    firstName = user.FirstName,
-                    lastName = user.LastName,
-                    birthdate = user.Birthdate,
-                    school = user.School,
-                });
-            }
-            if (model.Role == UserRoles.teacher)
-            {
-                var user = await _unitOfWork.TeacherRepository.GetByIdentityIdAsync(model.IdentityId);
+            //    if (user == null)
+            //    {
+            //        return NotFound();
+            //    }
+            //    return Ok(new
+            //    {
+            //        firstName = user.FirstName,
+            //        lastName = user.LastName,
+            //        birthdate = user.Birthdate,
+            //        school = user.School,
+            //    });
+            //}
+            //if (model.Role == UserRoles.teacher)
+            //{
+            //    var user = await _unitOfWork.TeacherRepository.GetByIdentityIdAsync(model.IdentityId);
 
-                if (user == null)
-                {
-                    return NotFound();
-                }
-                return Ok(new
-                {
-                    firstName = user.FirstName,
-                    lastName = user.LastName,
-                    birthdate = user.Birthdate,
-                    school = user.School,
-                });
-            }
-            return StatusCode(StatusCodes.Status500InternalServerError,
-                    new Response { Status = "Error" }); ;
+            //    if (user == null)
+            //    {
+            //        return NotFound();
+            //    }
+            //    return Ok(new
+            //    {
+            //        firstName = user.FirstName,
+            //        lastName = user.LastName,
+            //        birthdate = user.Birthdate,
+            //        school = user.School,
+            //    });
+            //}
+
+            User user = await _unitOfWork.UserRepository.GetByIdentityIdAsync(model.IdentityId);
+
+            if (user == null)
+                return NotFound();
+
+            return Ok(new
+            {
+                firstName = user.FirstName,
+                lastName = user.LastName,
+                birthdate = user.Birthdate,
+                school = user.School
+            });
         }
 
         /// <summary>
@@ -80,20 +91,22 @@ namespace FeedbackApp.WebApi.AccountManagement
         /// <response code="200">User data sucessfully modified</response>
         /// <response code="500">Something went wrong (DB Server)</response>
         /// <response code="401">Incorrect Token</response>
+        /// <response code="404">User Data not found. Check Request model</response>
         [HttpPost]
         [Route("modifierData")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> GetUserData([FromBody] ModifierUserDataModel model)
         {
-            if (model.Role == UserRoles.student)
-            {
-                await _unitOfWork.StudentRepository.UpdateStudentAsync
-                    (model.IdentityId, model.FirstName, model.LastName, model.Birthdate, model.School);
-                await _unitOfWork.SaveChangesAsync();
-                return Ok();
-            }
-            return StatusCode(StatusCodes.Status500InternalServerError,
-                    new Response { Status = "Error" });
+            User user = await _unitOfWork.UserRepository.GetByIdentityIdAsync(model.IdentityId);
+
+            if (user == null)
+                return NotFound();
+
+            //To-Do DB Fehler abfangen
+            await _unitOfWork.UserRepository.UpdateUserAsync
+                (model.IdentityId, model.Title, model.FirstName, model.LastName, model.Birthdate, model.School);
+            await _unitOfWork.SaveChangesAsync();
+            return Ok();
         }
     }
 }

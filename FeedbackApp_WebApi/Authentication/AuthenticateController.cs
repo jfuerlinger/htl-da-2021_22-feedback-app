@@ -168,8 +168,10 @@ namespace FeedbackApp.WebApi.Authentication
             {
                 await userManager.AddToRoleAsync(user, UserRoles.student);
             }
-            
-            await _unitOfWork.StudentRepository.CreateStudentAsync(user.Id);
+
+            User student = new() { IdentityId = user.Id, Role = UserRoles.student };
+
+            await _unitOfWork.UserRepository.CreateUserAsync(student); // To-Do DB abfangen
             await _unitOfWork.SaveChangesAsync();
             return Ok(new Response { Status = "Success", Message = msgCreateUserSuccess });
         }
@@ -224,7 +226,10 @@ namespace FeedbackApp.WebApi.Authentication
             {
                 await userManager.AddToRoleAsync(user, UserRoles.teacher);
             }
-            await _unitOfWork.TeacherRepository.CreateTeacherAsync(user.Id);
+
+            User teacher = new() { IdentityId = user.Id, Role = UserRoles.teacher };
+
+            await _unitOfWork.UserRepository.CreateUserAsync(teacher); //To-Do DB Fehler abfangen
             await _unitOfWork.SaveChangesAsync();
             return Ok(new Response { Status = "Success", Message = msgCreateUserSuccess });
         }
@@ -244,14 +249,12 @@ namespace FeedbackApp.WebApi.Authentication
         public async Task<IActionResult> DeleteUserConfirmed([FromBody] LoginModel model)
         {
             var user = await userManager.FindByNameAsync(model.Username);
-            bool isTeacher = false;
 
             if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
             {
                 if (await userManager.IsInRoleAsync(user, UserRoles.teacher))
                 {
                     await userManager.RemoveFromRoleAsync(user, UserRoles.teacher);
-                    isTeacher = true;
                 }
                 if (await userManager.IsInRoleAsync(user, UserRoles.student))
                 {
@@ -268,9 +271,7 @@ namespace FeedbackApp.WebApi.Authentication
                     new Response { Status = "Error", Message = msgDeleteUserFail }); ;
             }
 
-            if (isTeacher)
-                await _unitOfWork.TeacherRepository.DeleteTeacherByIdentityIdAsync(user.Id);
-            await _unitOfWork.StudentRepository.DeleteStudentByIdentityIdAsync(user.Id);
+            await _unitOfWork.UserRepository.DeleteUserByIdentityIdAsync(user.Id); //To-Do DB Fehler abfangen
             await _unitOfWork.SaveChangesAsync();
 
             return Ok(new Response { Status = "Success", Message = msgDeleteUserSuccess });
