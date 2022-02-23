@@ -11,8 +11,7 @@ namespace FeedbackApp.Persistence
 
         public FeedbackDbContext(DbContextOptions<FeedbackDbContext> options) : base(options)
         { }
-        public DbSet<Student> Students => Set<Student>();
-        public DbSet<Teacher> Teachers => Set<Teacher>();
+
         public DbSet<User> Users => Set<User>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

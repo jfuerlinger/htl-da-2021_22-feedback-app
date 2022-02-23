@@ -6,21 +6,15 @@ namespace FeedbackApp.Persistence
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private FeedbackDbContext _dbContext;
+        private readonly FeedbackDbContext _dbContext;
 
         public UnitOfWork() : this(new FeedbackDbContext()) { }
 
         public UnitOfWork(FeedbackDbContext dbContext)
         {
             _dbContext = dbContext;
-            StudentRepository = new StudentRepository(dbContext);
-            TeacherRepository = new TeacherRepository(dbContext);
             UserRepository = new UserRepository(dbContext);
         }
-
-        public IStudentRepository StudentRepository { get; }
-
-        public ITeacherRepository TeacherRepository { get; }
 
         public IUserRepository UserRepository { get; }
 

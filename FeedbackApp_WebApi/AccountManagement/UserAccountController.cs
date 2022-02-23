@@ -36,39 +36,6 @@ namespace FeedbackApp.WebApi.AccountManagement
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> GetUserData([FromBody] UserDataRequestModel model)
         {
-            //if (model.Role == UserRoles.student)
-            //{
-            //    var user = await _unitOfWork.StudentRepository.GetByIdentityIdAsync(model.IdentityId);
-
-            //    if (user == null)
-            //    {
-            //        return NotFound();
-            //    }
-            //    return Ok(new
-            //    {
-            //        firstName = user.FirstName,
-            //        lastName = user.LastName,
-            //        birthdate = user.Birthdate,
-            //        school = user.School,
-            //    });
-            //}
-            //if (model.Role == UserRoles.teacher)
-            //{
-            //    var user = await _unitOfWork.TeacherRepository.GetByIdentityIdAsync(model.IdentityId);
-
-            //    if (user == null)
-            //    {
-            //        return NotFound();
-            //    }
-            //    return Ok(new
-            //    {
-            //        firstName = user.FirstName,
-            //        lastName = user.LastName,
-            //        birthdate = user.Birthdate,
-            //        school = user.School,
-            //    });
-            //}
-
             User user = await _unitOfWork.UserRepository.GetByIdentityIdAsync(model.IdentityId);
 
             if (user == null)
