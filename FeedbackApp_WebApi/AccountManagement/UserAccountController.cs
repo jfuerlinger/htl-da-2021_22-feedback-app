@@ -22,6 +22,10 @@ namespace FeedbackApp.WebApi.AccountManagement
             _unitOfWork = unitOfWork;
         }
 
+        #region Messages
+        private readonly string msgDataModifierSucess = "Die User Daten wurden erfolgreich aktualisiert.";
+        #endregion
+
         /// <summary>
         /// get the additional user data
         /// </summary>
@@ -74,7 +78,7 @@ namespace FeedbackApp.WebApi.AccountManagement
             await _unitOfWork.UserRepository.UpdateUserAsync
                 (model.IdentityId, model.Title, model.FirstName, model.LastName, model.Birthdate, model.School);
             await _unitOfWork.SaveChangesAsync();
-            return Ok();
+            return Ok(new Response { Status = "Success", Message = msgDataModifierSucess });
         }
     }
 }

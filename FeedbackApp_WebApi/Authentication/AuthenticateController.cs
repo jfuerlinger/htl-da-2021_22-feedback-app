@@ -28,6 +28,7 @@ namespace FeedbackApp.WebApi.Authentication
         private readonly IConfiguration _configuration;
         private readonly IUnitOfWork _unitOfWork;
 
+        #region Messages
         private readonly string msgUserExists = "Benutzer exestiert bereits!";
         private readonly string msgCreateUserFail = "Benutzer erstellen fehlgeschlagen! Bitte Eingaben überprüfen und erneut versuchen.";
         private readonly string msgCreateUserSuccess = "Benutzer erfolgreich erstellt.";
@@ -39,6 +40,8 @@ namespace FeedbackApp.WebApi.Authentication
         private readonly string msgSomethingWentWrong = "Etwas ist schiefgelaufen.";
         private readonly string msgPwRequirements = "Das Passwort erfüllt die Mindestanforderungen nicht.";
         private readonly string msgUsernameRequirements = "Der Username erfüllt die Mindestanforderungen nicht.";
+        private readonly string msgChangeEmailSuccess = "Die E-Mail wurde erfolgreich geändert.";
+        #endregion
 
         public AuthenticateController(UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager, IUnitOfWork unitOfWork, IConfiguration configuration)
@@ -69,9 +72,6 @@ namespace FeedbackApp.WebApi.Authentication
 
                 var authClaims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.NameIdentifier, user.Id),
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(ClaimTypes.Email, user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
 
@@ -86,7 +86,7 @@ namespace FeedbackApp.WebApi.Authentication
                     (
                         issuer: _configuration["JWT:ValidIssuer"],
                         audience: _configuration["JWT:ValidAudience"],
-                        expires: DateTime.Now.AddMinutes(5),
+                        expires: DateTime.Now.AddMinutes(15),
                         claims: authClaims,
                         signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
@@ -339,7 +339,7 @@ namespace FeedbackApp.WebApi.Authentication
             {
                 string token = await userManager.GenerateChangeEmailTokenAsync(user, model.NewEmail);
                 await userManager.ChangeEmailAsync(user, model.NewEmail, token);
-                return Ok();
+                return Ok(new Response { Status="Success", Message = msgChangeEmailSuccess });
             }
             if (user == null)
             {
