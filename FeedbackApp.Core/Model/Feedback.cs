@@ -13,12 +13,14 @@ namespace FeedbackApp.Core.Model
         public int Id { get; set; }
         
         [Required]
-        public string Title { get; set; }
-        public string Subject { get; set; }
-        public string Description { get; set; }
-        public DateTime Date { get; set; }
-        public DateTime ExpiryDate { get; set; }
-        public string SubscriptionKey { get; set; }
+        public int Stars { get; set; }
+        public string Comment { get; set; } = string.Empty;
+
+        public int? UserId { get; set; }
+        public User User { get; set; } = new User();
+
+        public int? TeachingUnitId { get; set; }
+        public TeachingUnit TeachingUnit { get; set; } = new TeachingUnit();
 
     }
 }

@@ -13,6 +13,8 @@ namespace FeedbackApp.Persistence
         { }
 
         public DbSet<User> Users => Set<User>();
+        public DbSet<TeachingUnit> TeachingUnits => Set<TeachingUnit>();
+        public DbSet<Feedback> Feedbacks => Set<Feedback>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -18,6 +18,8 @@ namespace FeedbackApp.Persistence
 
         public IUserRepository UserRepository { get; }
 
+        public IFeedbackRepository FeedbackRepository { get; }
+
         public async Task CreateDatabaseAsync()
         {
             await _dbContext!.Database.EnsureCreatedAsync();

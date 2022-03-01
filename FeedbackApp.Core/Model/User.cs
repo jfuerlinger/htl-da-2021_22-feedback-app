@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,5 +25,8 @@ namespace FeedbackApp.Core.Model
         public DateTime? Birthdate { get; set; }
         [MaxLength(50)]
         public string? School { get; set; }
+
+        public List<TeachingUnit> TeachingUnits { get; set; } = new List<TeachingUnit>();
+        public List<Feedback> Feedbacks { get; set; } = new List<Feedback>();
     }
 }
