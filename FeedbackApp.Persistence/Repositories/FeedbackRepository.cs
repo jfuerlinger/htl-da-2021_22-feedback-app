@@ -1,5 +1,6 @@
 ﻿using FeedbackApp.Core.Contracts.Persistence;
 using FeedbackApp.Core.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,14 +18,14 @@ namespace FeedbackApp.Persistence.Repositories
             _dbContext = dbContext;
         }
 
-        public Task<int> CountAllFeedbacksAsync()
+        public async Task<int> CountAllFeedbacksAsync()
         {
-            throw new NotImplementedException();
+            return await _dbContext.Feedbacks.CountAsync();
         }
 
-        public Task<int> CountAllTeachingUnitsAsync()
+        public async Task<int> CountAllTeachingUnitsAsync()
         {
-            throw new NotImplementedException();
+            return await _dbContext.TeachingUnits.CountAsync();
         }
 
         public Task<int> CountFeedbacksAsync(int teachingUnitId)
@@ -37,24 +38,26 @@ namespace FeedbackApp.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public Task CreateFeedback(int userId, int teachingUnitId, int stars, string? comment)
+        public async Task AddFeedbackAsync(Feedback feedback)
         {
-            throw new NotImplementedException();
+            await _dbContext.Feedbacks.AddAsync(feedback);
         }
 
-        public Task CreateTeachingUnit(int userId, string title, bool isPublic, string? subject, string? description, DateTime? date, DateTime? expiryDate, string? subscriptionKey)
+        public async Task AddTeachingUnitAsync(TeachingUnit teachingUnit)
         {
-            throw new NotImplementedException();
+            await _dbContext.TeachingUnits.AddAsync(teachingUnit);
         }
 
-        public Task DeleteFeedback(int feedbackId)
+        public async Task DeleteFeedback(int feedbackId)
         {
-            throw new NotImplementedException();
+            var feedback = await _dbContext.Feedbacks.FindAsync(feedbackId);
+            _dbContext.Feedbacks.Remove(feedback);
         }
 
-        public Task DeleteTeachingUnit(int teachingUnitId)
+        public async Task DeleteTeachingUnit(int teachingUnitId)
         {
-            throw new NotImplementedException();
+            var teachingUnit = await _dbContext.TeachingUnits.FindAsync(teachingUnitId);
+            _dbContext.TeachingUnits.Remove(teachingUnit);
         }
 
         public Task<List<Feedback>> GetAllFeedbacksByTeachingUnitId(int teachingUnitId)

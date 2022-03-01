@@ -91,12 +91,15 @@ namespace FeedbackApp.WebApi.Authentication
                         signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
 
+                var UserInDb = await _unitOfWork.UserRepository.GetByIdentityIdAsync(user.Id);
+
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expiration = token.ValidTo,
 
                     //Klartext für Entwicklungszwecke Xamarin!!!
+                    userId = UserInDb.Id,
                     identityId = user.Id,
                     role = userRoles.FirstOrDefault(),
                     username = user.UserName,

@@ -67,7 +67,7 @@ namespace FeedbackApp.WebApi.AccountManagement
         [HttpPost]
         [Route("modifierData")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> GetUserData([FromBody] ModifierUserDataModel model)
+        public async Task<IActionResult> ModifierUserData([FromBody] ModifierUserDataModel model)
         {
             User user = await _unitOfWork.UserRepository.GetByIdentityIdAsync(model.IdentityId);
 

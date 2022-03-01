@@ -14,6 +14,7 @@ namespace FeedbackApp.Persistence
         {
             _dbContext = dbContext;
             UserRepository = new UserRepository(dbContext);
+            FeedbackRepository = new FeedbackRepository(dbContext);
         }
 
         public IUserRepository UserRepository { get; }

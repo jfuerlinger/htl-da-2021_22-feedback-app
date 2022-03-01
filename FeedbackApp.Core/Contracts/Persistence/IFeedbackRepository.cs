@@ -14,16 +14,14 @@ namespace FeedbackApp.Core.Contracts.Persistence
         Task<int> CountTeachingUnitsAsync(int userId);
         Task<int> CountFeedbacksAsync(int teachingUnitId);
 
-        Task CreateTeachingUnit(int userId, string title, bool isPublic, 
-            string? subject, string? description, DateTime? date, 
-            DateTime? expiryDate, string? subscriptionKey);
+        Task AddTeachingUnitAsync(TeachingUnit teachingUnit);
 
         Task ModifyTeachingUnit(int teachingUnitId, string title, bool isPublic,
            string? subject, string? description, DateTime? date,
            DateTime? expiryDate, string? subscriptionKey);
 
         Task DeleteTeachingUnit(int teachingUnitId);
-        Task CreateFeedback(int userId, int teachingUnitId, int stars, string? comment);
+        Task AddFeedbackAsync(Feedback feedback);
         Task ModifyFeedback(int feedbackId, int stars, string? comment);
         Task DeleteFeedback(int feedbackId);
 

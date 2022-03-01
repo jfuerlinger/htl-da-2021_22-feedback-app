@@ -14,7 +14,7 @@ namespace FeedbackApp.Core.Model
         
         [Required]
         public int Stars { get; set; }
-        public string Comment { get; set; } = string.Empty;
+        public string? Comment { get; set; } = string.Empty;
 
         public int? UserId { get; set; }
         public User User { get; set; } = new User();
