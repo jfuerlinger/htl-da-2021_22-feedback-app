@@ -39,7 +39,7 @@
                                 <Frame BackgroundColor="Transparent" BorderColor="Black" Margin="0,15,0,0" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="20">
                                     <StackLayout Grid.Row="2" Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="100" Padding="0" Margin="5">
-                                            <Image Source="https://cdn-icons.flaticon.com/png/512/2549/premium/2549951.png?token=exp=1638198058~hmac=7dccd8f7d6af7f0932f7e869e5392688" Aspect="AspectFill" Margin="4"/>
+                                            <Image Source="https://cdn-icons-png.flaticon.com/512/124/124922.png" Aspect="AspectFill" Margin="4"/>
                                         </Frame>
                                         <Entry Text="" x:Name="EntryPassword" IsPassword="True" Placeholder="Password" TextColor="Black" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
                                     </StackLayout>
@@ -49,7 +49,6 @@
                             <StackLayout Padding="0" Margin="100,0">
                                 <Button Text="Anmelden" TextColor="White" BackgroundColor="Black" x:Name="ButtonAnmelden" Clicked="ButtonAnmelden_Clicked" CornerRadius="30"/>
                                 <Button Text="Registrieren" BackgroundColor="White" TextColor="Black" x:Name="ButtonRegistrierung" Clicked="ButtonRegistrierung_Clicked" CornerRadius="50"/>
-                                <Button Text="Anmeldung für Lehrer" BackgroundColor="White" TextColor="Black" x:Name="LehrerAnmeldung" Clicked="LehrerAnmeldung_Clicked"/>
                             </StackLayout>
                         </StackLayout>
                     </Frame>

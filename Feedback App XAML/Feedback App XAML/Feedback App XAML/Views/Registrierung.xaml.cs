@@ -19,7 +19,7 @@ namespace Feedback_App_XAML.Views
             InitializeComponent();
         }
 
-        private async void ButtonRegistrierung_Clicked(object sender, EventArgs e)
+        private async void SchulerReg_Clicked(object sender, EventArgs e)
         {
             if ((string.IsNullOrWhiteSpace(EntryUsername.Text)) ||
                 (string.IsNullOrWhiteSpace(EntryEmail.Text)) ||

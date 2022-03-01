@@ -9,13 +9,13 @@
                 <Label Text="Meine Daten" FontAttributes="Bold" Font="30" VerticalOptions="Center" HorizontalOptions="Center" Margin="20,40" TextColor="Black"/>
                 <Label Text="Vorname:" Font="20" VerticalOptions="Center" TextColor="Black"/>
                 <Label Text="Nachname:" Font="20" VerticalOptions="Center" TextColor="Black"/>
+                <Label Text="Username:" Font="20" VerticalOptions="Center" TextColor="Black"/>
                 <Label Text="Email:" Font="20" VerticalOptions="Center" TextColor="Black"/>
                 <Label Text="Schule:" Font="20" VerticalOptions="Center" TextColor="Black"/>
             </StackLayout>
 
             <StackLayout Padding="0" Margin="120,30">
-                <Button Text="Speichern" TextColor="White" BackgroundColor="Black" x:Name="ButtonSave" Clicked="ButtonSave_Clicked" CornerRadius="50"/>
-                <Button Text="Bearbeiten" BackgroundColor="White" TextColor="Black" x:Name="ButtonEdit" Clicked="ButtonEdit_Clicked" CornerRadius="50"/>
+                <Button Text="Bearbeiten" TextColor="White" BackgroundColor="Black" x:Name="ButtonSave" Clicked="ButtonEdit_Clicked" CornerRadius="50"/>
             </StackLayout>
 
         </StackLayout>

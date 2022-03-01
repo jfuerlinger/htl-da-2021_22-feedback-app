@@ -31,16 +31,6 @@ namespace Feedback_App_XAML.Views
 
             if (getLoginDetails is true)
             {
-                //try
-                //{
-                //    await SecureStorage.SetAsync("token", EntryPassword.Text);
-                //}
-                //catch (Exception ex)
-
-                //{
-
-                //}
-
                 await DisplayAlert("Success!", "Benutzer erfolgreich angemeldet.", "Okay");
                 await Navigation.PushAsync(new HomePage());
             }
@@ -48,16 +38,23 @@ namespace Feedback_App_XAML.Views
             {
                 await DisplayAlert("Error!", "Benutzer anmelden fehlgeschlagen! Bitte Eingaben überprüfen und erneut versuchen.", "Okay");
             }
+
+
+
+
+
+            //try
+            //{
+            //    await SecureStorage.SetAsync("token", EntryPassword.Text);
+            //}
+            //catch (Exception ex)
+            //{
+            //}
         }
 
         private async void ButtonRegistrierung_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new Registrierung());
-        }
-
-        private void LehrerAnmeldung_Clicked(object sender, EventArgs e)
-        {
-
         }
     }
 }

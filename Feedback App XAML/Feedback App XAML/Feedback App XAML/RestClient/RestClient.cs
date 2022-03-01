@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Newtonsoft.Json;
 using Feedback_App_XAML.Models;
-using Xamarin.Essentials;
 
 
 namespace Feedback_App_XAML.RestClient
@@ -35,8 +34,14 @@ namespace Feedback_App_XAML.RestClient
             string debugContentJson = await content.ReadAsStringAsync();
             var result = await client.PostAsync(LoginWebServiceUrl, content).ConfigureAwait(false);
 
+
+
             string responseString = await result.Content.ReadAsStringAsync();
-            TokenModel token = JsonConvert.DeserializeObject<TokenModel>(responseString);
+            var role = JsonConvert.DeserializeObject(responseString);
+
+            var myrole = responseString.IndexOf("username");
+
+
             return result.IsSuccessStatusCode;
         }
 

@@ -12,7 +12,8 @@ namespace Feedback_App_XAML.RestClient
     {
         //private const string MainWebServiceUrl = "https://localhost:5001/"; // LocalHost
         private const string MainWebServiceUrl = "https://10.0.2.2:5001"; // For ANDROID EMULATOR
-        private const string RegisterWebServiceUrl = MainWebServiceUrl + "/api/register";
+        private const string RegWebServiceUrl = MainWebServiceUrl + "/api/register";
+        private const string RegLehrerWebServiceUrl = MainWebServiceUrl + "/api/register-lehrer";
 
         public async Task<bool> checkRegister(string userName, string email, string password)
         {
@@ -24,15 +25,13 @@ namespace Feedback_App_XAML.RestClient
             #endif
 
             RegisterModel model = new RegisterModel() { Username = userName, Email = email, Password = password };
-
-
             bool Response = false;
             var client = new HttpClient(httpClientHandler);
 
             var json = JsonConvert.SerializeObject(model);
             HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             httpContent.Headers.ContentType=new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var response = client.PostAsync(RegisterWebServiceUrl, httpContent);
+            var response = client.PostAsync(RegWebServiceUrl, httpContent);
             var mystring = response.GetAwaiter().GetResult();
 
             if(response.Result.IsSuccessStatusCode)
@@ -40,21 +39,32 @@ namespace Feedback_App_XAML.RestClient
                 Response = true;
             }
             return Response;
+        }
 
+        public async Task<bool> checkRegisterLehrer(string userName, string email, string password)
+        {
+            HttpClientHandler httpClientHandler;
+            #if (DEBUG)
+            httpClientHandler = new HttpClientHandler { ServerCertificateCustomValidationCallback = (o, cert, chain, errors) => true };
+            #else
+                httpClientHandler = new HttpClientHandler(); "#endif using (var client = new HttpClient(httpHandler));
+            #endif
 
+            RegisterModel model = new RegisterModel() { Username = userName, Email = email, Password = password };
+            bool Response = false;
+            var client = new HttpClient(httpClientHandler);
 
-            //var content = new StringContent(json, Encoding.UTF8, "application/json");
-            //string debugContentJson = await content.ReadAsStringAsync();
-            //var result = await client.PostAsync(LoginWebServiceUrl, content).ConfigureAwait(false);
-            //return result.IsSuccessStatusCode;
+            var json = JsonConvert.SerializeObject(model);
+            HttpContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            var response = client.PostAsync(RegLehrerWebServiceUrl, httpContent);
+            var mystring = response.GetAwaiter().GetResult();
 
-            //var client = new HttpClient();
-            //client.BaseAddress = new Uri("localhost:8080");
-            //string jsonData = @"{""username"" : ""myusername"", ""password"" : ""mypassword""}"
-            //var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            //HttpResponseMessage response = await client.PostAsync("/foo/login", content);
-            //// this result string should be something like: "{"token":"rgh2ghgdsfds"}"
-            //var result = await response.Content.ReadAsStringAsync();
+            if (response.Result.IsSuccessStatusCode)
+            {
+                Response = true;
+            }
+            return Response;
         }
     }
 }

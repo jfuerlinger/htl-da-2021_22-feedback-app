@@ -25,7 +25,7 @@
                                 <Label Text="Bei FeedbackApp registrieren" TextColor="Black" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" FontSize="Large"/>
                             </StackLayout>
 
-                            <StackLayout Padding="0" Margin="20,50">
+                            <StackLayout Padding="0" Margin="20,20">
                                 <Frame BackgroundColor="Transparent" BorderColor="Black" Margin="0,15,0,0" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="20">
                                     <StackLayout Grid.Row="0" Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="100" Padding="0" Margin="5">
@@ -38,7 +38,7 @@
                                 <Frame BackgroundColor="Transparent" BorderColor="Black" Margin="0,15,0,0" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="20">
                                     <StackLayout Grid.Row="0" Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="100" Padding="0" Margin="5">
-                                            <Image Source="https://cdn-icons.flaticon.com/png/512/542/premium/542638.png?token=exp=1638198802~hmac=3a57222af066a5b64d64c64e0e85fccf" Aspect="AspectFill" Margin="6"/>
+                                            <Image Source="https://cdn-icons.flaticon.com/png/512/542/premium/542689.png?token=exp=1644850845~hmac=39966e9ef3aeff375bbd029561e0a03e" Aspect="AspectFill" Margin="6"/>
                                         </Frame>
                                         <Entry Text="" x:Name="EntryEmail" Placeholder="Email" TextColor="Black" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
                                     </StackLayout>
@@ -47,15 +47,15 @@
                                 <Frame BackgroundColor="Transparent" BorderColor="Black" Margin="0,15,0,0" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="20">
                                     <StackLayout Grid.Row="2" Orientation="Horizontal">
                                         <Frame BackgroundColor="White" HeightRequest="40" WidthRequest="40" CornerRadius="100" Padding="0" Margin="5">
-                                            <Image Source="https://cdn-icons.flaticon.com/png/512/2549/premium/2549951.png?token=exp=1638198058~hmac=7dccd8f7d6af7f0932f7e869e5392688" Aspect="AspectFill" Margin="4"/>
+                                            <Image Source="https://cdn-icons-png.flaticon.com/512/124/124922.png" Aspect="AspectFill" Margin="4"/>
                                         </Frame>
                                         <Entry Text="" x:Name="EntryPassword" IsPassword="True" Placeholder="Password" TextColor="Black" FontAttributes="None" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
                                     </StackLayout>
                                 </Frame>
                             </StackLayout>
 
-                            <StackLayout Padding="0" Margin="100,0">
-                                <Button Text="Registrieren" BackgroundColor="Black" TextColor="White" x:Name="ButtonRegistrierung" Clicked="ButtonRegistrierung_Clicked" CornerRadius="50"/>
+                            <StackLayout Padding="0" Margin="50,0">
+                                <Button Text="Konto erstellen" BackgroundColor="Black" TextColor="White" x:Name="SchulerReg" Clicked="SchulerReg_Clicked" CornerRadius="30"/>
                             </StackLayout>
                         </StackLayout>
                     </Frame>
