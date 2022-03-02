@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FeedbackApp.WebApi.Feedback
@@ -58,6 +59,93 @@ namespace FeedbackApp.WebApi.Feedback
             await _unitOfWork.SaveChangesAsync();
 
             return Ok();
+        }
+
+        [HttpPost]
+        [Route("createFeedback")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> CreateFeedback([FromBody] FeedbackModel model)
+        {
+            User user = await _unitOfWork.UserRepository.GetByIdAsync(model.UserId);
+            TeachingUnit teachingUnit = await _unitOfWork.FeedbackRepository.GetTeachingUnitById(model.TeachingUnitId);
+
+            Core.Model.Feedback feedback = new Core.Model.Feedback() 
+            { User = user, UserId = user.Id, TeachingUnit = teachingUnit, 
+                TeachingUnitId = teachingUnit.Id, Stars = model.Stars, Comment = model.Comment};
+
+            await _unitOfWork.FeedbackRepository.AddFeedbackAsync(feedback);
+            await _unitOfWork.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("getUserTeachingUnits")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> GetUserTeachingUnits(int id)
+        {
+            List<TeachingUnit> teachingUnits = await _unitOfWork.FeedbackRepository.GetAllTeachingUnitsByUserId(id);
+            Dictionary <int, string> teachingUnitsOut = new Dictionary<int, string>();
+
+            foreach (var teachingUnit in teachingUnits)
+            {
+                teachingUnitsOut.Add(teachingUnit.Id, teachingUnit.Title);
+            }
+
+            return Ok(new { teachingUnits = teachingUnitsOut });
+        }
+
+        [HttpGet]
+        [Route("getTeachingUnit")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> GetTeachingUnit(int id)
+        {
+            TeachingUnit teachingUnit = await _unitOfWork.FeedbackRepository.GetTeachingUnitById(id);
+
+            return Ok(new 
+            { 
+                id = teachingUnit.Id,
+                userId = teachingUnit.UserId,
+                isPublic = teachingUnit.IsPublic,
+                title = teachingUnit.Title,
+                subject = teachingUnit.Subject,
+                description = teachingUnit.Description,
+                date = teachingUnit.Date.ToString(),
+                expiryDate = teachingUnit.ExpiryDate.ToString(),
+                subscriptionKey = teachingUnit.SubscriptionKey
+            });
+        }
+
+        [HttpGet]
+        [Route("countUserTeachingUnits")]
+        public async Task<IActionResult> CountUserTeachingUnits(int id)
+        {
+            int teachingUcount = await _unitOfWork.FeedbackRepository.CountTeachingUnitsAsync(id);
+            return Ok(new { count = teachingUcount });
+        }
+
+        [HttpGet]
+        [Route("countFeedbacks")]
+        public async Task<IActionResult> CountFeedbacks(int id)
+        {
+            int feedbackCount = await _unitOfWork.FeedbackRepository.CountFeedbacksAsync(id);
+            return Ok(new { count = feedbackCount });
+        }
+
+        [HttpGet]
+        [Route("getFeedbacks")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> GetFeedbacks(int id)
+        {
+            List<Core.Model.Feedback> feedbacks = await _unitOfWork.FeedbackRepository.GetAllFeedbacksByTeachingUnitId(id);
+            Dictionary<string, string> feedbackDict = new Dictionary<string, string>();
+
+            foreach (var feedback in feedbacks)
+            {
+                feedbackDict.Add(feedback.UserId.ToString(), $"{feedback.Stars} Stars; {feedback.Comment}"); // To-Do: display UserName
+            }
+
+            return Ok(feedbackDict);
         }
     }
 }

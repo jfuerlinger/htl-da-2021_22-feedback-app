@@ -28,14 +28,14 @@ namespace FeedbackApp.Persistence.Repositories
             return await _dbContext.TeachingUnits.CountAsync();
         }
 
-        public Task<int> CountFeedbacksAsync(int teachingUnitId)
+        public async Task<int> CountFeedbacksAsync(int teachingUnitId)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Feedbacks.Where(x => x.TeachingUnitId == teachingUnitId).CountAsync();
         }
 
-        public Task<int> CountTeachingUnitsAsync(int userId)
+        public async Task<int> CountTeachingUnitsAsync(int userId)
         {
-            throw new NotImplementedException();
+            return await _dbContext.TeachingUnits.Where(x => x.UserId == userId).CountAsync();
         }
 
         public async Task AddFeedbackAsync(Feedback feedback)
@@ -60,24 +60,24 @@ namespace FeedbackApp.Persistence.Repositories
             _dbContext.TeachingUnits.Remove(teachingUnit);
         }
 
-        public Task<List<Feedback>> GetAllFeedbacksByTeachingUnitId(int teachingUnitId)
+        public async Task<List<Feedback>> GetAllFeedbacksByTeachingUnitId(int teachingUnitId)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Feedbacks.Where(x => x.TeachingUnitId == teachingUnitId).ToListAsync();
         }
 
-        public Task<List<TeachingUnit>> GetAllTeachingUnitsByUserId(int userId)
+        public async Task<List<TeachingUnit>> GetAllTeachingUnitsByUserId(int userId)
         {
-            throw new NotImplementedException();
+            return await _dbContext.TeachingUnits.Where(x => x.UserId == userId).ToListAsync();
         }
 
-        public Task<Feedback> GetFeedbackById(int feedackId)
+        public async Task<Feedback> GetFeedbackById(int feedbackId)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Feedbacks.Where(x => x.Id == feedbackId).FirstOrDefaultAsync();
         }
 
-        public Task<TeachingUnit> GetTeachingUnitById(int teachingUnit)
+        public async Task<TeachingUnit> GetTeachingUnitById(int teachingUnit)
         {
-            throw new NotImplementedException();
+            return await _dbContext.TeachingUnits.FindAsync(teachingUnit);
         }
 
         public Task ModifyFeedback(int feedbackId, int stars, string? comment)
