@@ -1,24 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Feedback_App_XAML"  
              x:Class="Feedback_App_XAML.Views.MyAccountPage">
     <ContentPage.Content>
         <StackLayout Margin="20,10,20,10">
-
-            <StackLayout Margin="20,40">
-                <Label Text="Meine Daten" FontAttributes="Bold" Font="30" VerticalOptions="Center" HorizontalOptions="Center" Margin="20,40" TextColor="Black"/>
-                <Label Text="Vorname:" Font="20" VerticalOptions="Center" TextColor="Black"/>
-                <Label Text="Nachname:" Font="20" VerticalOptions="Center" TextColor="Black"/>
-                <Label Text="Username:" Font="20" VerticalOptions="Center" TextColor="Black"/>
-                <Label Text="Email:" Font="20" VerticalOptions="Center" TextColor="Black"/>
-                <Label Text="Schule:" Font="20" VerticalOptions="Center" TextColor="Black"/>
+            <StackLayout Padding="0" Margin="0,40,0,0">
+                <Label Text="Welcome To AccountPage!" HorizontalOptions="Center" FontSize="Title" TextColor="Black"/>
+                
+                <Grid ColumnDefinitions="1*, 1*" RowDefinitions="Auto, Auto" Margin="20,30,20,0">
+                    <Button Grid.Row="0" Grid.Column="0" x:Name="btnPopUpName" Text="Name einfügen" Clicked="btnPopUpName_Clicked" TextColor="Black" CornerRadius="25"/>
+                    <Button Grid.Row="0" Grid.Column="1" x:Name="btnPopUpSchool" Text="Schule einfügen" Clicked="btnPopUpSchool_Clicked" TextColor="Black" IsEnabled="False" CornerRadius="25"/>
+                </Grid>
+            </StackLayout>
+            
+            <StackLayout Padding="0" Margin="0,40,10,10">
+                <Label Text="Meine Daten:" TextColor="Black" FontSize="20" HorizontalTextAlignment="Center"></Label>
+                <ListView x:Name="MainListView" HasUnevenRows="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding .}" TextColor="Black" FontSize="Medium" Padding="10" Margin="0,0,0,0"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </StackLayout>
 
-            <StackLayout Padding="0" Margin="120,30">
-                <Button Text="Bearbeiten" TextColor="White" BackgroundColor="Black" x:Name="ButtonSave" Clicked="ButtonEdit_Clicked" CornerRadius="50"/>
+            <StackLayout Padding="0" Margin="10,0,10,10">
+                <Grid ColumnDefinitions="auto, auto" RowDefinitions="Auto, Auto" Margin="20,0,20,0">
+                    <Button Grid.Row="0" Grid.Column="0" x:Name="btnPopUpEmail" Text="Email ändern" Clicked="btnPopUpEmail_Clicked" TextColor="Black" CornerRadius="25" IsEnabled="false"/>
+                    <Button Grid.Row="0" Grid.Column="1" x:Name="btnPopUpPassword" Text="Password ändern" Clicked="btnPopUpPassword_Clicked" TextColor="Black" CornerRadius="25" IsEnabled="false"/>
+                </Grid>
+                <Button Grid.Row="1" x:Name="btnDeleteAcc" Text="Konto löschen" Clicked="btnDeleteAcc_Clicked" TextColor="Red" CornerRadius="25" Margin="40,0,40,0"/>
             </StackLayout>
-
         </StackLayout>
-
     </ContentPage.Content>
 </ContentPage>
