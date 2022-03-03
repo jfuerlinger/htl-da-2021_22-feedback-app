@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Feedback_App_XAML.Models
 {
-    internal class RegisterModel
+    public class RegisterModel
     {
         public string Username { get; set; }
         public string Email { get; set; }

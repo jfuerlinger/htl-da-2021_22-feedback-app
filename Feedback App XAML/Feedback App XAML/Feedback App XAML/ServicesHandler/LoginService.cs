@@ -18,5 +18,11 @@ namespace Feedback_App_XAML.ServicesHandler
 
             return check;
         }
+        public async Task<string> GetData(string userName, string password)
+        {
+            var check = await _restClient.GetData(userName, password);
+
+            return check;
+        }
     }
 }

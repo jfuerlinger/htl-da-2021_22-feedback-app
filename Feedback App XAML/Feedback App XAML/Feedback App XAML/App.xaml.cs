@@ -2,6 +2,7 @@
 using Xamarin.Forms;
 using Feedback_App_XAML.Views;
 using Xamarin.Forms.Xaml;
+using Amazon.Util.Internal.PlatformServices;
 
 namespace Feedback_App_XAML
 {

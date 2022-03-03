@@ -12,10 +12,8 @@ namespace Feedback_App_XAML.RestClient
 {
     public class RestClient<T>
     {
-        //private const string MainWebServiceUrl = "https://localhost:5001/"; // LOCALHOST
         private const string MainWebServiceUrl = "https://10.0.2.2:5001"; // FOR ANDROID EMULATOR
         private const string LoginWebServiceUrl = MainWebServiceUrl + "/api/login";
-
 
         public async Task<bool> checkLogin(string userName, string password)
         {
@@ -33,20 +31,10 @@ namespace Feedback_App_XAML.RestClient
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             string debugContentJson = await content.ReadAsStringAsync();
             var result = await client.PostAsync(LoginWebServiceUrl, content).ConfigureAwait(false);
-
-
-
-            string responseString = await result.Content.ReadAsStringAsync();
-            var role = JsonConvert.DeserializeObject(responseString);
-
-            var myrole = responseString.IndexOf("username");
-
-
             return result.IsSuccessStatusCode;
         }
 
-
-        public async Task Login(string userName, string password)
+        public async Task<string> GetData(string userName, string password)
         {
             LoginModel model = new LoginModel() { Username = userName, Password = password };
 
@@ -64,7 +52,8 @@ namespace Feedback_App_XAML.RestClient
             var result = await client.PostAsync(LoginWebServiceUrl, content).ConfigureAwait(false);
 
             string responseString = await result.Content.ReadAsStringAsync();
-            TokenModel token = JsonConvert.DeserializeObject<TokenModel>(responseString);
+            var text = JsonConvert.DeserializeObject(responseString);
+            return responseString;
         }
     }
 }
