@@ -153,7 +153,6 @@ namespace FeedbackApp.WebApi.Feedback
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> DeleteTeachingUnit(int id)
         {
-            await _unitOfWork.FeedbackRepository.DeleteFeedbackRange(id);
             await _unitOfWork.FeedbackRepository.DeleteTeachingUnit(id);
             await _unitOfWork.SaveChangesAsync();
             return Ok();
@@ -175,6 +174,27 @@ namespace FeedbackApp.WebApi.Feedback
         {
             List<TeachingUnit> teachingUnits = await _unitOfWork.FeedbackRepository.GetAllPublicTeachingUnits();
             return Ok(teachingUnits); // To-do: Daten einschränken
+        }
+
+        [HttpPost]
+        [Route("modifyFeedback")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> ModifyFeedback([FromBody] ModifyFeedbackModel model)
+        {
+            await _unitOfWork.FeedbackRepository.ModifyFeedback(model.FeedbackId, model.Stars, model.Comment);
+            await _unitOfWork.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("modifyTU")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> ModifyTeachingUnit([FromBody] ModifyTuModel model)
+        {
+            await _unitOfWork.FeedbackRepository.ModifyTeachingUnit(model.TeachingUnitId, model.Title, model.IsPublic, 
+                model.Subject, model.Description, model.Date, model.ExpiryDate, model.SubscriptionKey);
+            await _unitOfWork.SaveChangesAsync();
+            return Ok();
         }
     }
 }

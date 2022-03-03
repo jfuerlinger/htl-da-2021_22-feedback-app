@@ -56,6 +56,7 @@ namespace FeedbackApp.Persistence.Repositories
 
         public async Task DeleteTeachingUnit(int teachingUnitId)
         {
+            await DeleteFeedbackRange(teachingUnitId);
             var teachingUnit = await _dbContext.TeachingUnits.FindAsync(teachingUnitId);
             _dbContext.TeachingUnits.Remove(teachingUnit);
         }
@@ -80,14 +81,29 @@ namespace FeedbackApp.Persistence.Repositories
             return await _dbContext.TeachingUnits.FindAsync(teachingUnit);
         }
 
-        public Task ModifyFeedback(int feedbackId, int stars, string? comment)
+        public async Task ModifyFeedback(int feedbackId, int stars, string? comment)
         {
-            throw new NotImplementedException();
+            Feedback feedback = await GetFeedbackById(feedbackId);
+
+            feedback.Stars = stars;
+            feedback.Comment = comment;
+            
+            _dbContext.Feedbacks.Update(feedback);
         }
 
-        public Task ModifyTeachingUnit(int teachingUnitId, string title, bool isPublic, string? subject, string? description, DateTime? date, DateTime? expiryDate, string? subscriptionKey)
+        public async Task ModifyTeachingUnit(int teachingUnitId, string title, bool isPublic, string? subject, string? description, DateTime? date, DateTime? expiryDate, string? subscriptionKey)
         {
-            throw new NotImplementedException();
+            TeachingUnit teachingUnit = await GetTeachingUnitById(teachingUnitId);
+
+            teachingUnit.Title = title;
+            teachingUnit.IsPublic = isPublic;
+            teachingUnit.Subject = subject;
+            teachingUnit.Description = description;
+            teachingUnit.Date = date;
+            teachingUnit.ExpiryDate = expiryDate;
+            teachingUnit.SubscriptionKey = subscriptionKey;
+
+            _dbContext.TeachingUnits.Update(teachingUnit);
         }
 
         public async Task DeleteFeedbackRange(int teachingUnitId)
