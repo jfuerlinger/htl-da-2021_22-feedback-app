@@ -7,6 +7,7 @@ namespace FeedbackApp.Core.Contracts.Persistence
     {
         IUserRepository UserRepository { get; }
         IFeedbackRepository FeedbackRepository { get; }
+        IStatisticRepository StatisticRepository { get; }
 
         Task<int> SaveChangesAsync();
         Task DeleteDatabaseAsync();

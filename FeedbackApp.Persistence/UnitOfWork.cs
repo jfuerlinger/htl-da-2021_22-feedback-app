@@ -15,11 +15,14 @@ namespace FeedbackApp.Persistence
             _dbContext = dbContext;
             UserRepository = new UserRepository(dbContext);
             FeedbackRepository = new FeedbackRepository(dbContext);
+            StatisticRepository = new StatisticRepository(dbContext);
         }
 
         public IUserRepository UserRepository { get; }
 
         public IFeedbackRepository FeedbackRepository { get; }
+
+        public IStatisticRepository StatisticRepository { get; }
 
         public async Task CreateDatabaseAsync()
         {

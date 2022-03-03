@@ -25,7 +25,8 @@ namespace FeedbackApp.WebApi.Feedback
         }
 
         #region Messages
-
+        private readonly string msgTeachingUnitsNotFound = "Keine Lehreinheit(en) gefunden.";
+        private readonly string msgWrongStarRating = "Eine Bewertung kann nur zwischen 1-5 Sternen sein";
         #endregion
 
         /// <summary>
@@ -79,10 +80,12 @@ namespace FeedbackApp.WebApi.Feedback
         }
 
         /// <summary>
-        /// get all teaching units from an user (require token)
+        /// get all teaching units from an user (token)
         /// </summary>
         /// <param name="id"></param>
         /// <returns>list of teaching units</returns>
+        /// <response code="200">Teaching Units successfully sent</response>
+        /// <response code="500">Something went wrong</response>
         [HttpGet]
         [Route("getUserTU")]
         [Authorize(AuthenticationSchemes = "Bearer")]
@@ -100,7 +103,7 @@ namespace FeedbackApp.WebApi.Feedback
         }
 
         /// <summary>
-        /// get a teaching unit by id (require token)
+        /// get a teaching unit by id (token)
         /// </summary>
         /// <param name="id"></param>
         /// <returns>teaching unit</returns>
@@ -126,7 +129,7 @@ namespace FeedbackApp.WebApi.Feedback
         }
 
         /// <summary>
-        /// get all feedbacks from a teaching unit (require token)
+        /// get all feedbacks from a teaching unit (token)
         /// </summary>
         /// <param name="id"></param>
         /// <returns>list of feedbacks</returns>
@@ -159,7 +162,7 @@ namespace FeedbackApp.WebApi.Feedback
         }
 
         /// <summary>
-        /// create a teaching unit (require token)
+        /// create a teaching unit (token)
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -184,15 +187,21 @@ namespace FeedbackApp.WebApi.Feedback
         }
 
         /// <summary>
-        /// create a feedback for a teaching unit (require token)
+        /// create a feedback for a teaching unit (token)
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        /// <response code="200">Feedback successfully created</response>
+        /// <response code="400">Incorrect star rating</response>
+        /// 
         [HttpPost]
         [Route("createFeedback")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> CreateFeedback([FromBody] FeedbackModel model)
         {
+            if (model.Stars < 1 || model.Stars > 5)
+                return BadRequest(new Response { Status = "Incorrect Input", Message = msgWrongStarRating});
+            
             User user = await _unitOfWork.UserRepository.GetByIdAsync(model.UserId);
             TeachingUnit teachingUnit = await _unitOfWork.FeedbackRepository.GetTeachingUnitById(model.TeachingUnitId);
 
@@ -207,7 +216,7 @@ namespace FeedbackApp.WebApi.Feedback
         }
 
         /// <summary>
-        /// modify a teaching unit (require token)
+        /// modify a teaching unit (token)
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -223,7 +232,7 @@ namespace FeedbackApp.WebApi.Feedback
         }
 
         /// <summary>
-        /// modify a feedback (require token)
+        /// modify a feedback (token)
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -232,13 +241,16 @@ namespace FeedbackApp.WebApi.Feedback
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> ModifyFeedback([FromBody] ModifyFeedbackModel model)
         {
+            if (model.Stars < 1 || model.Stars > 5)
+                return BadRequest(new Response { Status = "Incorrect Input", Message = msgWrongStarRating });
+
             await _unitOfWork.FeedbackRepository.ModifyFeedback(model.FeedbackId, model.Stars, model.Comment);
             await _unitOfWork.SaveChangesAsync();
             return Ok();
         }
 
         /// <summary>
-        /// delete a teaching unit (require token)
+        /// delete a teaching unit (token)
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -253,7 +265,7 @@ namespace FeedbackApp.WebApi.Feedback
         }
 
         /// <summary>
-        /// delete a feedback (require token)
+        /// delete a feedback (token)
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
