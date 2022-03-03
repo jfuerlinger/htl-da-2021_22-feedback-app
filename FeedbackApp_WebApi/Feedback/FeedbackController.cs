@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace FeedbackApp.WebApi.Feedback
 {
+    /// <summary>
+    /// Manage Teaching Units and Feedbacks
+    /// </summary>
     [Route("api/feedback")]
     [ApiController]
     public class FeedbackController : ControllerBase
@@ -25,14 +28,22 @@ namespace FeedbackApp.WebApi.Feedback
 
         #endregion
 
+        /// <summary>
+        /// get the count of all teaching units
+        /// </summary>
+        /// <returns>all teaching units count</returns>
         [HttpGet]
-        [Route("getAllTeachingUnitsCount")]
+        [Route("getAllTUCount")]
         public async Task<IActionResult> GetAllTeachingUnitsCount()
         {
             int teachingUnitscount = await _unitOfWork.FeedbackRepository.CountAllTeachingUnitsAsync();
             return Ok(new {count = teachingUnitscount});
         }
 
+        /// <summary>
+        /// get the count of all feedbacks
+        /// </summary>
+        /// <returns>all feedbacks count</returns>
         [HttpGet]
         [Route("getAllFeedbacksCount")]
         public async Task<IActionResult> GetAllFeedbacksCount()
@@ -41,8 +52,119 @@ namespace FeedbackApp.WebApi.Feedback
             return Ok(new {count = feedbacksCount});
         }
 
+        /// <summary>
+        /// get the user teaching units count
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>user teaching units count</returns>
+        [HttpGet]
+        [Route("countUserTU")]
+        public async Task<IActionResult> CountUserTeachingUnits(int id)
+        {
+            int teachingUcount = await _unitOfWork.FeedbackRepository.CountTeachingUnitsAsync(id);
+            return Ok(new { count = teachingUcount });
+        }
+
+        /// <summary>
+        /// get the count of all feedbacks in a teaching unit
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>count feedbacks from teaching unit</returns>
+        [HttpGet]
+        [Route("countFeedbacksTU")]
+        public async Task<IActionResult> CountFeedbacks(int id)
+        {
+            int feedbackCount = await _unitOfWork.FeedbackRepository.CountFeedbacksAsync(id);
+            return Ok(new { count = feedbackCount });
+        }
+
+        /// <summary>
+        /// get all teaching units from an user (require token)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>list of teaching units</returns>
+        [HttpGet]
+        [Route("getUserTU")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> GetUserTeachingUnits(int id)
+        {
+            List<TeachingUnit> teachingUnits = await _unitOfWork.FeedbackRepository.GetAllTeachingUnitsByUserId(id);
+            Dictionary<int, string> teachingUnitsOut = new Dictionary<int, string>();
+
+            foreach (var teachingUnit in teachingUnits)
+            {
+                teachingUnitsOut.Add(teachingUnit.Id, teachingUnit.Title);
+            }
+
+            return Ok(new { teachingUnits = teachingUnitsOut });
+        }
+
+        /// <summary>
+        /// get a teaching unit by id (require token)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>teaching unit</returns>
+        [HttpGet]
+        [Route("getTU")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> GetTeachingUnit(int id)
+        {
+            TeachingUnit teachingUnit = await _unitOfWork.FeedbackRepository.GetTeachingUnitById(id);
+
+            return Ok(new
+            {
+                id = teachingUnit.Id,
+                userId = teachingUnit.UserId,
+                isPublic = teachingUnit.IsPublic,
+                title = teachingUnit.Title,
+                subject = teachingUnit.Subject,
+                description = teachingUnit.Description,
+                date = teachingUnit.Date.ToString(),
+                expiryDate = teachingUnit.ExpiryDate.ToString(),
+                subscriptionKey = teachingUnit.SubscriptionKey
+            });
+        }
+
+        /// <summary>
+        /// get all feedbacks from a teaching unit (require token)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>list of feedbacks</returns>
+        [HttpGet]
+        [Route("getFeedbacks")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> GetFeedbacks(int id)
+        {
+            List<Core.Model.Feedback> feedbacks = await _unitOfWork.FeedbackRepository.GetAllFeedbacksByTeachingUnitId(id);
+            Dictionary<string, string> feedbackDict = new Dictionary<string, string>();
+
+            foreach (var feedback in feedbacks)
+            {
+                feedbackDict.Add(feedback.Id.ToString(), $"{feedback.Stars} Stars; {feedback.Comment}"); // To-Do: display UserName
+            }
+
+            return Ok(feedbackDict);
+        }
+
+        /// <summary>
+        /// get all public teaching units
+        /// </summary>
+        /// <returns>list of public teaching units</returns>
+        [HttpGet]
+        [Route("getAllPublicTU")]
+        public async Task<IActionResult> GetAllPublicTeachingUnits()
+        {
+            List<TeachingUnit> teachingUnits = await _unitOfWork.FeedbackRepository.GetAllPublicTeachingUnits();
+            return Ok(teachingUnits); // To-do: Daten einschränken
+        }
+
+        /// <summary>
+        /// create a teaching unit (require token)
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
-        [Route("createTeachingUnit")]
+        [Route("createTU")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> CreateTeachingUnit([FromBody] TeachingUnitModel model)
         {
@@ -61,6 +183,11 @@ namespace FeedbackApp.WebApi.Feedback
             return Ok();
         }
 
+        /// <summary>
+        /// create a feedback for a teaching unit (require token)
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("createFeedback")]
         [Authorize(AuthenticationSchemes = "Bearer")]
@@ -79,103 +206,27 @@ namespace FeedbackApp.WebApi.Feedback
             return Ok();
         }
 
-        [HttpGet]
-        [Route("getUserTeachingUnits")]
+        /// <summary>
+        /// modify a teaching unit (require token)
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("modifyTU")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> GetUserTeachingUnits(int id)
+        public async Task<IActionResult> ModifyTeachingUnit([FromBody] ModifyTuModel model)
         {
-            List<TeachingUnit> teachingUnits = await _unitOfWork.FeedbackRepository.GetAllTeachingUnitsByUserId(id);
-            Dictionary <int, string> teachingUnitsOut = new Dictionary<int, string>();
-
-            foreach (var teachingUnit in teachingUnits)
-            {
-                teachingUnitsOut.Add(teachingUnit.Id, teachingUnit.Title);
-            }
-
-            return Ok(new { teachingUnits = teachingUnitsOut });
-        }
-
-        [HttpGet]
-        [Route("getTeachingUnit")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> GetTeachingUnit(int id)
-        {
-            TeachingUnit teachingUnit = await _unitOfWork.FeedbackRepository.GetTeachingUnitById(id);
-
-            return Ok(new 
-            { 
-                id = teachingUnit.Id,
-                userId = teachingUnit.UserId,
-                isPublic = teachingUnit.IsPublic,
-                title = teachingUnit.Title,
-                subject = teachingUnit.Subject,
-                description = teachingUnit.Description,
-                date = teachingUnit.Date.ToString(),
-                expiryDate = teachingUnit.ExpiryDate.ToString(),
-                subscriptionKey = teachingUnit.SubscriptionKey
-            });
-        }
-
-        [HttpGet]
-        [Route("countUserTeachingUnits")]
-        public async Task<IActionResult> CountUserTeachingUnits(int id)
-        {
-            int teachingUcount = await _unitOfWork.FeedbackRepository.CountTeachingUnitsAsync(id);
-            return Ok(new { count = teachingUcount });
-        }
-
-        [HttpGet]
-        [Route("countFeedbacks")]
-        public async Task<IActionResult> CountFeedbacks(int id)
-        {
-            int feedbackCount = await _unitOfWork.FeedbackRepository.CountFeedbacksAsync(id);
-            return Ok(new { count = feedbackCount });
-        }
-
-        [HttpGet]
-        [Route("getFeedbacks")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> GetFeedbacks(int id)
-        {
-            List<Core.Model.Feedback> feedbacks = await _unitOfWork.FeedbackRepository.GetAllFeedbacksByTeachingUnitId(id);
-            Dictionary<string, string> feedbackDict = new Dictionary<string, string>();
-
-            foreach (var feedback in feedbacks)
-            {
-                feedbackDict.Add(feedback.Id.ToString(), $"{feedback.Stars} Stars; {feedback.Comment}"); // To-Do: display UserName
-            }
-
-            return Ok(feedbackDict);
-        }
-
-        [HttpDelete]
-        [Route("deleteTeachingUnit")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> DeleteTeachingUnit(int id)
-        {
-            await _unitOfWork.FeedbackRepository.DeleteTeachingUnit(id);
+            await _unitOfWork.FeedbackRepository.ModifyTeachingUnit(model.TeachingUnitId, model.Title, model.IsPublic,
+                model.Subject, model.Description, model.Date, model.ExpiryDate, model.SubscriptionKey);
             await _unitOfWork.SaveChangesAsync();
             return Ok();
         }
 
-        [HttpDelete]
-        [Route("deleteFeedback")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> DeleteFeedback(int id)
-        {
-            await _unitOfWork.FeedbackRepository.DeleteFeedback(id);
-            await _unitOfWork.SaveChangesAsync();
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("getAllPublicTU")]
-        public async Task<IActionResult> GetAllPublicTeachingUnits()
-        {
-            List<TeachingUnit> teachingUnits = await _unitOfWork.FeedbackRepository.GetAllPublicTeachingUnits();
-            return Ok(teachingUnits); // To-do: Daten einschränken
-        }
-
+        /// <summary>
+        /// modify a feedback (require token)
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("modifyFeedback")]
         [Authorize(AuthenticationSchemes = "Bearer")]
@@ -186,15 +237,38 @@ namespace FeedbackApp.WebApi.Feedback
             return Ok();
         }
 
-        [HttpPost]
-        [Route("modifyTU")]
+        /// <summary>
+        /// delete a teaching unit (require token)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("deleteTU")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        public async Task<IActionResult> ModifyTeachingUnit([FromBody] ModifyTuModel model)
+        public async Task<IActionResult> DeleteTeachingUnit(int id)
         {
-            await _unitOfWork.FeedbackRepository.ModifyTeachingUnit(model.TeachingUnitId, model.Title, model.IsPublic, 
-                model.Subject, model.Description, model.Date, model.ExpiryDate, model.SubscriptionKey);
+            await _unitOfWork.FeedbackRepository.DeleteTeachingUnit(id);
             await _unitOfWork.SaveChangesAsync();
             return Ok();
         }
+
+        /// <summary>
+        /// delete a feedback (require token)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("deleteFeedback")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> DeleteFeedback(int id)
+        {
+            await _unitOfWork.FeedbackRepository.DeleteFeedback(id);
+            await _unitOfWork.SaveChangesAsync();
+            return Ok();
+        }
+
+        
+
+        
     }
 }
