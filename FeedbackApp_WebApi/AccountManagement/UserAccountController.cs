@@ -27,7 +27,7 @@ namespace FeedbackApp.WebApi.AccountManagement
         #endregion
 
         /// <summary>
-        /// get the additional user data
+        /// get the additional user data  (require token)
         /// </summary>
         /// <param name="model"></param>
         /// <returns>additional user data (firstname, lastname, birthdate, school)</returns>
@@ -56,7 +56,7 @@ namespace FeedbackApp.WebApi.AccountManagement
         }
 
         /// <summary>
-        /// modify the additional user data
+        /// modify the additional user data  (require token)
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>

@@ -238,7 +238,7 @@ namespace FeedbackApp.WebApi.Authentication
         }
 
         /// <summary>
-        /// deletes a student or teacher account
+        /// deletes a student or teacher account  (require token)
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -323,7 +323,7 @@ namespace FeedbackApp.WebApi.Authentication
         }
 
         /// <summary>
-        /// change the e-mail adress of a student or teacher 
+        /// change the e-mail adress of a student or teacher (require token)
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
