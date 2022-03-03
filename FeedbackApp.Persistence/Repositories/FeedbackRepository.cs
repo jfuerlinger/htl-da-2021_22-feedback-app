@@ -89,5 +89,11 @@ namespace FeedbackApp.Persistence.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public async Task DeleteFeedbackRange(int teachingUnitId)
+        {
+            List<Feedback> feedbacks = await GetAllFeedbacksByTeachingUnitId(teachingUnitId);
+            _dbContext.Feedbacks.RemoveRange(feedbacks);
+        }
     }
 }

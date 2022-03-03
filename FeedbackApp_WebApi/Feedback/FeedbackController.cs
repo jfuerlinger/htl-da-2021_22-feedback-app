@@ -142,10 +142,31 @@ namespace FeedbackApp.WebApi.Feedback
 
             foreach (var feedback in feedbacks)
             {
-                feedbackDict.Add(feedback.UserId.ToString(), $"{feedback.Stars} Stars; {feedback.Comment}"); // To-Do: display UserName
+                feedbackDict.Add(feedback.Id.ToString(), $"{feedback.Stars} Stars; {feedback.Comment}"); // To-Do: display UserName
             }
 
             return Ok(feedbackDict);
+        }
+
+        [HttpDelete]
+        [Route("deleteTeachingUnit")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> DeleteTeachingUnit(int id)
+        {
+            await _unitOfWork.FeedbackRepository.DeleteFeedbackRange(id);
+            await _unitOfWork.FeedbackRepository.DeleteTeachingUnit(id);
+            await _unitOfWork.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("deleteFeedback")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> DeleteFeedback(int id)
+        {
+            await _unitOfWork.FeedbackRepository.DeleteFeedback(id);
+            await _unitOfWork.SaveChangesAsync();
+            return Ok();
         }
     }
 }

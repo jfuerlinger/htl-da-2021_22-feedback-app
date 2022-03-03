@@ -24,6 +24,7 @@ namespace FeedbackApp.Core.Contracts.Persistence
         Task AddFeedbackAsync(Feedback feedback);
         Task ModifyFeedback(int feedbackId, int stars, string? comment);
         Task DeleteFeedback(int feedbackId);
+        Task DeleteFeedbackRange(int teachingUnitId);
 
         Task<List<TeachingUnit>> GetAllTeachingUnitsByUserId(int userId);
         Task<List<Feedback>> GetAllFeedbacksByTeachingUnitId(int teachingUnitId);
