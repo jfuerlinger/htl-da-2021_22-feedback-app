@@ -168,5 +168,13 @@ namespace FeedbackApp.WebApi.Feedback
             await _unitOfWork.SaveChangesAsync();
             return Ok();
         }
+
+        [HttpGet]
+        [Route("getAllPublicTU")]
+        public async Task<IActionResult> GetAllPublicTeachingUnits()
+        {
+            List<TeachingUnit> teachingUnits = await _unitOfWork.FeedbackRepository.GetAllPublicTeachingUnits();
+            return Ok(teachingUnits); // To-do: Daten einschränken
+        }
     }
 }

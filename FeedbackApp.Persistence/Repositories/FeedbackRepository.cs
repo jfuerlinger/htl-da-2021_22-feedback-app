@@ -95,5 +95,10 @@ namespace FeedbackApp.Persistence.Repositories
             List<Feedback> feedbacks = await GetAllFeedbacksByTeachingUnitId(teachingUnitId);
             _dbContext.Feedbacks.RemoveRange(feedbacks);
         }
+
+        public async Task<List<TeachingUnit>> GetAllPublicTeachingUnits()
+        {
+            return await _dbContext.TeachingUnits.Where(x => x.IsPublic == true).ToListAsync();
+        }
     }
 }

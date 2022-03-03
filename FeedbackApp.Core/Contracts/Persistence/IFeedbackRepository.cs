@@ -30,5 +30,6 @@ namespace FeedbackApp.Core.Contracts.Persistence
         Task<List<Feedback>> GetAllFeedbacksByTeachingUnitId(int teachingUnitId);
         Task<TeachingUnit> GetTeachingUnitById(int teachingUnit);
         Task<Feedback> GetFeedbackById(int feedackId);
+        Task<List<TeachingUnit>> GetAllPublicTeachingUnits();
     }
 }
