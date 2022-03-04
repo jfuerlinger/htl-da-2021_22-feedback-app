@@ -27,6 +27,7 @@ namespace FeedbackApp.WebApi.Feedback
         #region Messages
         private readonly string msgTeachingUnitsNotFound = "Keine Lehreinheit(en) gefunden.";
         private readonly string msgWrongStarRating = "Eine Bewertung kann nur zwischen 1-5 Sternen sein";
+        private readonly string msgFeedbackExpired = "Ablaufdatum zum Bewerten der Lehreinheit überschritten";
         #endregion
 
         /// <summary>
@@ -196,12 +197,21 @@ namespace FeedbackApp.WebApi.Feedback
         {
             User user = await _unitOfWork.UserRepository.GetByIdAsync(model.UserId);
 
-            DateTime? date = null;
-            DateTime? expiryDate = null;
+            DateTime date = DateTime.Now;
+            DateTime expiryDate = DateTime.Now.AddYears(1);
+
+            if (!String.IsNullOrEmpty(model.DateString))
+            {
+                DateTime.TryParse(model.DateString, out date);
+            }
+            if (!String.IsNullOrEmpty(model.ExpiryDateString))
+            {
+                DateTime.TryParse(model.ExpiryDateString, out expiryDate);
+            }  
 
             TeachingUnit teachingUnit = new TeachingUnit { Title = model.Title, IsPublic = model.IsPublic,
                 Description = model.Description, Subject = model.Subject, SubscriptionKey = model.SubscriptionKey, 
-                User = user, UserId = user.Id};
+                User = user, UserId = user.Id, Date = date, ExpiryDate = expiryDate };
 
             await _unitOfWork.FeedbackRepository.AddTeachingUnitAsync(teachingUnit);
             await _unitOfWork.SaveChangesAsync();
@@ -227,6 +237,11 @@ namespace FeedbackApp.WebApi.Feedback
             
             User user = await _unitOfWork.UserRepository.GetByIdAsync(model.UserId);
             TeachingUnit teachingUnit = await _unitOfWork.FeedbackRepository.GetTeachingUnitById(model.TeachingUnitId);
+
+            if (teachingUnit.ExpiryDate != null || DateTime.Now > teachingUnit.ExpiryDate)
+            {
+                return BadRequest(new Response { Status = "Expired", Message = msgFeedbackExpired });
+            }
 
             Core.Model.Feedback feedback = new Core.Model.Feedback() 
             { User = user, UserId = user.Id, TeachingUnit = teachingUnit, 
