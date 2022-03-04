@@ -14,6 +14,7 @@ using Xamarin.Forms.Xaml;
 using System.Net.Http.Headers;
 using Xamarin.Essentials;
 using System.Collections.ObjectModel;
+using System.IO;
 
 namespace Feedback_App_XAML.Views
 {
@@ -24,14 +25,6 @@ namespace Feedback_App_XAML.Views
         {
             InitializeComponent();
         }
-
-        private string _getData;
-
-        public string GetData()
-        {
-            return _getData;
-        }
-
         private async void ButtonAnmelden_Clicked(object sender, EventArgs e)
         {
             LoginService serviceData = new LoginService();
@@ -40,10 +33,11 @@ namespace Feedback_App_XAML.Views
             var items = getData.Split('"');
             string token = items[3];
             string expiration = items[7];
-            string identityId = items[11];
-            string role = items[15];
-            string username = items[19];
-            string email = items[23];
+            string userIdTest = items[10];
+            string identityId = items[13];
+            string role = items[17];
+            string username = items[21];
+            string email = items[25];
 
             Application.Current.Properties["token"] = token;
             Application.Current.Properties["expiration"] = expiration;
@@ -51,9 +45,6 @@ namespace Feedback_App_XAML.Views
             Application.Current.Properties["role"] = role;
             Application.Current.Properties["username"] = username;
             Application.Current.Properties["email"] = email;
-
-            UserModel model = new UserModel(username, email);
-            string aa = model.Username;
 
             LoginService services = new LoginService();
             var getLoginDetails = await services.CheckLoginIfExists(EntryUsername.Text, EntryPassword.Text);
@@ -64,6 +55,25 @@ namespace Feedback_App_XAML.Views
                 
                 if (role is "student") { await Navigation.PushAsync(new HomePage()); }
                 else { await Navigation.PushAsync(new HomePageLehrer()); }
+
+                LoginService serviceGetUserData = new LoginService();
+                var getGetUserData = await serviceGetUserData.GetUserData(token, identityId);
+
+                getGetUserData = getGetUserData.Replace('"',' ');
+                getGetUserData = getGetUserData.Replace(" ", "");
+
+                var datas = getGetUserData.Split(',');
+                string title = getGetUserData.Split(':')[0].Split(',')[0];
+                string firstName = getGetUserData.Split(':')[2].Split(',')[0];
+                string lastName = getGetUserData.Split(':')[3].Split(',')[0];
+                string birthdate = getGetUserData.Split(':')[4].Split(',')[0];
+                string school = getGetUserData.Split(':')[5].Split('}')[0];
+
+                Application.Current.Properties["title"] = title;
+                Application.Current.Properties["firstName"] = firstName;
+                Application.Current.Properties["lastName"] = lastName;
+                Application.Current.Properties["birthdate"] = birthdate;
+                Application.Current.Properties["school"] = school;
             }
             else { await DisplayAlert("Error!", "Benutzer anmelden fehlgeschlagen! Bitte Eingaben überprüfen und erneut versuchen.", "Okay"); }
         }

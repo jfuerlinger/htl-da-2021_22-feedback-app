@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Newtonsoft.Json;
 using Feedback_App_XAML.Models;
-
+using System.Net;
+using System.IO;
+using Xamarin.Forms.PlatformConfiguration.AndroidSpecific.AppCompat;
 
 namespace Feedback_App_XAML.RestClient
 {
@@ -54,6 +56,156 @@ namespace Feedback_App_XAML.RestClient
             string responseString = await result.Content.ReadAsStringAsync();
             var text = JsonConvert.DeserializeObject(responseString);
             return responseString;
+        }
+
+        public async Task<string> GetUserData (string token, string identityId)
+        {
+            GetUserData model = new GetUserData() { Token = token, IdentityId = identityId };
+
+            HttpClientHandler httpClientHandler;
+                #if (DEBUG)
+            httpClientHandler = new HttpClientHandler { ServerCertificateCustomValidationCallback = (o, cert, chain, errors) => true };
+            #else
+                            httpClientHandler = new HttpClientHandler(); "#endif using (var client = new HttpClient(httpHandler));
+            #endif
+
+            var client = new HttpClient(httpClientHandler);
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://10.0.2.2:5001/api/user/getData");
+            request.Method = HttpMethod.Post;
+
+            request.Headers.Add("Accept", "*/*");
+            request.Headers.Add("User-Agent", "Thunder Client (https://www.thunderclient.com)");
+            request.Headers.Add("Authorization", "Bearer " + token);
+
+            var bodyString = "{    \"identityId\": \"" + identityId + "\"}";
+
+            var content = new StringContent(bodyString, Encoding.UTF8, "application/json");
+            request.Content = content;
+
+            var response = await client.SendAsync(request);
+            var result = await response.Content.ReadAsStringAsync();
+            return result;
+        }
+
+        public async Task<bool> SetDataUser(string firstName, string lastName, string token, string identityId, string school)
+        {
+            SetData model = new SetData() { FirstName = firstName, LastName = lastName, Token=token, IdentityId=identityId, School=school };
+
+            HttpClientHandler httpClientHandler;
+            #if (DEBUG)
+            httpClientHandler = new HttpClientHandler { ServerCertificateCustomValidationCallback = (o, cert, chain, errors) => true };
+            #else
+                            httpClientHandler = new HttpClientHandler(); "#endif using (var client = new HttpClient(httpHandler));
+            #endif
+
+
+            var client = new HttpClient(httpClientHandler);
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://10.0.2.2:5001/api/user/modifierData");
+            request.Method = HttpMethod.Post;
+
+            request.Headers.Add("Accept", "*/*");
+            request.Headers.Add("User-Agent", "Thunder Client (https://www.thunderclient.com)");
+
+
+            request.Headers.Add("Authorization", "Bearer " + token);
+            var bodyString = "{    \"identityId\": \"" + identityId + "\",    \"title\": null,    \"firstName\": \"" + firstName + "\",    \"lastName\": \"" + lastName + "\",    \"birthdate\": null,    \"school\": \"" + school + "\"}";
+            var content = new StringContent(bodyString, Encoding.UTF8, "application/json");
+            request.Content = content;
+
+            var response = await client.SendAsync(request);
+            var result = await response.Content.ReadAsStringAsync();
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> SetPass(string userName, string password, string newPassword)
+        {
+            SetPass model = new SetPass() { Username=userName,  Password=password, NewPassword= newPassword };
+
+            HttpClientHandler httpClientHandler;
+            #if (DEBUG)
+            httpClientHandler = new HttpClientHandler { ServerCertificateCustomValidationCallback = (o, cert, chain, errors) => true };
+            #else
+                            httpClientHandler = new HttpClientHandler(); "#endif using (var client = new HttpClient(httpHandler));
+            #endif
+
+
+            var client = new HttpClient(httpClientHandler);
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://10.0.2.2:5001/api/changePw");
+            request.Method = HttpMethod.Post;
+
+            request.Headers.Add("Accept", "*/*");
+            request.Headers.Add("User-Agent", "Thunder Client (https://www.thunderclient.com)");
+
+            var bodyString = "{    \"username\": \"" + userName + "\",    \"password\": \"" + password + "\",    \"newPassword\": \"" + newPassword + "\"}"; 
+            var content = new StringContent(bodyString, Encoding.UTF8, "application/json");
+            request.Content = content;
+
+            var response = await client.SendAsync(request);
+            var result = await response.Content.ReadAsStringAsync();
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> SetEmail(string userName, string newemail, string token)
+        {
+            SetEmail model = new SetEmail() { Username = userName, NewEmail=newemail, Token=token};
+
+            HttpClientHandler httpClientHandler;
+            #if (DEBUG)
+            httpClientHandler = new HttpClientHandler { ServerCertificateCustomValidationCallback = (o, cert, chain, errors) => true };
+            #else
+                            httpClientHandler = new HttpClientHandler(); "#endif using (var client = new HttpClient(httpHandler));
+            #endif
+
+
+            var client = new HttpClient(httpClientHandler);
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://10.0.2.2:5001/api/changeEmail");
+            request.Method = HttpMethod.Post;
+
+            request.Headers.Add("Accept", "*/*");
+            request.Headers.Add("User-Agent", "Thunder Client (https://www.thunderclient.com)");
+            request.Headers.Add("Authorization", "Bearer " + token);
+
+            var bodyString = "{    \"username\": \"" + userName + "\",    \"newEmail\": \"" + newemail + "\"}";
+            var content = new StringContent(bodyString, Encoding.UTF8, "application/json");
+            request.Content = content;
+
+            var response = await client.SendAsync(request);
+            var result = await response.Content.ReadAsStringAsync();
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> DeleteUserAcc(string userName, string password, string token)
+        {
+            DeleteUser model = new DeleteUser() { Username = userName, Password=password, Token = token };
+
+            HttpClientHandler httpClientHandler;
+            #if (DEBUG)
+            httpClientHandler = new HttpClientHandler { ServerCertificateCustomValidationCallback = (o, cert, chain, errors) => true };
+            #else
+                            httpClientHandler = new HttpClientHandler(); "#endif using (var client = new HttpClient(httpHandler));
+            #endif
+
+
+            var client = new HttpClient(httpClientHandler);
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://10.0.2.2:5001/api/deleteAccount");
+            request.Method = HttpMethod.Post;
+
+            request.Headers.Add("Accept", "*/*");
+            request.Headers.Add("User-Agent", "Thunder Client (https://www.thunderclient.com)");
+            request.Headers.Add("Authorization", "Bearer " + token);
+
+            var bodyString = "{    \"username\": \"" + userName + "\",    \"password\": \"" + password + "\"}";
+            var content = new StringContent(bodyString, Encoding.UTF8, "application/json");
+            request.Content = content;
+
+            var response = await client.SendAsync(request);
+            var result = await response.Content.ReadAsStringAsync();
+            return response.IsSuccessStatusCode;
         }
     }
 }

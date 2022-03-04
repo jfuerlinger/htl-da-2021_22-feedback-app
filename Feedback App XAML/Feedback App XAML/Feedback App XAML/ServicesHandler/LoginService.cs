@@ -24,5 +24,35 @@ namespace Feedback_App_XAML.ServicesHandler
 
             return check;
         }
+        public async Task<string> GetUserData(string token, string identityId)
+        {
+            var check = await _restClient.GetUserData(token, identityId);
+
+            return check;
+        }
+        public async Task<bool> SetData(string firstName, string lastName, string token, string identityId, string school)
+        {
+            var check = await _restClient.SetDataUser(firstName, lastName, token, identityId, school);
+
+            return check;
+        }
+        public async Task<bool> SetPass(string username, string password, string newPassword)
+        {
+            var check = await _restClient.SetPass(username, password, newPassword);
+
+            return check;
+        }
+        public async Task<bool> SetEmail(string username, string newemail, string token)
+        {
+            var check = await _restClient.SetEmail(username, newemail, token);
+
+            return check;
+        }
+        public async Task<bool> DeleteUserAcc(string username, string password, string token)
+        {
+            var check = await _restClient.DeleteUserAcc(username, password, token);
+
+            return check;
+        }
     }
 }
