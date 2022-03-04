@@ -162,6 +162,29 @@ namespace FeedbackApp.WebApi.Feedback
         }
 
         /// <summary>
+        /// search public teaching units
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns>list of public teaching units contains search</returns>
+        [HttpGet]
+        [Route("searchPublicTU")]
+        public async Task<IActionResult> SearchPublicTeachingUnits(string search)
+        {
+            List<TeachingUnit> teachingUnits;
+
+            if (String.IsNullOrEmpty(search))
+            {
+                teachingUnits = await _unitOfWork.FeedbackRepository.GetAllPublicTeachingUnits();
+            }
+            else
+            {
+                teachingUnits = await _unitOfWork.FeedbackRepository.GetSearchTeachingUnits(search);
+            }
+            
+            return Ok(teachingUnits);
+        }
+
+        /// <summary>
         /// create a teaching unit (token)
         /// </summary>
         /// <param name="model"></param>

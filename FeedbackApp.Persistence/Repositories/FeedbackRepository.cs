@@ -116,5 +116,10 @@ namespace FeedbackApp.Persistence.Repositories
         {
             return await _dbContext.TeachingUnits.Where(x => x.IsPublic == true).ToListAsync();
         }
+
+        public async Task<List<TeachingUnit>> GetSearchTeachingUnits(string search)
+        {
+            return await _dbContext.TeachingUnits.Where(x => x.IsPublic == true && x.Title.Contains(search)).ToListAsync();
+        }
     }
 }
