@@ -238,7 +238,7 @@ namespace FeedbackApp.WebApi.Feedback
             User user = await _unitOfWork.UserRepository.GetByIdAsync(model.UserId);
             TeachingUnit teachingUnit = await _unitOfWork.FeedbackRepository.GetTeachingUnitById(model.TeachingUnitId);
 
-            if (teachingUnit.ExpiryDate != null || DateTime.Now > teachingUnit.ExpiryDate)
+            if (DateTime.Now > teachingUnit.ExpiryDate)
             {
                 return BadRequest(new Response { Status = "Expired", Message = msgFeedbackExpired });
             }
