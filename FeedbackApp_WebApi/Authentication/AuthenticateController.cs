@@ -327,7 +327,7 @@ namespace FeedbackApp.WebApi.Authentication
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        /// /// <response code="200">e-mail successfully changed</response>
+        /// <response code="200">e-mail successfully changed</response>
         /// <response code="500">Something went wrong (API)</response>
         /// <response code="401">Incorrect Token</response>
         /// <response code="404">User not found. Check request model</response>
