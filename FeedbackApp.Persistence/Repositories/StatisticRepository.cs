@@ -35,7 +35,7 @@ namespace FeedbackApp.Persistence.Repositories
             _dbContext.TeachingUnitStatistics.Update(teachingUnitStatistic);
         }
 
-        public async Task CalcAvgStarsUserStats(int userId)
+        public async Task UpdateAvgStarsUserStats(int userId)
         {
             double avgStars = 0;
             int count = 0;

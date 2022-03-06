@@ -252,6 +252,9 @@ namespace FeedbackApp.WebApi.Feedback
             await _unitOfWork.FeedbackRepository.AddFeedbackAsync(feedback);
             await _unitOfWork.StatisticRepository.IncreaseFeedbackCounter(teachingUnit.Id, user.Id);
             await _unitOfWork.SaveChangesAsync();
+            
+            await _unitOfWork.StatisticRepository.UpdateAvgStarsTeachingUnit(teachingUnit.Id);
+            await _unitOfWork.SaveChangesAsync();
 
             return Ok();
         }

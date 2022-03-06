@@ -16,7 +16,7 @@ namespace FeedbackApp.Core.Contracts.Persistence
         Task IncreaseFeedbackCounter(int teachingUnitId, int userId);
         Task UpdateUserCount();
         Task UpdateAvgStarsTeachingUnit(int teachingUnitId);
-        Task CalcAvgStarsUserStats(int userId);
+        Task UpdateAvgStarsUserStats(int userId);
         Task<UserStatistic> GetUserStatistic(int userId);
         Task<TeachingUnitStatistic> GetTeachingUnitStatistic(int teachingUnitId);
         Task DeleteUserStats(int userid);

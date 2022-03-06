@@ -23,7 +23,7 @@ namespace FeedbackApp.WebApi.Statistic
         {
             _unitOfWork = unitOfWork;
         }
-        
+
         /// <summary>
         /// get global Statistics
         /// </summary>
@@ -35,6 +35,29 @@ namespace FeedbackApp.WebApi.Statistic
             GlobalHistory globalHistory = await _unitOfWork.StatisticRepository.GetGlobalHistory();
 
             return Ok(globalHistory);
+        }
+
+        [HttpGet]
+        [Route("userStats")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> GetUserStats(int userId)
+        {
+            await _unitOfWork.StatisticRepository.UpdateAvgStarsUserStats(userId);
+            await _unitOfWork.SaveChangesAsync();
+
+            UserStatistic userStatistic = await _unitOfWork.StatisticRepository.GetUserStatistic(userId);
+
+            return Ok(userStatistic);
+        }
+
+        [HttpGet]
+        [Route("teachingUnitStat")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> GetTeachingUnitStats(int teachingUnitId)
+        {
+            TeachingUnitStatistic teachingUnitStatistic = await _unitOfWork.StatisticRepository.GetTeachingUnitStatistic(teachingUnitId);
+
+            return Ok(teachingUnitStatistic);
         }
     }
 }
