@@ -25,14 +25,17 @@ namespace FeedbackApp.WebApi.Statistic
         }
         
         /// <summary>
-        /// get the teacher statistics
+        /// get global Statistics
         /// </summary>
-        /// <returns>teacher statistics</returns>
+        /// <returns>created teaching units count, created feedbacks count</returns>
         [HttpGet]
-        [Route("teacherStat")]
-        public async Task<IActionResult> GetTeacherStatistic()
+        [Route("globalStats")]
+        public async Task<IActionResult> GetGlobalStats()
         {
-            return Ok();
+            GlobalHistory globalHistory = await _unitOfWork.StatisticRepository.GetGlobalHistory();
+
+            return Ok(new { CreatedTuCount = globalHistory.CreatedTeachingUnitsCount, 
+                CreatedFeedbacksCount = globalHistory.CreatedFeedbacksCount });
         }
     }
 }
