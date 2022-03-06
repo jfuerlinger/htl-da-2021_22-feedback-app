@@ -283,7 +283,7 @@ namespace FeedbackApp.WebApi.Authentication
 
             var userDb = await _unitOfWork.UserRepository.GetByIdentityIdAsync(user.Id);
 
-            await _unitOfWork.UserRepository.DeleteUserByIdentityIdAsync(user.Id); //To-Do DB Fehler abfangen
+            await _unitOfWork.UserRepository.DeleteUserByIdentityIdAsync(user.Id);
             await _unitOfWork.StatisticRepository.DeleteUserStats(userDb.Id);
             await _unitOfWork.SaveChangesAsync();
 

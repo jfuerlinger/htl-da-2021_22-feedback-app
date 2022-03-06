@@ -44,7 +44,7 @@ namespace FeedbackApp.WebApi.Statistic
         {
             UserStatistic userStatistic = await _unitOfWork.StatisticRepository.GetUserStatistic(userId);
 
-            if (userStatistic.CreatedFeedbacksCount != 0)
+            if (userStatistic.CreatedTeachingUnitsCount != 0)
             {
                 await _unitOfWork.StatisticRepository.UpdateAvgStarsUserStats(userId);
                 await _unitOfWork.SaveChangesAsync();
