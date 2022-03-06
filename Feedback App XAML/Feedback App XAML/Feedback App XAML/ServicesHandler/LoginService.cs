@@ -54,5 +54,23 @@ namespace Feedback_App_XAML.ServicesHandler
 
             return check;
         }
+        public async Task<string> SearchUnits(string searchSchlussel)
+        {
+            var check = await _restClient.SearchUnits(searchSchlussel);
+
+            return check;
+        }
+        public async Task<bool> CreateFeedback(string teachingUnitId, string userId, string stars, string comment, string token)
+        {
+            var check = await _restClient.CreateFeedback(teachingUnitId, userId, stars, comment, token);
+
+            return check;
+        }
+        public async Task<bool> CreateUnit(string userId, string title, string subject, string description, string subscriptionKey, string token)
+        {
+            var check = await _restClient.CreateUnit(userId, title, subject, description, subscriptionKey, token);
+
+            return check;
+        }
     }
 }

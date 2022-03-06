@@ -3,10 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Feedback_App_XAML.Views.HomePageLehrer">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Lehrer HomePage"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Margin="20,10,20,10">
+            
+            <StackLayout Padding="0" Margin="20,10,10,0" HorizontalOptions="EndAndExpand" VerticalOptions="End">
+                <Button Text="Mein Konto" TextColor="Black" x:Name="buttonMyAcc" Clicked="buttonMyAcc_Clicked" CornerRadius="20"/>
+            </StackLayout>
+
+            <Label x:Name="MainLabel" Text="Feedback erstellen" Font="40" TextColor="Black" HorizontalOptions="CenterAndExpand" FontSize="Title" Margin="0,80,10,10"/>
+
+            <Button x:Name="btncreateUnit" Text="Units erstellen" Clicked="btncreateUnit_Clicked"/>
+
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

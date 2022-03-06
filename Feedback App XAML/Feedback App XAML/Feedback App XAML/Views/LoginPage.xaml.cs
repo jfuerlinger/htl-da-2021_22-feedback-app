@@ -33,14 +33,19 @@ namespace Feedback_App_XAML.Views
             var items = getData.Split('"');
             string token = items[3];
             string expiration = items[7];
-            string userIdTest = items[10];
+            string userId = items[10];
             string identityId = items[13];
             string role = items[17];
             string username = items[21];
             string email = items[25];
 
+            userId = userId.Replace(":", "");
+            userId = userId.Replace(",", "");
+
+
             Application.Current.Properties["token"] = token;
             Application.Current.Properties["expiration"] = expiration;
+            Application.Current.Properties["userId"] = userId;
             Application.Current.Properties["identityId"] = identityId;
             Application.Current.Properties["role"] = role;
             Application.Current.Properties["username"] = username;
@@ -53,7 +58,7 @@ namespace Feedback_App_XAML.Views
             {
                 await DisplayAlert("Success!", "Benutzer " + username + " erfolgreich angemeldet.", "Okay");
                 
-                if (role is "student") { await Navigation.PushAsync(new HomePage()); }
+                if (role is "student") { await Navigation.PushAsync(new HomePageSchuler()); }
                 else { await Navigation.PushAsync(new HomePageLehrer()); }
 
                 LoginService serviceGetUserData = new LoginService();

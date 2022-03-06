@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Feedback_App_XAML.Views.HomePageSchuler">
+    <ContentPage.Content>
+        <StackLayout Margin="20,10,20,10">
+            
+            <StackLayout Padding="0" Margin="20,10,10,0" HorizontalOptions="EndAndExpand" VerticalOptions="End">
+                <Button Text="Mein Konto" TextColor="Black" x:Name="buttonMyAcc" Clicked="buttonMyAcc_Clicked" CornerRadius="20"/>
+            </StackLayout>
+
+            <Label x:Name="MainLabel" Text="Units finden" Font="40" TextColor="Black" HorizontalOptions="CenterAndExpand" FontSize="Title" Margin="0,80,10,10"/>
+
+            <SearchBar x:Name="SearchBar" SearchButtonPressed="SearchBar_SearchButtonPressed"/>
+
+            <ListView x:Name="MainListView" HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Label Text="{Binding .}" TextColor="Black" FontSize="Medium" Padding="10" Margin="0,0,0,0"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Button x:Name="BtnCreateFeedback" Text="Feedback geben" Clicked="BtnCreateFeedback_Clicked" IsEnabled="False"/>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
