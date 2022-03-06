@@ -50,7 +50,7 @@ namespace FeedbackApp.WebApi
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
                 {
                     // Username settings
-                    var allowed = options.User.AllowedUserNameCharacters + "äüöÄÜÖ";
+                    var allowed = options.User.AllowedUserNameCharacters + "äüöÄÜÖß";
                     options.User.AllowedUserNameCharacters = allowed;
                     options.User.RequireUniqueEmail = true;
                     // Username Lenght = 6 --> AuthenticateValidations.cs

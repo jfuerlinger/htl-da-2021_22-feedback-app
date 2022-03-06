@@ -236,8 +236,11 @@ namespace FeedbackApp.WebApi.Authentication
 
             await _unitOfWork.UserRepository.CreateUserAsync(teacher); //To-Do DB Fehler abfangen
             await _unitOfWork.StatisticRepository.CreateUserStats(teacher);
+            await _unitOfWork.SaveChangesAsync();
+
             await _unitOfWork.StatisticRepository.UpdateUserCount();
             await _unitOfWork.SaveChangesAsync();
+
             return Ok(new Response { Status = "Success", Message = msgCreateUserSuccess });
         }
 
@@ -282,6 +285,8 @@ namespace FeedbackApp.WebApi.Authentication
 
             await _unitOfWork.UserRepository.DeleteUserByIdentityIdAsync(user.Id); //To-Do DB Fehler abfangen
             await _unitOfWork.StatisticRepository.DeleteUserStats(userDb.Id);
+            await _unitOfWork.SaveChangesAsync();
+
             await _unitOfWork.StatisticRepository.UpdateUserCount();
             await _unitOfWork.SaveChangesAsync();
 
