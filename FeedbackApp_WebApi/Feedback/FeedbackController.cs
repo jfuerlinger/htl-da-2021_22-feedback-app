@@ -214,6 +214,8 @@ namespace FeedbackApp.WebApi.Feedback
                 User = user, UserId = user.Id, Date = date, ExpiryDate = expiryDate };
 
             await _unitOfWork.FeedbackRepository.AddTeachingUnitAsync(teachingUnit);
+            await _unitOfWork.StatisticRepository.CreateTeachingUnitStats(teachingUnit);
+            await _unitOfWork.StatisticRepository.IncreaseTeachingUnitCounter(user.Id);
             await _unitOfWork.SaveChangesAsync();
 
             return Ok();
@@ -248,6 +250,7 @@ namespace FeedbackApp.WebApi.Feedback
                 TeachingUnitId = teachingUnit.Id, Stars = model.Stars, Comment = model.Comment};
 
             await _unitOfWork.FeedbackRepository.AddFeedbackAsync(feedback);
+            await _unitOfWork.StatisticRepository.IncreaseFeedbackCounter(teachingUnit.Id, user.Id);
             await _unitOfWork.SaveChangesAsync();
 
             return Ok();
@@ -298,6 +301,7 @@ namespace FeedbackApp.WebApi.Feedback
         public async Task<IActionResult> DeleteTeachingUnit(int id)
         {
             await _unitOfWork.FeedbackRepository.DeleteTeachingUnit(id);
+            await _unitOfWork.StatisticRepository.DeleteTeachingUnitStats(id);
             await _unitOfWork.SaveChangesAsync();
             return Ok();
         }

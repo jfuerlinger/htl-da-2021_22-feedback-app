@@ -175,6 +175,8 @@ namespace FeedbackApp.WebApi.Authentication
             User student = new() { IdentityId = user.Id, Role = UserRoles.student };
 
             await _unitOfWork.UserRepository.CreateUserAsync(student); // To-Do DB abfangen
+            await _unitOfWork.StatisticRepository.CreateUserStats(student);
+            await _unitOfWork.StatisticRepository.UpdateUserCount();
             await _unitOfWork.SaveChangesAsync();
             return Ok(new Response { Status = "Success", Message = msgCreateUserSuccess });
         }
@@ -233,6 +235,8 @@ namespace FeedbackApp.WebApi.Authentication
             User teacher = new() { IdentityId = user.Id, Role = UserRoles.teacher };
 
             await _unitOfWork.UserRepository.CreateUserAsync(teacher); //To-Do DB Fehler abfangen
+            await _unitOfWork.StatisticRepository.CreateUserStats(teacher);
+            await _unitOfWork.StatisticRepository.UpdateUserCount();
             await _unitOfWork.SaveChangesAsync();
             return Ok(new Response { Status = "Success", Message = msgCreateUserSuccess });
         }
@@ -274,7 +278,11 @@ namespace FeedbackApp.WebApi.Authentication
                     new Response { Status = "Error", Message = msgDeleteUserFail }); ;
             }
 
+            var userDb = await _unitOfWork.UserRepository.GetByIdentityIdAsync(user.Id);
+
             await _unitOfWork.UserRepository.DeleteUserByIdentityIdAsync(user.Id); //To-Do DB Fehler abfangen
+            await _unitOfWork.StatisticRepository.DeleteUserStats(userDb.Id);
+            await _unitOfWork.StatisticRepository.UpdateUserCount();
             await _unitOfWork.SaveChangesAsync();
 
             return Ok(new Response { Status = "Success", Message = msgDeleteUserSuccess });

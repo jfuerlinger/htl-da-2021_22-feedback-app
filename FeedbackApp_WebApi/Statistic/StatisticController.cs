@@ -34,8 +34,7 @@ namespace FeedbackApp.WebApi.Statistic
         {
             GlobalHistory globalHistory = await _unitOfWork.StatisticRepository.GetGlobalHistory();
 
-            return Ok(new { CreatedTuCount = globalHistory.CreatedTeachingUnitsCount, 
-                CreatedFeedbacksCount = globalHistory.CreatedFeedbacksCount });
+            return Ok(globalHistory);
         }
     }
 }

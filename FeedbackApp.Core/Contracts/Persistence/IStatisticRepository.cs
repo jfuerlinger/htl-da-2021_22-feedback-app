@@ -13,10 +13,13 @@ namespace FeedbackApp.Core.Contracts.Persistence
         Task CreateUserStats(User user);
         Task CreateTeachingUnitStats(TeachingUnit teachingUnit);
         Task IncreaseTeachingUnitCounter(int userId);
-        Task IncreaseFeedbackCounter(int teachingUnitId);
-        Task CalcAvgStarsTeachingUnit(int teachingUnitId);
+        Task IncreaseFeedbackCounter(int teachingUnitId, int userId);
+        Task UpdateUserCount();
+        Task UpdateAvgStarsTeachingUnit(int teachingUnitId);
         Task CalcAvgStarsUserStats(int userId);
         Task<UserStatistic> GetUserStatistic(int userId);
         Task<TeachingUnitStatistic> GetTeachingUnitStatistic(int teachingUnitId);
+        Task DeleteUserStats(int userid);
+        Task DeleteTeachingUnitStats(int teachingUnitId);
     }
 }

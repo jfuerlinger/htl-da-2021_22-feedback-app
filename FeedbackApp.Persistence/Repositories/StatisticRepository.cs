@@ -18,14 +18,39 @@ namespace FeedbackApp.Persistence.Repositories
             _dbContext = dbContext;
         }
 
-        public Task CalcAvgStarsTeachingUnit(int teachingUnitId)
+        public async Task UpdateAvgStarsTeachingUnit(int teachingUnitId)
         {
-            throw new NotImplementedException();
+            TeachingUnitStatistic teachingUnitStatistic = await GetTeachingUnitStatistic(teachingUnitId);
+            List<Feedback> feedbacks = await _dbContext.Feedbacks.Where(x => x.TeachingUnitId == teachingUnitId).ToListAsync();
+            double avgStars = 0;
+
+            foreach (Feedback feedback in feedbacks)
+            {
+                avgStars += feedback.Stars;
+            }
+
+            avgStars = avgStars / (double)feedbacks.Count();
+            teachingUnitStatistic.AvgStars = avgStars;
+
+            _dbContext.TeachingUnitStatistics.Update(teachingUnitStatistic);
         }
 
-        public Task CalcAvgStarsUserStats(int userId)
+        public async Task CalcAvgStarsUserStats(int userId)
         {
-            throw new NotImplementedException();
+            double avgStars = 0;
+            int count = 0;
+            UserStatistic userStatistic = await GetUserStatistic(userId);
+            List<TeachingUnit> teachingUnits = await _dbContext.TeachingUnits.Where(x => x.UserId == userId).ToListAsync();
+            
+            foreach (TeachingUnit teachingUnit in teachingUnits)
+            {
+                TeachingUnitStatistic teachingUnitStatistic = await GetTeachingUnitStatistic(teachingUnit.Id);
+                avgStars += teachingUnitStatistic.AvgStars;
+                count++;
+            }
+
+            userStatistic.AvgStars = avgStars / (double)count;
+            _dbContext.UserStatistics.Update(userStatistic);
         }
 
         public async Task CreateTeachingUnitStats(TeachingUnit teachingUnit)
@@ -43,6 +68,20 @@ namespace FeedbackApp.Persistence.Repositories
             await _dbContext.UserStatistics.AddAsync(userStatistic);
         }
 
+        public async Task DeleteTeachingUnitStats(int teachingUnitId)
+        {
+            var teachingUnitStats = await GetTeachingUnitStatistic(teachingUnitId);
+
+            _dbContext.TeachingUnitStatistics.Remove(teachingUnitStats);
+        }
+
+        public async Task DeleteUserStats(int userid)
+        {
+            var userStats = await GetUserStatistic(userid);
+
+            _dbContext.UserStatistics.Remove(userStats);
+        }
+
         public async Task<GlobalHistory> GetGlobalHistory()
         {
             int count = await _dbContext.GlobalHistories.CountAsync();
@@ -57,24 +96,49 @@ namespace FeedbackApp.Persistence.Repositories
             return await _dbContext.GlobalHistories.FirstOrDefaultAsync();
         }
 
-        public Task<TeachingUnitStatistic> GetTeachingUnitStatistic(int teachingUnitId)
+        public async Task<TeachingUnitStatistic> GetTeachingUnitStatistic(int teachingUnitId)
         {
-            throw new NotImplementedException();
+            return await _dbContext.TeachingUnitStatistics.Where(x => x.TeachingUnitId == teachingUnitId).FirstOrDefaultAsync();
         }
 
-        public Task<UserStatistic> GetUserStatistic(int userId)
+        public async Task<UserStatistic> GetUserStatistic(int userId)
         {
-            throw new NotImplementedException();
+            return await _dbContext.UserStatistics.Where(x => x.UserId == userId).FirstOrDefaultAsync();
         }
 
-        public Task IncreaseFeedbackCounter(int teachingUnitId)
+        public async Task IncreaseFeedbackCounter(int teachingUnitId, int userId)
         {
-            throw new NotImplementedException();
+            var globalHistory = await GetGlobalHistory();
+            var teachingUnitStat = await GetTeachingUnitStatistic(teachingUnitId);
+            var userStatistic = await GetUserStatistic(userId);
+
+            globalHistory.CreatedFeedbacksCount++;
+            teachingUnitStat.FeedbackCount++;
+            userStatistic.CreatedFeedbacksCount++;
+
+            _dbContext.GlobalHistories.Update(globalHistory);
+            _dbContext.TeachingUnitStatistics.Update(teachingUnitStat);
+            _dbContext.UserStatistics.Update(userStatistic);
         }
 
-        public Task IncreaseTeachingUnitCounter(int userId)
+        public async Task IncreaseTeachingUnitCounter(int userId)
         {
-            throw new NotImplementedException();
+            var globalHistory = await GetGlobalHistory();
+            var userStatistic = await GetUserStatistic(userId);
+
+            globalHistory.CreatedTeachingUnitsCount++;
+            userStatistic.CreatedTeachingUnitsCount++;
+
+            _dbContext.GlobalHistories.Update(globalHistory);
+            _dbContext.UserStatistics.Update(userStatistic);
+        }
+
+        public async Task UpdateUserCount()
+        {
+            var globalHistory = await GetGlobalHistory();
+            globalHistory.UserCount = await _dbContext.Users.CountAsync();
+
+            _dbContext.GlobalHistories.Update(globalHistory);
         }
     }
 }

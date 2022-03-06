@@ -13,5 +13,6 @@ namespace FeedbackApp.Core.Model
         public int Id { get; set; }
         public int CreatedTeachingUnitsCount { get; set; }
         public int CreatedFeedbacksCount { get; set; }
+        public int UserCount { get; set; }
     }
 }
