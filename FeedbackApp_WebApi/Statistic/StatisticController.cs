@@ -42,10 +42,14 @@ namespace FeedbackApp.WebApi.Statistic
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> GetUserStats(int userId)
         {
-            await _unitOfWork.StatisticRepository.UpdateAvgStarsUserStats(userId);
-            await _unitOfWork.SaveChangesAsync();
-
             UserStatistic userStatistic = await _unitOfWork.StatisticRepository.GetUserStatistic(userId);
+
+            if (userStatistic.CreatedFeedbacksCount != 0)
+            {
+                await _unitOfWork.StatisticRepository.UpdateAvgStarsUserStats(userId);
+                await _unitOfWork.SaveChangesAsync();
+                userStatistic = await _unitOfWork.StatisticRepository.GetUserStatistic(userId);
+            }
 
             return Ok(userStatistic);
         }
