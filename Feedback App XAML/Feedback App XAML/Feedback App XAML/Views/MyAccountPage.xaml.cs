@@ -29,14 +29,14 @@ namespace Feedback_App_XAML.Views
             //var title = Application.Current.Properties["title"].ToString();
             var firstName = Application.Current.Properties["firstName"].ToString();
             var lastName = Application.Current.Properties["lastName"].ToString();
-            var birthdate = Application.Current.Properties["birthdate"].ToString();
+            //var birthdate = Application.Current.Properties["birthdate"].ToString();
             var school = Application.Current.Properties["school"].ToString();
 
             var userData = new List<string>();
             userData.Add("Username: " + username);
             userData.Add("Email: " + email);
             userData.Add("Name: " + firstName + " " + lastName);
-            userData.Add("Geburtstag: " + birthdate);
+            //userData.Add("Geburtstag: " + birthdate);
             userData.Add("Schule: " + school);
 
             MainListView.ItemsSource = userData;
@@ -167,6 +167,22 @@ namespace Feedback_App_XAML.Views
             {
                 await DisplayAlert("Error!", "Bitte wiederholen. Die Daten sind ungenau oder entsprechen nicht den Kriterien. Das neue Passwort muss: (Min. 6 Zeichen, 1x Groß, 1x klein) enthalten.", "Okay");
             }
+        }
+
+        private void onEdit(object sender, EventArgs e)
+        {
+            var mi = ((MenuItem)sender);
+            DisplayAlert("More Context Action", mi.CommandParameter + " more context action", "OK");
+        }
+
+        private void MenuItem_Clicked(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MenuItem_Clicked_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

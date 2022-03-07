@@ -284,7 +284,7 @@ namespace Feedback_App_XAML.RestClient
             request.Headers.Add("User-Agent", "Thunder Client (https://www.thunderclient.com)");
             request.Headers.Add("Authorization", "Bearer " + token);
 
-            var bodyString = "{    \"userId\": \"3\",    \"title\": \"" + title + "\",    \"isPublic\": true,    \"subject\": \"" + subject + "\",    \"description\": \"" + description + "\",    \"dateString\": null,    \"expiryDateString\": null,    \"subscriptionKey\": \"" + subscriptionKey + "\"}";
+            var bodyString = "{    \"userId\": \"" + userId + "\",    \"title\": \"" + title + "\",    \"isPublic\": true,    \"subject\": \"" + subject + "\",    \"description\": \"" + description + "\",    \"dateString\": null,    \"expiryDateString\": null,    \"subscriptionKey\": \"" + subscriptionKey + "\"}";
             var content = new StringContent(bodyString, Encoding.UTF8, "application/json");
             request.Content = content;
 
@@ -292,6 +292,58 @@ namespace Feedback_App_XAML.RestClient
             var result = await response.Content.ReadAsStringAsync();
 
             return response.IsSuccessStatusCode;
+        }
+
+        public async Task<string> GetUnitsByUserId(string token, int userId)
+        {
+            GetUnitsByUserId model = new GetUnitsByUserId() { Token = token, UserId = userId };
+
+            HttpClientHandler httpClientHandler;
+            #if (DEBUG)
+            httpClientHandler = new HttpClientHandler { ServerCertificateCustomValidationCallback = (o, cert, chain, errors) => true };
+            #else
+                            httpClientHandler = new HttpClientHandler(); "#endif using (var client = new HttpClient(httpHandler));
+            #endif
+
+            var client = new HttpClient(httpClientHandler);
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://10.0.2.2:5001/api/feedback/getUserTU?id=" + userId);
+            request.Method = HttpMethod.Get;
+
+            request.Headers.Add("Accept", "*/*");
+            request.Headers.Add("User-Agent", "Thunder Client (https://www.thunderclient.com)");
+            request.Headers.Add("Authorization", "Bearer " + token);
+
+            var response = await client.SendAsync(request);
+            var result = await response.Content.ReadAsStringAsync();
+            return result;
+        }
+
+        public async Task<string> GetUserStatistic(string token, int userId)
+        {
+            GetUserStatistik model = new GetUserStatistik() {Token=token, UserId=userId};
+
+            HttpClientHandler httpClientHandler;
+            #if (DEBUG)
+            httpClientHandler = new HttpClientHandler { ServerCertificateCustomValidationCallback = (o, cert, chain, errors) => true };
+            #else
+                httpClientHandler = new HttpClientHandler(); "#endif using (var client = new HttpClient(httpHandler));
+            #endif
+
+
+
+            var client = new HttpClient(httpClientHandler);
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://10.0.2.2:5001/api/statistic/userStats?userId=1");
+            request.Method = HttpMethod.Get;
+
+            request.Headers.Add("Accept", "*/*");
+            request.Headers.Add("User-Agent", "Thunder Client (https://www.thunderclient.com)");
+            request.Headers.Add("Authorization", "Bearer " + token);
+
+            var response = await client.SendAsync(request);
+            var result = await response.Content.ReadAsStringAsync();
+            return result;
         }
     }
 }

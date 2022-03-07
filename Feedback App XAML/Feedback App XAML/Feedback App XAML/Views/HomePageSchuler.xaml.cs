@@ -1,4 +1,6 @@
-﻿using Feedback_App_XAML.ServicesHandler;
+﻿using Feedback_App_XAML.Models;
+using Feedback_App_XAML.ServicesHandler;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,16 +20,16 @@ namespace Feedback_App_XAML.Views
             InitializeComponent();
         }
 
-        public void ListViewUserData()
+        public void ListViewUnits()
         {
             var titleUnit = Application.Current.Properties["titleUnit"].ToString();
             var subjectUnit = Application.Current.Properties["subjectUnit"].ToString();
             var descriptionUnit = Application.Current.Properties["descriptionUnit"].ToString();
 
             var userData = new List<string>();
-            userData.Add("Title: " + titleUnit);
-            userData.Add("Subject: " + subjectUnit);
-            userData.Add("Description: " + descriptionUnit);
+            userData.Add("Titel: " + titleUnit);
+            //userData.Add("Subject: " + subjectUnit);
+            userData.Add("Beschreibung: " + descriptionUnit);
             MainListView.ItemsSource = userData;
         }
 
@@ -36,37 +38,47 @@ namespace Feedback_App_XAML.Views
             await Navigation.PushAsync(new MyAccountPage());
         }
 
+
         private async void SearchBar_SearchButtonPressed(object sender, EventArgs e)
         {
             var searchSchlussel = SearchBar.Text;
 
             LoginService servicesearchUnits = new LoginService();
-            var serachUnitsData = await servicesearchUnits.SearchUnits(searchSchlussel);
+            var serachUnitsDataJson = await servicesearchUnits.SearchUnits(searchSchlussel);
 
-            serachUnitsData = serachUnitsData.Replace('"', ' ');
-            serachUnitsData = serachUnitsData.Replace(" ", "");
 
-            var datas = serachUnitsData.Split(',');
-            string idUnit = serachUnitsData.Split(':')[1].Split(',')[0];
-            string titleUnit = serachUnitsData.Split(':')[3].Split(',')[0];
-            string subjectUnit = serachUnitsData.Split(':')[4].Split(',')[0];
-            string descriptionUnit = serachUnitsData.Split(':')[5].Split(',')[0];
-
-            Application.Current.Properties["idUnit"] = idUnit;
-            Application.Current.Properties["titleUnit"] = titleUnit;
-            Application.Current.Properties["subjectUnit"] = subjectUnit;
-            Application.Current.Properties["descriptionUnit"] = descriptionUnit;
-
-            if(searchSchlussel == titleUnit)
+            try
             {
-                ListViewUserData();
+                var result = JsonConvert.DeserializeObject<List<AllUnit_FeedbackData>>(serachUnitsDataJson);
+
+                if(result != null)
+                {
+                    var titleUnit = result[0].Title;
+                    var idUnit = result[0].UnitId;
+                    var subjectUnit = result[0].Subject;
+                    var descriptionUnit = result[0].Description;
+
+                    Application.Current.Properties["idUnit"] = idUnit;
+                    Application.Current.Properties["titleUnit"] = titleUnit;
+                    Application.Current.Properties["subjectUnit"] = subjectUnit;
+                    Application.Current.Properties["descriptionUnit"] = descriptionUnit;
+                }
+            }
+            catch
+            {
+                await DisplayAlert("Error!", "Bitte wiederholen.", "Okay");
+            }
+
+            //if(searchSchlussel == titleUnit)
+            //{
+                ListViewUnits();
                 BtnCreateFeedback.IsEnabled = true;
 
-            }
-            else
-            {
-                await DisplayAlert("Error!", "Bitte wiederholen. Die Daten sind ungenau oder Unit ist noch nicht erstellt.", "Okay");
-            }
+            //}
+            //else
+            //{
+            //    await DisplayAlert("Error!", "Bitte wiederholen. Die Daten sind ungenau oder Unit ist noch nicht erstellt.", "Okay");
+            //}
         }
 
         private async void BtnCreateFeedback_Clicked(object sender, EventArgs e)
@@ -84,6 +96,11 @@ namespace Feedback_App_XAML.Views
             if(setfeedback is true)
             {
                 BtnCreateFeedback.IsEnabled = false;
+                await DisplayAlert("Success!", "Feedback wurde erfolgreich erstellt.", "Okay");
+            }
+            else
+            {
+                await DisplayAlert("Error!", "Bitte wiederholen.", "Okay");
             }
         }
     }

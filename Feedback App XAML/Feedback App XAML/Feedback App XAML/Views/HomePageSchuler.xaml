@@ -6,14 +6,14 @@
         <StackLayout Margin="20,10,20,10">
             
             <StackLayout Padding="0" Margin="20,10,10,0" HorizontalOptions="EndAndExpand" VerticalOptions="End">
-                <Button Text="Mein Konto" TextColor="Black" x:Name="buttonMyAcc" Clicked="buttonMyAcc_Clicked" CornerRadius="20"/>
+                <Button Text="Mein Konto" TextColor="Black" x:Name="buttonMyAcc" Clicked="buttonMyAcc_Clicked" BackgroundColor="WhiteSmoke" FontAttributes="Bold" FontSize="Body"/>
             </StackLayout>
 
-            <Label x:Name="MainLabel" Text="Units finden" Font="40" TextColor="Black" HorizontalOptions="CenterAndExpand" FontSize="Title" Margin="0,80,10,10"/>
+            <Label x:Name="MainLabel" Text="Einheiten finden:" Font="40" TextColor="Black" HorizontalOptions="CenterAndExpand" FontSize="Title" Margin="0,80,10,10"/>
 
             <SearchBar x:Name="SearchBar" SearchButtonPressed="SearchBar_SearchButtonPressed"/>
 
-            <ListView x:Name="MainListView" HasUnevenRows="True">
+            <ListView x:Name="MainListView" HasUnevenRows="True" IsPullToRefreshEnabled="true">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -23,7 +23,7 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <Button x:Name="BtnCreateFeedback" Text="Feedback geben" Clicked="BtnCreateFeedback_Clicked" IsEnabled="False"/>
+            <Button x:Name="BtnCreateFeedback" Text="Feedback geben" Clicked="BtnCreateFeedback_Clicked" IsEnabled="False" CornerRadius="10" Margin="10,10,10,10"/>
             
         </StackLayout>
     </ContentPage.Content>

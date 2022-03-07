@@ -72,5 +72,17 @@ namespace Feedback_App_XAML.ServicesHandler
 
             return check;
         }
+        public async Task<string> GetUnitsByUserId(string token, int userId)
+        {
+            var check = await _restClient.GetUnitsByUserId(token, userId);
+
+            return check;
+        }
+        public async Task<string> GetUserStatistic(string token, int userId)
+        {
+            var check = await _restClient.GetUserStatistic(token, userId);
+
+            return check;
+        }
     }
 }

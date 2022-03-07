@@ -25,23 +25,54 @@ namespace Feedback_App_XAML.Views
         {
             InitializeComponent();
         }
+
+        public async void GetUserData()
+        {
+            LoginService serviceData = new LoginService();
+            var getData = await serviceData.GetData(EntryUsername.Text, EntryPassword.Text);
+
+            AllUserData jsonToken = JsonConvert.DeserializeObject<AllUserData>(getData);
+            string token = jsonToken.Token;
+            AllUserData jsonExpiration = JsonConvert.DeserializeObject<AllUserData>(getData);
+            string expiration = jsonExpiration.Expiration;
+            AllUserData jsonUserId = JsonConvert.DeserializeObject<AllUserData>(getData);
+            int userId = jsonUserId.UserId;
+            AllUserData jsonIdentityId = JsonConvert.DeserializeObject<AllUserData>(getData);
+            string identityId = jsonExpiration.IdentityId;
+            AllUserData jsonRole = JsonConvert.DeserializeObject<AllUserData>(getData);
+            string role = jsonRole.Role;
+            AllUserData jsonUsername = JsonConvert.DeserializeObject<AllUserData>(getData);
+            string username = jsonUsername.Username;
+            AllUserData jsonEmail = JsonConvert.DeserializeObject<AllUserData>(getData);
+            string email = jsonUsername.Email;
+
+            Application.Current.Properties["token"] = token;
+            Application.Current.Properties["expiration"] = expiration;
+            Application.Current.Properties["userId"] = userId;
+            Application.Current.Properties["identityId"] = identityId;
+            Application.Current.Properties["role"] = role;
+            Application.Current.Properties["username"] = username;
+            Application.Current.Properties["email"] = email;
+        }
         private async void ButtonAnmelden_Clicked(object sender, EventArgs e)
         {
             LoginService serviceData = new LoginService();
             var getData = await serviceData.GetData(EntryUsername.Text, EntryPassword.Text);
 
-            var items = getData.Split('"');
-            string token = items[3];
-            string expiration = items[7];
-            string userId = items[10];
-            string identityId = items[13];
-            string role = items[17];
-            string username = items[21];
-            string email = items[25];
-
-            userId = userId.Replace(":", "");
-            userId = userId.Replace(",", "");
-
+            AllUserData jsonToken = JsonConvert.DeserializeObject<AllUserData>(getData);
+            string token = jsonToken.Token;
+            AllUserData jsonExpiration = JsonConvert.DeserializeObject<AllUserData>(getData);
+            string expiration = jsonExpiration.Expiration;
+            AllUserData jsonUserId = JsonConvert.DeserializeObject<AllUserData>(getData);
+            int userId = jsonUserId.UserId;
+            AllUserData jsonIdentityId = JsonConvert.DeserializeObject<AllUserData>(getData);
+            string identityId = jsonExpiration.IdentityId;
+            AllUserData jsonRole = JsonConvert.DeserializeObject<AllUserData>(getData);
+            string role = jsonRole.Role;
+            AllUserData jsonUsername = JsonConvert.DeserializeObject<AllUserData>(getData);
+            string username = jsonUsername.Username;
+            AllUserData jsonEmail = JsonConvert.DeserializeObject<AllUserData>(getData);
+            string email = jsonUsername.Email;
 
             Application.Current.Properties["token"] = token;
             Application.Current.Properties["expiration"] = expiration;
@@ -57,28 +88,37 @@ namespace Feedback_App_XAML.Views
             if (getLoginDetails is true)
             {
                 await DisplayAlert("Success!", "Benutzer " + username + " erfolgreich angemeldet.", "Okay");
-                
+
                 if (role is "student") { await Navigation.PushAsync(new HomePageSchuler()); }
                 else { await Navigation.PushAsync(new HomePageLehrer()); }
 
                 LoginService serviceGetUserData = new LoginService();
                 var getGetUserData = await serviceGetUserData.GetUserData(token, identityId);
 
-                getGetUserData = getGetUserData.Replace('"',' ');
-                getGetUserData = getGetUserData.Replace(" ", "");
-
-                var datas = getGetUserData.Split(',');
-                string title = getGetUserData.Split(':')[0].Split(',')[0];
-                string firstName = getGetUserData.Split(':')[2].Split(',')[0];
-                string lastName = getGetUserData.Split(':')[3].Split(',')[0];
-                string birthdate = getGetUserData.Split(':')[4].Split(',')[0];
-                string school = getGetUserData.Split(':')[5].Split('}')[0];
+                AllUserData jsonTitle = JsonConvert.DeserializeObject<AllUserData>(getGetUserData);
+                string title = jsonTitle.Title;
+                AllUserData jsonFirstName = JsonConvert.DeserializeObject<AllUserData>(getGetUserData);
+                string firstName = jsonFirstName.FirstName;
+                AllUserData jsonLastName = JsonConvert.DeserializeObject<AllUserData>(getGetUserData);
+                string lastName = jsonLastName.LastName;
+                AllUserData jsonBirthdate = JsonConvert.DeserializeObject<AllUserData>(getGetUserData);
+                string birthdate = jsonBirthdate.Birthdate;
+                AllUserData jsonSchool = JsonConvert.DeserializeObject<AllUserData>(getGetUserData);
+                string school = jsonSchool.School;
 
                 Application.Current.Properties["title"] = title;
                 Application.Current.Properties["firstName"] = firstName;
                 Application.Current.Properties["lastName"] = lastName;
                 Application.Current.Properties["birthdate"] = birthdate;
                 Application.Current.Properties["school"] = school;
+
+                if(role is "teacher")
+                {
+                    LoginService serviceGetUnitsByUserId = new LoginService();
+                    var unitsByUserId = await serviceGetUnitsByUserId.GetUnitsByUserId(token, userId);
+
+
+                }
             }
             else { await DisplayAlert("Error!", "Benutzer anmelden fehlgeschlagen! Bitte Eingaben überprüfen und erneut versuchen.", "Okay"); }
         }

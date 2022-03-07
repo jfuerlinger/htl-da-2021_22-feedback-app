@@ -6,13 +6,25 @@
         <StackLayout Margin="20,10,20,10">
             
             <StackLayout Padding="0" Margin="20,10,10,0" HorizontalOptions="EndAndExpand" VerticalOptions="End">
-                <Button Text="Mein Konto" TextColor="Black" x:Name="buttonMyAcc" Clicked="buttonMyAcc_Clicked" CornerRadius="20"/>
+                <Button Text="Mein Konto" TextColor="Black" x:Name="buttonMyAcc" Clicked="buttonMyAcc_Clicked" BackgroundColor="WhiteSmoke" FontAttributes="Bold" FontSize="Body"/>
             </StackLayout>
 
             <Label x:Name="MainLabel" Text="Feedback erstellen" Font="40" TextColor="Black" HorizontalOptions="CenterAndExpand" FontSize="Title" Margin="0,80,10,10"/>
+            
 
             <Button x:Name="btncreateUnit" Text="Units erstellen" Clicked="btncreateUnit_Clicked"/>
+            <Button x:Name="btnStatistic" Text="Statistic" Clicked="btnStatistic_Clicked"/>
 
+
+            <ListView x:Name="MainListView" HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Label Text="{Binding .}" TextColor="Black" FontSize="Medium" Padding="10" Margin="0,0,0,0"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
         </StackLayout>
     </ContentPage.Content>
