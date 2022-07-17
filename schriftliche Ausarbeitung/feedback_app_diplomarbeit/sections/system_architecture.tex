@@ -13,4 +13,13 @@
 \setauthor{Mirzet Sankonjic}
 
 \subsection{Models}
+Jedes Model ist ein Interface. In diesem Interface wird ein neues Datenmodel definiert,
+welches in allen Componenten und Services verwendet werden kann. Dieses Datenmodel
+ist ident mit den Data Transfer Objects oder Entitäten des Servers und dient als
+Schnittstelle.
 \subsection{Services}
+Die Daten werden vom Client über einen Service per API an den Server gesendet
+und wieder empfangen. Hierfür wird das HttpClientModule eingebunden. Es stehen
+die HTTP-Requests GET, POST, PUT, PATCH und DELETE zur Verfügung. Die
+Services werden dann in den benötigten Componenten injiziert im Konstruktor. Durch
+die typisierte Variante wird ein Observable <> zurückgegeben.
