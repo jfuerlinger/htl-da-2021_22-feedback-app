@@ -1,0 +1,9 @@
+Visual Studio Code Logo
+Visual_Studio_Code_1.35_icon.svg.png
+https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/2048px-Visual_Studio_Code_1.35_icon.svg.png
+public domain
+
+Visual Studio Code Screenshot
+VS_Code_1.36.0-insider.png
+https://upload.wikimedia.org/wikipedia/commons/4/42/VS_Code_1.36.0-insider.png
+Free License
