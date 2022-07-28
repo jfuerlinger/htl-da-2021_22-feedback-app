@@ -10,13 +10,16 @@
             </StackLayout>
 
             <Label x:Name="MainLabel" Text="Feedback erstellen" Font="40" TextColor="Black" HorizontalOptions="CenterAndExpand" FontSize="Title" Margin="0,80,10,10"/>
-            
+
 
             <Button x:Name="btncreateUnit" Text="Units erstellen" Clicked="btncreateUnit_Clicked"/>
-            <Button x:Name="btnStatistic" Text="Statistic" Clicked="btnStatistic_Clicked"/>
+            
+            <SearchBar x:Name="SearchBar" SearchButtonPressed="SearchBar_SearchButtonPressed"/>
 
 
-            <ListView x:Name="MainListView" HasUnevenRows="True">
+            <Label Text="Your Units"/>
+
+            <ListView x:Name="MainListView" HasUnevenRows="True" IsPullToRefreshEnabled="true">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

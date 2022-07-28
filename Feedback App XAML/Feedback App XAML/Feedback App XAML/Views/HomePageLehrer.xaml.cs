@@ -23,9 +23,13 @@ namespace Feedback_App_XAML.Views
         public void ListViewUnits()
         {
             var titleUnit = Application.Current.Properties["titleUnit"].ToString();
+            var subjectUnit = Application.Current.Properties["subjectUnit"].ToString();
+            var descriptionUnit = Application.Current.Properties["descriptionUnit"].ToString();
 
             var userData = new List<string>();
-            userData.Add("Title: " + titleUnit);
+            userData.Add("Titel: " + titleUnit);
+            //userData.Add("Subject: " + subjectUnit);
+            userData.Add("Beschreibung: " + descriptionUnit);
             MainListView.ItemsSource = userData;
         }
 
@@ -58,29 +62,37 @@ namespace Feedback_App_XAML.Views
             }
         }
 
-        private async void btnStatistic_Clicked(object sender, EventArgs e)
+        private async void SearchBar_SearchButtonPressed(object sender, EventArgs e)
         {
-            var token = Application.Current.Properties["token"].ToString();
-            var userId = (int)Application.Current.Properties["userId"];
+            var searchSchlussel = SearchBar.Text;
 
-            LoginService serGetUserStat = new LoginService();
-            var getStat = await serGetUserStat.GetUserStatistic(token, userId);
-
-            AllUnit_FeedbackData jsonCreatedTeachingUnitsCount = JsonConvert.DeserializeObject<AllUnit_FeedbackData>(getStat);
-            int createdTeachingUnitsCount = jsonCreatedTeachingUnitsCount.CreatedTeachingUnitsCount;
-
-            AllUnit_FeedbackData jsonCreatedFeedbacksCount = JsonConvert.DeserializeObject<AllUnit_FeedbackData>(getStat);
-            int createdFeedbacksCount = jsonCreatedFeedbacksCount.CreatedFeedbacksCount;
-
-            AllUnit_FeedbackData jsonAvgStars = JsonConvert.DeserializeObject<AllUnit_FeedbackData>(getStat);
-            double avgStars = jsonAvgStars.AvgStars;
+            LoginService servicesearchUnits = new LoginService();
+            var serachUnitsDataJson = await servicesearchUnits.SearchUnits(searchSchlussel);
 
 
-            Application.Current.Properties["createdTeachingUnitsCount"] = createdTeachingUnitsCount;
-            Application.Current.Properties["createdFeedbacksCount"] = createdFeedbacksCount;
-            Application.Current.Properties["avgStars"] = avgStars;
+            try
+            {
+                var result = JsonConvert.DeserializeObject<List<AllUnit_FeedbackData>>(serachUnitsDataJson);
 
-            await DisplayAlert("Statistik!", "Sie haben " + createdTeachingUnitsCount + " Einheiten erstellt und " + createdFeedbacksCount + " Feedbaks gegeben. Ihr AVG ist: " + avgStars, "Okay");
+                if (result != null)
+                {
+                    var titleUnit = result[0].Title;
+                    var idUnit = result[0].Id;
+                    var subjectUnit = result[0].Subject;
+                    var descriptionUnit = result[0].Description;
+
+                    Application.Current.Properties["idUnit"] = idUnit;
+                    Application.Current.Properties["titleUnit"] = titleUnit;
+                    Application.Current.Properties["subjectUnit"] = subjectUnit;
+                    Application.Current.Properties["descriptionUnit"] = descriptionUnit;
+                }
+            }
+            catch
+            {
+                await DisplayAlert("Error!", "Bitte wiederholen.", "Okay");
+            }
+
+            ListViewUnits();
         }
     }
 }

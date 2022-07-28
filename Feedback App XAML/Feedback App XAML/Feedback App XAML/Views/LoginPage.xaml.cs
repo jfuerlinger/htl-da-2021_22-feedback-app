@@ -112,12 +112,12 @@ namespace Feedback_App_XAML.Views
                 Application.Current.Properties["birthdate"] = birthdate;
                 Application.Current.Properties["school"] = school;
 
-                if(role is "teacher")
+                if(role is "student")
                 {
-                    LoginService serviceGetUnitsByUserId = new LoginService();
-                    var unitsByUserId = await serviceGetUnitsByUserId.GetUnitsByUserId(token, userId);
+                    var searchSchlussel = "";
 
-
+                    LoginService servicesearchUnits = new LoginService();
+                    var serachUnitsDataJson = await servicesearchUnits.SearchUnits(searchSchlussel);
                 }
             }
             else { await DisplayAlert("Error!", "Benutzer anmelden fehlgeschlagen! Bitte Eingaben überprüfen und erneut versuchen.", "Okay"); }

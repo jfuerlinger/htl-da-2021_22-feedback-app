@@ -13,6 +13,7 @@
 
             <SearchBar x:Name="SearchBar" SearchButtonPressed="SearchBar_SearchButtonPressed"/>
 
+            
             <ListView x:Name="MainListView" HasUnevenRows="True" IsPullToRefreshEnabled="true">
                 <ListView.ItemTemplate>
                     <DataTemplate>

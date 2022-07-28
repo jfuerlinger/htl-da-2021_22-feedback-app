@@ -60,7 +60,7 @@ namespace Feedback_App_XAML.ServicesHandler
 
             return check;
         }
-        public async Task<bool> CreateFeedback(string teachingUnitId, string userId, string stars, string comment, string token)
+        public async Task<bool> CreateFeedback(int teachingUnitId, int userId, int stars, string comment, string token)
         {
             var check = await _restClient.CreateFeedback(teachingUnitId, userId, stars, comment, token);
 

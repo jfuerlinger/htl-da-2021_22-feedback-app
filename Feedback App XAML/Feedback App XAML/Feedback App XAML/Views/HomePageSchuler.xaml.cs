@@ -54,7 +54,7 @@ namespace Feedback_App_XAML.Views
                 if(result != null)
                 {
                     var titleUnit = result[0].Title;
-                    var idUnit = result[0].UnitId;
+                    var idUnit = result[0].Id;
                     var subjectUnit = result[0].Subject;
                     var descriptionUnit = result[0].Description;
 
@@ -83,12 +83,13 @@ namespace Feedback_App_XAML.Views
 
         private async void BtnCreateFeedback_Clicked(object sender, EventArgs e)
         {
-            var stars = await DisplayPromptAsync("Feedback erstellen!", "Stars eingeben (von 1 bis 5)");
+            var starsinput = await DisplayPromptAsync("Feedback erstellen!", "Stars eingeben (von 1 bis 5)");
             var comment = await DisplayPromptAsync("Feedback erstellen!", "Komentar eingeben");
 
+            var stars = Convert.ToInt32(starsinput);
             var token = Application.Current.Properties["token"].ToString();
-            var userId = Application.Current.Properties["userId"].ToString();
-            var teachingUnitId = Application.Current.Properties["idUnit"].ToString();
+            var userId = (int)Application.Current.Properties["userId"];
+            var teachingUnitId = (int)Application.Current.Properties["idUnit"];
 
             LoginService serviceCreateFeedback = new LoginService();
             var setfeedback = await serviceCreateFeedback.CreateFeedback(teachingUnitId, userId, stars, comment, token);

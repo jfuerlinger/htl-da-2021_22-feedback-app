@@ -7,6 +7,10 @@
         
         <StackLayout Margin="20,10,20,10">
 
+            <StackLayout Padding="0" Margin="20,10,10,0" HorizontalOptions="EndAndExpand" VerticalOptions="End">
+                <Button Text="My Statistic" TextColor="Black" x:Name="buttonMyStat" Clicked="buttonMyStat_Clicked" BackgroundColor="WhiteSmoke" FontAttributes="Bold" FontSize="Body"/>
+            </StackLayout>
+
             <StackLayout Padding="0" Margin="0,40,0,0">
                 <Label Text="Welcome To AccountPage!" HorizontalOptions="Center" FontSize="Title" TextColor="Black"/>
             </StackLayout>
@@ -19,13 +23,6 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
-
-                                    <ViewCell.ContextActions>
-                                        <MenuItem Clicked="onEdit" CommandParameter="{Binding .}" Text="Edit" />
-                                        <MenuItem Clicked="MenuItem_Clicked" CommandParameter="{Binding .}" Text="Name" />
-                                        <MenuItem Clicked="MenuItem_Clicked_1" CommandParameter="{Binding .}" Text="Schule" />
-                                    </ViewCell.ContextActions>
-
                                     <Label Text="{Binding .}" TextColor="Black" FontSize="Medium" Padding="10"/>
                                 </ViewCell>
                             </DataTemplate>
@@ -37,10 +34,6 @@
                     <Button Grid.Row="3" Grid.Column="1" x:Name="btnPopUpSchool" Text="Edit" Clicked="btnPopUpSchool_Clicked" TextColor="Black" BackgroundColor="WhiteSmoke" FontAttributes="Bold"/>
                 </Grid>
 
-                <StackLayout>
-                    <Label Text="Meine Statistik" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Title" TextColor="Black" Margin="0,20"/>
-                </StackLayout>
-                
                 <StackLayout Margin="0,40,0,40">
                     <Button x:Name="btnPopUpPassword" Text="Password ändern?" Clicked="btnPopUpPassword_Clicked" TextColor="Black" BackgroundColor="WhiteSmoke"/>
                     <Button x:Name="btnDeleteAcc" Text="Konto löschen" Clicked="btnDeleteAcc_Clicked" TextColor="Red" BackgroundColor="WhiteSmoke"/>

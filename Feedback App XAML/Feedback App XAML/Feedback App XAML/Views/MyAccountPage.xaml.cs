@@ -24,13 +24,13 @@ namespace Feedback_App_XAML.Views
 
         public void ListViewUserData()
         {
-            var username = Application.Current.Properties["username"].ToString();
-            var email = Application.Current.Properties["email"].ToString();
-            //var title = Application.Current.Properties["title"].ToString();
-            var firstName = Application.Current.Properties["firstName"].ToString();
-            var lastName = Application.Current.Properties["lastName"].ToString();
-            //var birthdate = Application.Current.Properties["birthdate"].ToString();
-            var school = Application.Current.Properties["school"].ToString();
+            var username = Application.Current.Properties["username"];
+            var email = Application.Current.Properties["email"];
+            //var title = Application.Current.Properties["title"];
+            var firstName = Application.Current.Properties["firstName"];
+            var lastName = Application.Current.Properties["lastName"];
+            //var birthdate = Application.Current.Properties["birthdate"];
+            var school = Application.Current.Properties["school"]; 
 
             var userData = new List<string>();
             userData.Add("Username: " + username);
@@ -95,7 +95,6 @@ namespace Feedback_App_XAML.Views
                     Application.Current.Properties["lastName"] = lastNameInput;
                 }
             }
-
             ListViewUserData();
         }
 
@@ -168,21 +167,39 @@ namespace Feedback_App_XAML.Views
                 await DisplayAlert("Error!", "Bitte wiederholen. Die Daten sind ungenau oder entsprechen nicht den Kriterien. Das neue Passwort muss: (Min. 6 Zeichen, 1x Groß, 1x klein) enthalten.", "Okay");
             }
         }
-
-        private void onEdit(object sender, EventArgs e)
+        private async void buttonMyStat_Clicked(object sender, EventArgs e)
         {
-            var mi = ((MenuItem)sender);
-            DisplayAlert("More Context Action", mi.CommandParameter + " more context action", "OK");
-        }
+            var token = Application.Current.Properties["token"].ToString();
+            var userId = (int)Application.Current.Properties["userId"];
 
-        private void MenuItem_Clicked(object sender, EventArgs e)
-        {
+            LoginService serGetUserStat = new LoginService();
+            var getStat = await serGetUserStat.GetUserStatistic(token, userId);
 
-        }
+            AllUnit_FeedbackData jsonCreatedTeachingUnitsCount = JsonConvert.DeserializeObject<AllUnit_FeedbackData>(getStat);
+            int createdTeachingUnitsCount = jsonCreatedTeachingUnitsCount.CreatedTeachingUnitsCount;
 
-        private void MenuItem_Clicked_1(object sender, EventArgs e)
-        {
+            AllUnit_FeedbackData jsonCreatedFeedbacksCount = JsonConvert.DeserializeObject<AllUnit_FeedbackData>(getStat);
+            int createdFeedbacksCount = jsonCreatedFeedbacksCount.CreatedFeedbacksCount;
 
+            AllUnit_FeedbackData jsonAvgStars = JsonConvert.DeserializeObject<AllUnit_FeedbackData>(getStat);
+            double avgStars = jsonAvgStars.AvgStars;
+
+
+            Application.Current.Properties["createdTeachingUnitsCount"] = createdTeachingUnitsCount;
+            Application.Current.Properties["createdFeedbacksCount"] = createdFeedbacksCount;
+            Application.Current.Properties["avgStars"] = avgStars;
+
+            var role = Application.Current.Properties["role"].ToString();
+
+            if(role is "student")
+            {
+                await DisplayAlert("Statistik!", "Sie haben " + createdFeedbacksCount + " Feedbaks gegeben.", "Okay");
+            }
+            else
+            {
+                await DisplayAlert("Statistik!", "Sie haben " + createdTeachingUnitsCount + " Einheiten erstellt. Ihr AVG ist: " + avgStars, "Okay");
+
+            }
         }
     }
 }

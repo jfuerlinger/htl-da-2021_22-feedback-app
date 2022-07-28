@@ -6,7 +6,7 @@ namespace Feedback_App_XAML.Models
 {
     public class AllUnit_FeedbackData
     {
-        public int UnitId { get; set; }
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Subject { get; set; }
         public string Description { get; set; }

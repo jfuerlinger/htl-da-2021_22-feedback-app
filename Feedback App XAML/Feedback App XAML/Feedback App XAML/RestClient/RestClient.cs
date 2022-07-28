@@ -234,7 +234,7 @@ namespace Feedback_App_XAML.RestClient
             return result;
         }
 
-        public async Task<bool> CreateFeedback(string teachingUnitId, string userId, string stars, string comment, string token)
+        public async Task<bool> CreateFeedback(int teachingUnitId, int userId, int stars, string comment, string token)
         {
             CreateFeedback model = new CreateFeedback() { TeachingUnitId = teachingUnitId, UserId = userId, Stars = stars, Comment=comment, Token=token };
 
@@ -334,7 +334,7 @@ namespace Feedback_App_XAML.RestClient
 
             var client = new HttpClient(httpClientHandler);
             var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("https://10.0.2.2:5001/api/statistic/userStats?userId=1");
+            request.RequestUri = new Uri("https://10.0.2.2:5001/api/statistic/userStats?userId=" + userId);
             request.Method = HttpMethod.Get;
 
             request.Headers.Add("Accept", "*/*");
