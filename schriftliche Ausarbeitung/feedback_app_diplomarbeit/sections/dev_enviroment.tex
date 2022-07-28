@@ -44,17 +44,17 @@ darf ausschließlich für schulische Zwecke eingesetzt werden.
 
 Visual Studio Code, wird auch als VS Code bezeichnet, ist ein Code-Editor entwickelt von Microsoft. 
 Seit November 2015 ist der Source-Code des Code-Editors auf Github verfügbar. Im April 2016 wurde die erste finale Version 
-von Visual Studio Code veröffentlicht. Der Source-Code von des Code-Editors mit einer MIT-Lizenz lizensiert und ist somit Open-Source.
+von Visual Studio Code veröffentlicht. Der Source-Code des Code-Editors ist mit einer MIT-Lizenz lizensiert und ist somit Open-Source.
 Das installierbare Programm hingegen enthält Microsoft-Binaries und ist deshalb keine Open-Source. Das Programm ist kostenlos verfügbar.
 
 Der Texteditor basiert auf dem App-Framework Electron und läuft daher in der Chromium-Engine. Standardmäßig werden ohne zusätzliche Instalationen
-die gängigen Programmier- und Scriptsprachen wie HTML, JavaScript, SQL, JSON, C und viele weitere unterstützt. 
+die gängigen Programmier- und Scriptsprachen wie HTML, JavaScript, SQL, JSON, C, etc. unterstützt. 
 Folgende Basisfunktionen besitzt das Entwickler-Tool:
 
 \begin{itemize}
     \item Syntaxhervorhebung
     \item Autovervollständigung
-    \item Code-Folding (ev. Erklärung Fusszeile!)
+    \item Code-Folding % (ev. Erklärung Fusszeile!)
     \item Debugging
     \item Versionsverwaltung
     \item Konfigurierbare Code-Snippets
@@ -63,6 +63,7 @@ Folgende Basisfunktionen besitzt das Entwickler-Tool:
 \end{itemize}
 
 \subsection{Unterschiede zu Visual Studio}
+\author{Stefano Pyringer}
 Entwicklungsumgebungen (IDEs) wie Visual Studio sind meistens für ein Betriebssystem entwickelt worden und funktionieren 
 gar nicht oder nur eingeschränkt auf anderen Betriebssystemen. Die Auswahl von Programmiersprachen und Frameworks ist beschränkt. IDEs 
 haben üblicherweise einen hohen Speicher- und Ressourcenbedarf.
@@ -78,14 +79,34 @@ In Visual Studio Code wird ein Workspace geöffnet, indem ein Ordner ausgewählt
 Ein Texteditor kann den Funktionsumfang und Komfort einer Entwicklungsumgebung nicht mithalten. Visual Studio Code 
 kann dank Plug-ins, werden auch als Extensions bezeichnet, in der Funktionalität stark erweitert werden.
 Ein großer Vorteil zu Visual Studio ist der Extension-Marketplace, die von einer großen Gemeinschaft von Entwicklern gepflegt wird.
-Dank einer Vielzahl von Plug-ins ist fast jede beliebige Sprache verfügbar mit umfangreichen Hilfsfunktionen wie IntelliSense oder Snippets verfügbar.
+Dank einer Vielzahl von Plug-ins ist fast jede beliebige Sprache mit umfangreichen Hilfsfunktionen wie IntelliSense oder Snippets verfügbar.
 
+\subsection{Verwendungsgrund}
+\author{Stefano Pyringer}
+Visual Studio Code wurde für dieses Projekt für die Testung der HTML-Schnittstellen (APIs) des Programms und für die Planung der Datenbankobjekte verwendet.
+Es wurden im Unterricht bereits gute Erfahrungen mit dem Code-Editor gemacht. Ein großer Vorteil ist der sparsame Verbrauch von Ressourcen, 
+da das Projekt großteils mit Laptops entwickelt wurde und der große Funktionsumfang von bekannten Entwicklerwerkzeugen nicht benötigt wurde.
+
+Es wurden folgende Plug-ins verwendet:
+\begin{itemize}
+    \item Thunder Client
+    \item ERD Editor
+\end{itemize}
+
+% Link zu Extension einfügen?
 \subsection{Thunder Client Extension}
 \author{Stefano Pyringer}
+Die Thunder Client Extension ist eine leichtgewichte REST-API, die sich durch eine einfach zu bedienende GUI auszeichnet.
+Sie unterstützt API Collections, Environment Variablen und kommt auch mit großen Anfragen klar. Desweiteren können die API Anfragen 
+ohne Script mithilfe der GUI getestet werden. Sie ist eine schnelle und einfache Alternative zu Postman.
 
-
+% Link zu Extension einfügen?
 \subsection{ERD Editor Extension}
 \author{Stefano Pyringer}
+Der ERD Editor ist eine Extension für Visual Studio Code, mit der die Planung von Datenbankobjekten und deren 
+Beziehungen ermöglicht wird. Mithilfe dieses Plug-ins sind verschiedene grafische Darstellungen des Entity Relation Diagramms möglich.
+Ein Code-Generator kann die geplanten Datenbankobjekte in SQL-DDL-Code umwandeln. Die Extension ist eine Alternative zu Planungswerkzeugen, 
+die z. B. im Oracle SQL Developer enthalten sind.
 
 \section{Github}
 \author{Mirzet Sakonjic}
