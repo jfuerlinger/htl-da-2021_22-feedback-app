@@ -1,7 +1,27 @@
 \section{Backend}
 \author{Stefano Pyringer}
 \lipsum[50]
+\newpage
 
 \section{Frontend}
 \author{Mirzet Sakonjic}
-\lipsum[50]
+\subsection*{Login}
+Die Anwendungsseite wird ausschließlich in der Oberfläche realisiert, 
+indem das Bild in einem separaten Ressourcenordner gespeichert und mit <img> 
+angezeigt wird. Das Bild auf der Startseite ist urheberrechtlich geschützt, 
+da sich dieses eine Bild nur auf der Anmeldeseite befindet. Beim Einloggen gibt 
+der Nutzer seine E-Mail-Adresse und sein Passwort ein, die bereits ausgelesen 
+und im Hintergrund in der Datenbank gespeichert wurden. Bei Bedarf kann ein 
+neuer Benutzer angelegt werden. Die Validierung überprüft, ob die E-Mail-Adresse 
+und das Passwort eingegeben wurden. Es überprüft auch Passwortregeln wie Länge, 
+Großbuchstaben oder zusätzliche Zeichen.
+Wenn der User auf den Button „Login“ drückt, wird ein API Get-Request mit der
+eingegebenen E-Mail und Passwort ans Backend gesendet. Wenn die Zugangsdaten
+stimmen und der User vorhanden ist, werden die Logindaten inklusive Username
+zurückgesendet und in der globalen Komponente abgespeichert, damit im gesamten
+Projekt darauf zugegriffen werden kann.
+Sollten die Zugangsdaten nicht stimmen, wird eine Fehlermeldung angezeigt.
+Nach dem erfolgreichen Laden aller Daten wird der User zu der Startseite
+weitergeleitet.
+
+\subsection*{Benutzerkontoverwaltung}
