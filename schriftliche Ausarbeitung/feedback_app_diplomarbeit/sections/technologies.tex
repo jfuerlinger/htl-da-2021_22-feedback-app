@@ -4,6 +4,33 @@ Das .NET wird für die Entwicklung und Ausführung von Anwendungsprogrammen verw
 Sie ist mit einer MIT-Lizenz lizensiert und ist somit eine freie open-source Software. Das .NET-Framework wurde von Microsoft 
 2016 unter den Namen .NET Core modernisiert. .NET ist der Nachfolger von .NET Core seit Dezember 2020 und ist in der Version 6.0.7 verfügbar (Stand Juli 2022).
 
+\subsection{Allgemeine Eigenschaften}
+Microsoft die Konzeptideen von Java, aufgrund des hohen Erfolgs der Sprache,
+übernommen und versucht, die bekannten Schwachstellen der Sprache auszumerzen und dadurch die Messlatte mit 
+.NET spürbar höher gelegt.
+
+Folgenede Eigenschaften bringt .NET mit sich:
+
+\subsubsection{Objektorientierung}
+.NET ist komplett objektbasiert. Auch einfache Datentypen wie Integer werden als Objekte behandelt.
+
+\subsubsection{WinAPI-32-Ersatz}
+Microsoft will langfristig die Win32-API durch Klassen des .NET-Frameworks ersetzten. Alle Sprachen greifen 
+daher auf die gleiche Bibliothek zurück. Dadurch verwischen die charackterischtischen Merkmale der verschiedenen Sprachen. 
+Die Wahl einer Sprache im .NET ist nicht mehr mit den Entscheidungen gleichzusetzen, wie effizient eine Anwendung geschrieben werden kann 
+oder was sie zu leisten imstande ist.
+
+\subsubsection{Platttformunabhängigkeit}
+Auf .NET bassierenden Anwendungen laufen in einer Umgebung, die mit der virtuellen Maschine von Java verglichen werden kann.
+Erst zur Laufzeit der Anwendung wird der Maschinencode generiert. Aufgrund der öffentlichen Dokumentation der Spezifikation von 
+der Common Language Runtime (CLR) lässt sich sie sich auf Plattformen portieren wie Unix oder Linux. 
+Quelloffene Beispiele sind Mono oder CoreCLR.
+
+\subsection{Sprachunabhängigkeit}
+Eine in C\# geschriebene Klasse kann aus jeder anderen .NET-kompitablen Sprache wie F\# aufgerufen werden, ohne die Verwendung über eine 
+spezifizierte Schnittstellentechnologie wie COM/COM+ gehen zu müssen. Beispielweise lässt sich eine C\# implementierte Klasse aus einer 
+VB.NET-KLasse ableiten und auch umgekehrt ist dies möglich.
+
 \subsection{Architektur und Anwedungsgebiete}
 Das Software-Development-Kit (SDK) unterstützt Windows (ab 7, 32/64 Bit und Arm), macOS (ab 10.12), Linux-Distrubtionen(64 Bit, Arm) 
 und für Docker oder Snappy existieren offizelle Images. .NET besteht aus 2 Hauptkomponenten CoreCLR und CoreFX. 
