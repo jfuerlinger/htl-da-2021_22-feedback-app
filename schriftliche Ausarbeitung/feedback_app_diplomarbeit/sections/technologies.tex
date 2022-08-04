@@ -9,6 +9,7 @@ Microsoft die Konzeptideen von Java, aufgrund des hohen Erfolgs der Sprache,
 übernommen und versucht, die bekannten Schwachstellen der Sprache auszumerzen und dadurch die Messlatte mit 
 .NET spürbar höher gelegt.
 
+% ev. Bilder einfügen
 Folgenede Eigenschaften bringt .NET mit sich:
 
 \subsubsection{Objektorientierung}
@@ -57,9 +58,87 @@ Standardmäßig können für die Entwicklung von .NET Apps die Programmiersprach
     \item Internet of Things
 \end{itemize}
 
-\section{ASP .NET Core}
+\section{ASP.NET Core}
+\setauthor{Stefano Pyringer}
+ASP.NET Core ist ein modulares Open-Source Web-Framework für die Entwicklung von modernen Web-Anwendungen.
+Es wurde von Microsoft entwickelt und ist der Nachfolger von ASP.NET seit .NET 5. Das Web-Framework ist ein Bestandteil von 
+.NET. ASP.NET Core wurde von Grund auf neu entwickelt und unterscheidet sich wesentlich von Vorgänger Versionen. 
+
+Die wichtigsten Vorteile zu ASP.NET sind:
+\begin{itemize}
+    \item Entwicklung von Web-UI und Web-APIs in einer einheitlichen Umgebung
+    \item Open-Source und Community freundlich
+    \item Plattformunabhängigkeit (Windows, MacOS, Linux)
+    \item Moderne Entwicklungstools
+    \item Leichtgewichtige, modulare und leistungsstarke HTTP-Request Pipeline
+    \item Umfassende Testmöglichkeiten
+    \item Dependency Injection
+    \item Razor Pages und Blazor ermöglichen dynamische Webseiten mit .NET Programmiersprachen
+    \item Cloud kompitabel
+    \item Mehrere Hosting Möglichkeiten:
+    \begin{itemize}
+        \item Kestrel
+        \item IIS
+        \item HTTP.sys
+        \item Nginx
+        \item Apache
+        \item Docker
+    \end{itemize}
+\end{itemize}
+
+\subsection{Anwendungsgebiete}
 \setauthor{Stefano Pyringer}
 
+\subsubsection{Interaktive clientseitige Web-Apps mit Blazor/Razor View Engine}
+Mithilfe von Blazor ist das Erstellen von clientseitigen Webbenutzeroberflächen möglich.
+Zudem bietet die Razor View Engine die Möglichkeit, .NET-Sprachblöcke in HTML-Seiten einzubetten.
+Die UI wird anschließend als HTML und CSS gerendert inklusive umfassender Browserunterstützung (auch mobile Browser).
+Mit der Technik des Client-Side-Renderings werden die Skripte im Browser ausgeführt und verarbeitet.
+
+\subsubsection{Web-APIs}
+Mit ASP.NET Core können RESTful-basierte Webservices (HTTP-API) entwickelt werden. Die Services werden von Controllern gesteuert und diese 
+unterstützen CRUD-Datenoperationen (Create, Read, Update, Delete).
+Die Schnittstellen können mit Swagger/Open-API dokumentiert werden.
+
+\subsubsection{Web-Apps und APIs mit MVC}
+ASP.NET Core MVC ist ein zusätzliches umfassendes Framework bassierend auf dem Model-View-Controller-Entwursfmusters. Damit werden 
+die einzelnen Bereiche getrennt, was die Entwicklung, Organisition und Testbarkeit erleichtert. 
+ASP.NET Core MVC wird parallel zu Razor Pages als Alternative weiterhin unterstützt.
+
+\subsubsection{Web-Apps und APIs mit Razor Pages}
+Razor Pages ist der Nachfolger von MVC in ASP.NET Core und ersetzt ASP.NET Web Forms. 
+Sie bassiert auf dem MVC-Framework, jedoch ist die Komplexität reduziert. Razor Pages verwendet das 
+MVVM-Entwurfsmuster (Model-View-View-Model). Somit entfällt der Controller.
+
+
+\subsubsection{Echtzeit-Web-Apps mithilfe von SignalR}
+SignalR ist eine Open-Source-Bibliothek mithilfe die Hinzuufügung von Echtzeitwebfunktionen zu Apps zu vereinfachen.
+Diese Funktionen ermöglichen serverseitigen Code, Inhalte sofort an die Clients zu senden. SignalR verarbeitet die Verbindungsveraltung 
+automatisch.
+
+SignalR ist besonders für Szenarien geeignet, wo man Daten vom Server mit einer hohen Aktualisierungsfrequenz benötigt. 
+Solche Kanditen können sein:
+\begin{itemize}
+    \item Dashboard oder Überwachungsdienste wie Sofortupdates wie Reisehinweise oder Börsenwerte.
+    \item Soziale Netzwerke-Apps mit Chatroom-Funktion
+    \item Applikationen, die wiederholt in kürzester Zeit Daten benötigen (z. B.Gaming, GPS, Voting, Auktionen, etc.)
+\end{itemize}
+
+\subsubsection{gRPC-Dienste}
+RPC steht für Remote Procedure Call und eignet sich dafür, Mikroservices miteinander kommunizieren zu lassen.
+Das dRPC-Framwork ist sprachunabhängig und hochleistungsfähig.
+
+Es eignet sich besonders für folgende Szenarien:
+\begin{itemize}
+    \item Simple Mikroservices, wo Effizienz wichtig ist
+    \item Mehrsprachige Systeme
+    \item Point-to-Point-Dienste, die in Echtzeit Streaminganforderungen oder -antworten verarbeiten müssen.
+\end{itemize}
+
+\subsubsection{Datengesteuerte Web-Apps}
+
+\subsubsection{Hybrid-Apps}
+Die Technologien können miteinander kombiniert werden. So ist eine 
 
 \subsection{Identity}
 \setauthor{Stefano Pyringer}
