@@ -7,3 +7,8 @@ Visual Studio Code Screenshot
 VS_Code_1.36.0-insider.png
 https://upload.wikimedia.org/wikipedia/commons/4/42/VS_Code_1.36.0-insider.png
 Free License
+
+Prinzipielle Funktionsweise des ADO.NET Entity Framework
+ADO_NET_EF.png
+https://de.wikipedia.org/wiki/Entity_Framework#/media/Datei:ADO.NET_EF.svg
+CC BY-SA 3.0

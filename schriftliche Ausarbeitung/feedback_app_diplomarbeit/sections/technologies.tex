@@ -136,17 +136,156 @@ Es eignet sich besonders für folgende Szenarien:
 \end{itemize}
 
 \subsubsection{Datengesteuerte Web-Apps}
+Erstellung von Web-Applikationen, die mit Datenbankensysteme zusammenarbeiten. Daten können im 
+Browser mittels CRUD-Operationen verändert werden, ohne auf eine spezielle Software, wie den Oracle SQL-Explorer, zuzugreifen.
 
-\subsubsection{Hybrid-Apps}
-Die Technologien können miteinander kombiniert werden. So ist eine 
+\subsubsection{Hybrid-App Development}
+Verschiedene Technologien können miteinander kombiniert werden. So können alle vorherigen genannten Anwendungsmöglichkeiten 
+mit ASP.NET Core in einer App verwendet werden. 
+Es ist auch ein ist auch eine Verschmelzung von Benutzeroberflächen mit .NET MAUI, WPF und Windows Forms möglich. Diese laufen nicht im Browser, 
+sondern in einer eigenen Anwendung dargestellt, ohne die z. B. exestierende Oberfläche neu für die anzuwendende UI zu programmieren.
 
 \subsection{Identity}
 \setauthor{Stefano Pyringer}
+ASP.NET Core Identity ist eine API, dass das Benutzermanagement (Login-Interface) ermöglicht. 
+Die Benutzer können einen Account erstellen und mit diesen einloggen. Die API verwendet dafür eine 
+SQL-Datenbank, die die Benutzernamen, Rollen, Passwörter, E-Mail Adressen und weitere benutzerbezogene Daten verwaltet. 
+Als Alternative ist die Speicherung der Datenbank auf externen Datenbanksystemen wie Azure möglich.
 
+Ein externer Login von Login-Providern wie Google, Microsoft, Twitter und Facebook wird von ASP.NET Core Identity ebenfalls unterstützt.
+Der Identity Source Code ist auf Github erhältlich.
+
+Eine erweiterte Version von ASP.NET Core Identity ist IdentityServer4, welche ein OpenID Connect und OAuth 2.0 Framework bietet.
+Zudem sind folgende erweiterte Sicherheitsfeatures möglich:
+
+\begin{itemize}
+    \item Authentication as a Service (AaaS)
+    \item Single sign-on/off (SSO) Zugangsverfahren für Multi-Anwendungsszenarien
+    \item Zugriffskontrolle für APIs
+    \item Federation Gateway
+\end{itemize}
 
 \section{Entity Framework Core}
 \setauthor{Stefano Pyringer}
+\subsection{Überblick}
 
+Das Entity Framework (EF) ist ein moderner Objektdatenbank-Mapper für .NET-Objektstrukturen. Es
+wurde von Microsoft entwickelt und die erste Version erschien als Teil des .NET Framework 3.5 im
+Jahr 2008. Damals gehörte es noch zu ADO.NET, welches seit 2002 exestiert.  Es ist als Ergänzung zu verstehen, 
+der die Differenzen zwischen der objektorientierten Programmierung und relationalen Datenbanken addressiert.
+
+Im Jahr 2021 mit der Version 5 machte Microsoft das Framework quelloffen verfügbar und hieß
+Entity Framework. Mit .NET Core gibt es seit 2016 das Framework als separates Zusatzpaket Entity
+Framework Core (EF Core). Die aktuellste Version ist EF Core 6.0 (Stand Juli 2022) und 
+erhält Langzeit-Support (LTS) bis 8. November 2024.
+
+Es unterstützt LINQ-Abfragen, Migrationen und Änderungsnachverfolgung (Tracking). EF-Core
+unterstützt viele Datenbanken wie SQL-Datenbanken (lokal und Azure), SQLite, MySQL, PostgreSQL
+und Azure Cosmos DB.
+
+\subsection{Überblick ORM}
+Objektrelationale Abbildung (engl. Object-realtional mapping) kann mit einer objektorientieren
+Programmiersprache Objekte (Klassen) in einer relationalen Datenbank abgelegt werden. ORM ist
+somit eine Lösung für die Kommunikation zwischen Objektcode und relationaler Datenbank.
+
+Zu den Vorteilen von ORM zählen neben der Datenzugriffstechnik auch:
+
+\begin{itemize}
+    \item Vereinfachte Entwicklung, da die Konvertierung von Objekt und Tabelle und umgekehrt
+    automatisiert wird, was zu geringeren Entwicklungs- und Wartungskosten führt.
+    \item Weniger Code im Vergleich zu Embedded SQL und handgeschriebenen gespeicherten
+    Prozeduren
+    \item Transparente Objektzwischenspeicherung in der Anwendungsebene zur Verbesserung der
+    Systemleistung
+    \item Einfache und schnelle Wartung der Anwendung
+\end{itemize}
+
+Diese Technik bringt auch Nachteile mit sich:
+
+\begin{itemize}
+    \item Langsamere Performance im Gegensatz zu gespeicherten Prozeduren
+    \item ORM-Abhängigkeit kann unter bestimmten Umständen zu schlecht gestalteten
+    Datenbanken führen
+\end{itemize}
+
+\subsection{Architektur}
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics*[width=16cm]{pics/ADO_NET_EF.png}
+        \caption[Prinzipielle Funktionsweise des ADO.NET Entity Framework]{Prinzipielle Funktionsweise des ADO.NET Entity Framework \cite{ArchitekturEF}}
+    \end{center}
+\end{figure}
+
+\subsection{Überblick wichtiger EF-Objekte}
+\subsubsection{DbContext}
+Stellt eine Verbindung mit der Datenbank dar. Stellt Methoden für Abfragen (Query),
+Änderungsverfolgung (Tracking) und Speichern (Save) bereit.
+
+\subsubsection{DbQuery}
+Stellt Methoden für das Hinzufügen (Add), Anhängen (Attach) und Entfernen (Remove) von
+Entitäten bereit.
+
+\subsubsection{DbSet}
+Erbt von DbQuery und stellt die entsprechenden Methoden für Entity-Typen bereit.
+
+\subsubsection{Change Tracker API}
+Bietet Methoden an, um Änderungen verfolgen zu können.
+
+\subsubsection{Validation API}
+Führt eine automatische Validierung der Daten im DataLayer durch.
+
+\subsubsection{Code First Model Building}
+Erstellt eine Datenbank mithilfe von Code-basierten Klassen
+
+\subsection{EF-Modellieransätze}
+Für das Entity Framework gibt es 2 Modellieransätze, nämlich Code First und Model First. Ersteres setzt auf die Erzeugung einer 
+Datenbankstruktur mit C\# Code. Model First verwendet im Gegensatz Designer und Assistenten für die Erstellung der Datenbankstruktur.
+
+Daraus ergeben sich folgende Szenarien:
+
+\subsubsection{Code First - keine Datenbank vorhanden}
+Bestehende Klassen (MVC-Model) werden mit Annotationen ausgezeichnet, welche die Abbildung auf eine Datenbank steuern.
+Darauf afbauend werden vom DbContext die Datenbank und die Datenbank-Tabellen modelliert und beim Aufruf der SaveChanges-Methode erstellt.
+
+\subsubsection{Model First - keine Datenbank vorhanden}
+Die Entity-Klassen werden mit einem grafischen Designer modelliert. Dieses Modell wird mit Hilfe des Text Template Transformation Toolkit (T4) und 
+der dazugehörigen Skriptsprache in Entity-Klassen umgewandel. Der Designer erstellt zusätzlich ein SQL-Skript, mit dem die Datenbank erstellt wird.
+
+\subsubsection{Code First - Verwendung einer bestehenden Datenbank}
+Die Entity-Klassen können entsprechend der vorgegebenen Datenbank manuell erstellt werden. Dies ist jedoch sehr arbeitsintensiv.
+
+\subsubsection{Model First - Verwendung einer bestehenden Datenbank}
+Mit Hilfe eines Assistenten wird die Datenbank abgefragt und entsprechend der Datenbankstruktur ein passendes Modell erstellt.
+Dieses wird mit einem T4-Script in die entsprechenden Klassen umgewandelt.
+
+\subsection{Validierungsmöglichkeiten}
+Das Entity Framework bietet eine Vielzahl von Validierungsfeatures. Dieses Konzept gilt für mehrere
+Ebenen:
+
+\begin{itemize}
+    \item Entity direkt → Domainspezifisch
+    \item Persistenzschicht → Datenbankabhängig
+    \item Web-Ui clientseitig → Validierung im Browser
+    \item WPF → Validierung am Desktop
+\end{itemize}
+
+Die Validierungen können unterschiedlich implementiert werden:
+
+\subsubsection{Feld-Ebene}
+Es werden Data-Annotationen in den Model-Felder verwendet. Diese sind in EF Core schon vorgefertigt. Es können aber auch eigene
+Annotationen(-klassen) erstellt werden (Custom Validation).
+
+\subsubsection{Objekt-Ebene}
+Sie wird empfohlen, wenn die Validierung nicht genau einem Feld zugeordnet werden kann.
+Es wird die Methode Validate benutzt, wenn Entity IValidatableObject implementiert wird. Es können
+mehrere Validierungsfehler definiert werden.
+
+\subsubsection{Context-Ebene}
+Sie ist objektübergreifend (mehrere Objekte) und benutzt die Validation unter Verwendung
+der Daten aus der Datenbank.
+Es wird verwendet, wenn eine Validation unter Berücksichtigung mehrerer oder aller Objekte
+notwendig ist (z. B. Unique-Constraint).
 
 \subsection{MSSQLLocalDB}
 \setauthor{Stefano Pyringer}
