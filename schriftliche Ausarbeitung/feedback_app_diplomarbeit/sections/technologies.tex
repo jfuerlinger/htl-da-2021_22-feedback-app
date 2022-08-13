@@ -300,8 +300,63 @@ Mitlgieder dieser Initiative sind große Unternehmen wie z. B. Microsoft, Google
 Ziel ist es, ein offenes und herstellerneutrales Beschreibungsformat für API-Dienste bereitzustellen. Bei den API-Spezifikationen kommen meistens die 2 Sprachen YAML oder JSON zum Einsatz. 
 Die aktuellste der OpenApi-Spezifikation ist 3.1 (Stand Juli 2022). 
 
-Da es um eine nur um eine technische Spezifikation handelt, ist es nicht an eine spezielle technische Implementierung gebunden. Dafür gibt es Tools wie Swagger. 
+Der OpenApi-Standard definiert eine Reihe von Eigenschaften, die auch als sogennante Objekte zusammengefasst werden können. 
+Folgende Objekte liegen in einer Dokumentation vor:
+\begin{itemize}
+    \item Info Objekt: Version und Name der API
+    \item Contact Info: Kontaktinformationen des API-Anbieters
+    \item License Object: Unter welcher Lizenz die API lizensiert ist
+    \item Server Object: Hostnamen, URL-Struktur und Ports der Server
+    \item Components Object: gekapselte Objekte, die sich in einer API-Definition mehrfach verwenden lassen
+    \item Paths Objects: relative Pfade zu Endpunkte der API, die mit dem Server Object gemeinsam genutzt werden
+    \item Path Item Object: für einen spezifischen Pfad wie GET, PUT, POST, DELETE, etc.
+    \item Operation Object: legt unter anderem die Parameter und die zu erwartenden Server-Responses für eine Operation fest
+\end{itemize}
 
+Da es um eine nur um eine technische Spezifikation handelt, ist es nicht an eine spezielle technische Implementierung gebunden. Dafür gibt es Tools wie Swagger. 
+Swagger ist ein Sammlung von Open-Source-Werkzeugen, die helfen, die API-Dokumention zu entwickeln. 
+\begin{itemize}
+    \item Swagger Editor: ein Browser-basierter Editor, wo die OpenAPI-Dokumentation geschrieben werden kann
+    \item Swagger UI: erzeugt die OpenAPI-Dokumentation
+    \item Swagger Codegen: generiert die Server Stubs und Client SDKs
+\end{itemize}
+
+Es exestieren auch kostenplichtige Tools wie SwaggerHub Enterprise, Swagger Inspector und API-Tree. 
+Desweiteren gibt es verschiedene Entwicklungsumgebungen und Erweiterungen zur Unterstützung der OpenAPI-Dokumentation. 
+Nicht jede beliebige API lässt sich mittels OpenAPI abbilden. REST-APIs werden vollständig unterstützt.
+
+\subsection{Anwendungsgebiete}
+Generell wird die OpenAPI eingesetzt, um REST-APIs auf eine einheitliche Weise zu beschreiben. Da diese Definition in einem 
+maschinenlesbaren Format vorliegen, können automatisiert folgende Möglichkeiten erzeugt werden.
+
+\subsubsection{Erzeugung der API-Dokumentation}
+Es kann aus den Code der API-Definition eine HTML-basierte Dokumentation erzeugt werden. Diese dient als Nachschlagewerk für jene Entwickler, 
+die auf die APIs zugreifen wollen. Ändert sich die API-Defintion, so wird die Dokumentation automatisch neu erzeugt.
+
+\subsubsection{Erzeugung von Anbindungen in verschiedenen Programmiersprachen}
+Aus API-Definition können mit den passenden Tools eine Client-seitige Softwarebibliothek in einer unterstützten Programmiersprache 
+erzeugt werden. Diese werden ganz normal eingebunden und die Zugriffe auf die API-Diensten erfolgen z. B. über Funktionsaufrufe innerhalb 
+der gewohnten Entwicklungsumgebung. Damit werden Entwickler mit unterschiedlichen Programmiersprachen der Zugriff auf die API ermöglicht.
+
+\subsubsection{Erzeugung von Testfällen}
+Aus den API-Defintion hat man die Möglichkeit, Testfälle zu definieren. Diese Test werden bei jeder Änderung der API automatisch durchgeführt, 
+um sicherzustellen, dass jede Komponente der Software ordnungsgemäß funktioniert.
+
+\subsection{Vorteile von OpenAPI}
+Die Entwicklung und Pflege einer API wird in Einklang gehalten. Sie erlaubt es, dass die Koordination der API-Entwicklung zwischen Backend und 
+Frontend verbessert wird. Beide Seiten können aus der API-Definition Code-Komponenten erzeugen lassen, so dass entwickelt und getestet werden kann, 
+ohne auf die jeweils andere Seite warten zu müssen. Zudem ist es eine standardisierte Basis für die Entwicklung und Dokumentation von APIs.
+
+Außerdem ergeben sich aus der Nutzung von OpenAPI weitere Vorteile:
+\begin{itemize}
+    \item HTTP-APIs werden unabhängig von einer spezifischen Programmiersprache definiert
+    \item Server-Code für eine OpenAPI definierte API generieren
+    \item Client-Bibliotheken für eine OpenAPI-konforme API in mehr als 40 Programmiersprachen generieren
+    \item OpenAPI-Defintionen mit geigneten Tools verarbeiten
+    \item Eine interaktive API-Dokumentation erstellen
+    \item Auf API-Services mit minimalen Implementationsaufwand zugreifen
+    \item Services verstehen, ohne dafür Einsicht in den Quelltext oder weiteren zusätzlichen Dokumentation nehmen zu müssen
+\end{itemize}
 
 \section{JWT Token}
 \setauthor{Stefano Pyringer}
