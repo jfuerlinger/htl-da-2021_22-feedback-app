@@ -12,3 +12,13 @@ Prinzipielle Funktionsweise des ADO.NET Entity Framework
 ADO_NET_EF.png
 https://de.wikipedia.org/wiki/Entity_Framework#/media/Datei:ADO.NET_EF.svg
 CC BY-SA 3.0
+
+DotNet-Bot
+Dotnet-bot.png
+https://commons.wikimedia.org/wiki/File:Dotnet-bot.svg
+CC0
+
+OpenAPI Diagramm
+Open-APIs-5.png
+https://commons.wikimedia.org/wiki/File:Open-APIs-v5.png
+CC BY-SA 4.0
