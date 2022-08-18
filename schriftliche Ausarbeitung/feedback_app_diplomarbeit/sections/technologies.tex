@@ -393,6 +393,9 @@ Außerdem ergeben sich aus der Nutzung von OpenAPI weitere Vorteile:
 
 \section{JWT Token}
 \setauthor{Stefano Pyringer}
+\cite{JWTio}
+\cite{JWTSecurityInsider}
+
 Der JSON Web Token (JWT) ist ein offener Standard (RFC 7519), mit dem JSON-Objekte zwischen den Kommunikationspartner mit dem JSON-Access Token Verfahren 
 sicher und kompakt ausgetauscht werden können. JWTs sind digital signiert und können 2 verschiedene kryptographische Verfahren benutzen:
 \begin{itemize}
@@ -404,7 +407,7 @@ Der Token überträgt Claims, die die notwendigen Informationen für die Authent
 Dieser Token kann z. B. im HTTP-Header oder in der URL übertragen werden. JSON Web Tokens eignen sich für Authentifizierungsvorgänge zustandsloser Sessions und kommen 
 im Webumfeld beispielsweise für Single Sign-on Anwendugnen (SSO) zum Einsatz. Sie sind eine Alternative zu Session Cookies. 
 
-\subsection{Aufbau und Funktionsweise}
+\subsection{Aufbau}
 JWTs sind Zeichenstrings, die aus 3 Teilen bestehen, die mit einem Punkt (.) getrennt werden:
 \begin{itemize}
     \item Header
@@ -437,10 +440,39 @@ Die Signatur ist die Verschlüsselung vom Header, Payload, Passwort und im Heade
 
 \subsubsection{Erstellter Token}
 Das Ergebnis sind 3 Base64-URL Strings die mit einem Punkt getrennt werden. Diese Strings sind platzsparend in HTML und HTTP Umgebungen im Gegensatz zu XML bassierten Standards wie SAML. 
-Der \href{https://jwt.io/#debugger-io}{jwt.io Debugger} kann JSON Web Tokens decodieren, was nützlich ist zum Debuggen.
+Der \href{https://jwt.io/#debugger-io}{jwt.io Debugger} kann JSON Web Tokens decodieren, was nützlich ist zum Debuggen. Da der JWT Token durch den Debugger alle Informationen einsehbar sind, 
+sollten keine sennsiblen Daten im Token angefügt werden.
 
-%\ Screenshot einfügen, ev. mehr Text, Zitate einfügen
+%\ Screenshot einfügen (nicht am Anfang der Seite)
+\begin{figure}
+    \begin{center}
+        \includegraphics*[width=15cm]{./pics/screenshot-JWT-token1.png}
+        \caption[Bsp JWT in Debugger]{Beispiel JWT im jwt.io Debugger}
+    \end{center}
+\end{figure}
 
+\subsection{Funktionsweise}
+Wenn auf geschützte Ressourcen zugegriffen wird, so muss der Client (User) ein JSON Web Token senden, 
+welcher im Idealfall im Authorizations-Header ist, welches das Bearer-Schema verwendet. 
+Der Token beinhaltet grob die Daten, auf welche Bereiche der API ein Benutzer zugreifen darf. 
+
+JWT Token, die im HTTP-Header gesendet werden sollen, sollten nicht zu groß sein, da einige Server Dateigrößen von mehr als 8 KB im Header nicht akzeptieren.
+Sollte dennoch mehr Informationen notwendig sein, so sollte eine Alternative wie \textit{Auth0 Fine-Grained-Authorization} verwendet werden.
+
+Folgendes Diagramm zeigt den Ablauf für eine Anforderung einer geschützten Ressource:
+
+\begin{figure}
+    \begin{center}
+        \includegraphics*[width=10cm]{./pics/Ablauf-JWT-Auth.png}
+        \caption[Ablauf JWT Authentifizierung]{Diagramm JWT Authentifizierungsablauf}
+    \end{center}
+\end{figure}
+    
+\begin{enumerate}
+    \item Die Anwendung sendet einen Authentifizierungs-Request an den Authentifizierungsserver. Diese führt einen bestimmten \textit{authorization-code-flow} durch (z. B. OpenID)
+    \item Bei einer erfolgreichen Authentifizierung sendet der Authentisierungsserver ein Zugriffstoken zurück an den Client.
+    \item Die Anwendung kann mit dem erhaltenen Zugriffstoken auf die geschützte Ressourcen zugreifen (z. B. API).
+\end{enumerate}
 \newpage
 
 \section{Xamarin}
