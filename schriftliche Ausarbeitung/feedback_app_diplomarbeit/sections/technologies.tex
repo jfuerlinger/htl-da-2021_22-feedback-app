@@ -393,6 +393,53 @@ Außerdem ergeben sich aus der Nutzung von OpenAPI weitere Vorteile:
 
 \section{JWT Token}
 \setauthor{Stefano Pyringer}
+Der JSON Web Token (JWT) ist ein offener Standard (RFC 7519), mit dem JSON-Objekte zwischen den Kommunikationspartner mit dem JSON-Access Token Verfahren 
+sicher und kompakt ausgetauscht werden können. JWTs sind digital signiert und können 2 verschiedene kryptographische Verfahren benutzen:
+\begin{itemize}
+    \item Symmetrisches Verfahren mit HMAC
+    \item Asymmetrische Verfahren mit RSA oder ECDSA
+\end{itemize}
+
+Der Token überträgt Claims, die die notwendigen Informationen für die Authentifizierung einer Entität enthalten. 
+Dieser Token kann z. B. im HTTP-Header oder in der URL übertragen werden. JSON Web Tokens eignen sich für Authentifizierungsvorgänge zustandsloser Sessions und kommen 
+im Webumfeld beispielsweise für Single Sign-on Anwendugnen (SSO) zum Einsatz. Sie sind eine Alternative zu Session Cookies. 
+
+\subsection{Aufbau und Funktionsweise}
+JWTs sind Zeichenstrings, die aus 3 Teilen bestehen, die mit einem Punkt (.) getrennt werden:
+\begin{itemize}
+    \item Header
+    \item Payload
+    \item Signature
+\end{itemize}
+Der Token könnte in folgender Form dargestellt werden: \textit{Header.Payload.Signature}
+
+\subsubsection{Header}
+Der Header beschreibt, welcher Typ der Token hat und und welcher Signierungsalgorithmus verwendet wurde. 
+Bei JSON Web Tokens ist immer der Typ als \textit{JWT} angegeben.
+
+\subsubsection{Payload}
+Die Payload beinhaltet die Claims. Claims beinhalten Informationen über die Entität (den User) und zusätzliche Daten. 
+Claim Bezeichnungen werden stets nur mit 3 Buchstaben lang, da JWT ein kompakter Standard ist. Es exestieren 3 verschiedene Arten von Claims. 
+
+\textbf{Registered Claims} sind ein Set von vordefinierten Claims, welche empfohlen werden für ein funktionelle verwendbare Claims. 
+Diese können beispielweise \textit{iss} (issuer), \textit{exp} (expiration time), \textit{sub} (subject) oder \textit{aud} (audience) sein. 
+Die vorgeschlagenen Claims müssen nicht verwendet werden. 
+
+\textbf{Public Claims} können von den Benutzern den Belieben nach vereinbart werden. Sie sollten in der 
+IANA JSON Web Token Registry definiert sein um Kollisionen zu vermeiden. Als Alternative können sie auch als URI definiert sein, welche eine Kollisionsvermeidung für Namespaces hat.
+
+\textbf{Private Claims} sind selbsterstellte Claims, die Informationen beinhalten, auf die sich die benutzenden Parteien geeinigt haben und weder den \textit{registered} 
+oder den \textit{public} Claims zuzuordnen sind.
+
+\subsubsection{Signature}
+Die Signatur wird dazu benutzt, um festzustellen, dass die Nachricht nicht verändert oder gefälscht wurde. Zudem kann ermittelt werden, wer der Absender ist. 
+Die Signatur ist die Verschlüsselung vom Header, Payload, Passwort und im Header angegebene Verschlüsselungsmethode.
+
+\subsubsection{Erstellter Token}
+Das Ergebnis sind 3 Base64-URL Strings die mit einem Punkt getrennt werden. Diese Strings sind platzsparend in HTML und HTTP Umgebungen im Gegensatz zu XML bassierten Standards wie SAML. 
+Der \href{https://jwt.io/#debugger-io}{jwt.io Debugger} kann JSON Web Tokens decodieren, was nützlich ist zum Debuggen.
+
+%\ Screenshot einfügen, ev. mehr Text, Zitate einfügen
 
 \newpage
 
