@@ -1,7 +1,45 @@
 \section{Backend}
 \author{Stefano Pyringer}
-\lipsum[50]
-\newpage
+
+\subsection{Datenbank}
+\author{Stefano Pyringer}
+
+\subsection{Web API}
+\author{Stefano Pyringer}
+
+\subsubsection{Registrierung und Login}
+\author{Stefano Pyringer}
+Für das Usermanagement wird das NuGet Package ASP NET Identity verwendet. Der Authenticate-Controller ermöglicht die Registrierung, den Login und die Löschung des Benutzerkontos. 
+Zusätzlich kann das Passwort und die E-Mail Adresse nachträglich geändert werden.  
+Bei erfolgreicher Authentifizierung wird ein gültiger JSON Web Token zurückgesendet. 
+
+\begin{figure}[h]
+    \includegraphics*[width=15cm]{./pics/Screenshot_Swagger_Auth.png}
+    \caption[Swagger Authenticate-Controller]{Screenshot Swagger Web API Dokumentation Authenticate-Controller}
+\end{figure}
+
+Der Benutzername muss folgende Kriterien erfüllen:
+\begin{itemize}
+    \item mindestens 6 Zeichen
+    \item maximal 26 Zeichen
+    \item keine Leerzeichen
+    \item keine Sonderzeichen (Umlaute sind erlaubt)
+\end{itemize}
+
+Das Passwort hat folgende Mindestanforderungen:
+\begin{itemize}
+    \item mindestens 6 Zeichen
+    \item keine Leerzeichen
+    \item mindestens einen Großbuchstaben, einen Kleinbuchstaben und eine Zahl
+\end{itemize}
+
+Diese Anforderungen sind in der Start-Up Konfiguration der ASP NET Core Web API festgelegt und werden zusätzlich von 
+der Klasse AuthenticateValidations.cs kontrolliert. Im Fehlerfall wird ein entsprechender HTTP-Fehlercode zurückgegeben.
+
+\begin{figure}[h]
+    \includegraphics*[width=15cm]{./pics/screenshot_Startup_PwUserReq.png}
+    \caption[PW User Requirements Startup]{Screenshot Startup.cs Benutzername und Passwort Anforderungen}
+\end{figure}
 
 \section{Frontend}
 \author{Mirzet Sakonjic}
