@@ -4,19 +4,22 @@
 \subsection{Datenbank}
 \author{Stefano Pyringer}
 
+\newpage
+
 \subsection{Web API}
 \author{Stefano Pyringer}
 
-\subsubsection{Registrierung und Login}
+\subsubsection{Benutzerverwaltung}
 \author{Stefano Pyringer}
-Für das Usermanagement wird das NuGet Package ASP NET Identity verwendet. Der Authenticate-Controller ermöglicht die Registrierung, den Login und die Löschung des Benutzerkontos. 
-Zusätzlich kann das Passwort und die E-Mail Adresse nachträglich geändert werden.  
-Bei erfolgreicher Authentifizierung wird ein gültiger JSON Web Token zurückgesendet. 
 
 \begin{figure}[h]
     \includegraphics*[width=15cm]{./pics/Screenshot_Swagger_Auth.png}
-    \caption[Swagger Authenticate-Controller]{Screenshot Swagger Web API Dokumentation Authenticate-Controller}
+    \caption[Swagger Benutzerverwaltung]{Screenshot Swagger Web API Dokumentation Benutzerverwaltung}
 \end{figure}
+
+Für das Usermanagement wird das NuGet Package ASP NET Identity verwendet. Der Authenticate-Controller ermöglicht die Registrierung, den Login und die Löschung des Benutzerkontos. 
+Zusätzlich kann das Passwort und die E-Mail Adresse nachträglich geändert werden. Schüler und Lehrende werden durch Rollen getrennt.
+Bei erfolgreicher Authentifizierung wird ein gültiger JSON Web Token zurückgesendet. 
 
 Der Benutzername muss folgende Kriterien erfüllen:
 \begin{itemize}
@@ -36,11 +39,33 @@ Das Passwort hat folgende Mindestanforderungen:
 Diese Anforderungen sind in der Start-Up Konfiguration der ASP NET Core Web API festgelegt und werden zusätzlich von 
 der Klasse AuthenticateValidations.cs kontrolliert. Im Fehlerfall wird ein entsprechender HTTP-Fehlercode zurückgegeben.
 
+Der UserAccount-Controller ermöglicht das Hinzufügen folgender Daten:
+\begin{itemize}
+    \item Titel
+    \item Vorname
+    \item Nachname
+    \item Geburtsdatum
+    \item Lehranstalt
+\end{itemize}
+
 \begin{figure}[h]
     \includegraphics*[width=15cm]{./pics/screenshot_Startup_PwUserReq.png}
     \caption[PW User Requirements Startup]{Screenshot Startup.cs Benutzername und Passwort Anforderungen}
 \end{figure}
 
+\newpage
+\subsubsection{Authentifizierung}
+\author{Stefano Pyringer}
+Die Login-Methode sendet ein HTTP OK Response mit dem gültigen JWT Token als Objekt zurück. 
+Der Token ist 15 Minuten lang gültig und beinhaltet die Id des Benutzerkontos und deren Rolle. 
+Dieser erlaubt es, je nach Rolle, Zugriff auf die geschützten Bereiche der Web API.
+
+\begin{figure}[h]
+    \includegraphics*[width=15cm]{./pics/screenshot_jwt_create.png}
+    \caption[JWT create]{Screenshot JWT Token Erstellung detailiert}
+\end{figure}
+
+\newpage
 \section{Frontend}
 \author{Mirzet Sakonjic}
 \subsection*{Login}
