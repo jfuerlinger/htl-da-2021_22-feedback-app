@@ -1,6 +1,30 @@
 \section{Übersicht}
 \setauthor{Stefano Pyringer}
-\lipsum[10]
+
+Diese Abbildung bietet einen groben Überblick über die Technologien, die für die Erstellung und Betrieb der Feedback App verwendet wurden.
+Für die Umsetzung der Applikation wurde die Programmiersprache C\# verwendet. Die Technologien werden in Kapitel 3 ausführlich erklärt.
+
+\begin{figure} [h]
+    \includegraphics*[width=15cm]{./pics/architecture_overview.png}
+    \caption[overview architecture]{Systemarchitektur Überblick \cite{CSharpLogo} \cite{XamarinLogo}}
+\end{figure}
+
+\subsubsection{Backend}
+\begin{itemize}
+    \item .NET 6
+    \item \begin{itemize}
+        \item ASP.NET Core
+        \item Entity Framework Core
+        \item ASP.NET Core Identity
+    \end{itemize}
+\end{itemize}
+
+Für das Backend wurde die Software-Entwicklungsplattform .NET 6 verwendet, um Datenstruktur, Repositories und Authentifizierung zu realisieren. 
+Es wird mittels HTTP-API mit dem Frontend kommuniziert.
+
+\subsubsection{Frontend}
+Das Frontend handhabt die Interaktionen des Benutzers und stellt die von der API zur Verfügung gestellten Daten dar. Der Client ist auf mobilen Endgeräten 
+mit dem Betriebssystem Android und iOS lauffähig. Das Frontend wurde mit Xamarin realisiert.
 
 \section{Backend}
 \setauthor{Stefano Pyringer}
