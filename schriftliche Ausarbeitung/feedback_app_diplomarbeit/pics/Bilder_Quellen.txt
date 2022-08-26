@@ -22,3 +22,8 @@ OpenAPI Diagramm
 Open-APIs-5.png
 https://commons.wikimedia.org/wiki/File:Open-APIs-v5.png
 CC BY-SA 4.0
+
+C# Logo
+Csharp_Logo.png
+https://commons.wikimedia.org/wiki/File:Csharp_Logo.png
+CC BY-SA 4.0
