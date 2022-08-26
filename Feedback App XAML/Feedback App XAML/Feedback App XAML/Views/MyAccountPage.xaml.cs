@@ -26,17 +26,14 @@ namespace Feedback_App_XAML.Views
         {
             var username = Application.Current.Properties["username"];
             var email = Application.Current.Properties["email"];
-            //var title = Application.Current.Properties["title"];
             var firstName = Application.Current.Properties["firstName"];
             var lastName = Application.Current.Properties["lastName"];
-            //var birthdate = Application.Current.Properties["birthdate"];
             var school = Application.Current.Properties["school"]; 
 
             var userData = new List<string>();
             userData.Add("Username: " + username);
             userData.Add("Email: " + email);
             userData.Add("Name: " + firstName + " " + lastName);
-            //userData.Add("Geburtstag: " + birthdate);
             userData.Add("Schule: " + school);
 
             MainListView.ItemsSource = userData;
@@ -44,106 +41,167 @@ namespace Feedback_App_XAML.Views
 
         private async void btnPopUpEmail_Clicked(object sender, EventArgs e)
         {
-            var newemail = await DisplayPromptAsync("Email einfügen!", "Neue Email eingeben");
+            var newemail = await DisplayPromptAsync("Email einfügen!", "Neue Email eingeben", keyboard: Keyboard.Email);
 
-            if (newemail.Length == 0)
+            if (newemail is null)
             {
-                await DisplayAlert("Error!", "Bitte wiederholen.", "Okay");
+                ListViewUserData();
             }
             else
             {
-                var token = Application.Current.Properties["token"].ToString();
-                var username = Application.Current.Properties["username"].ToString();
-
-
-                LoginService serviceSetEmail = new LoginService();
-                var setEmail = await serviceSetEmail.SetEmail(username, newemail, token);
-
-                if (setEmail is true)
+                if (newemail.Length == 0)
                 {
-                    await DisplayAlert("Success!", "Die User Daten wurden erfolgreich aktualisiert.", "Okay");
-                    Application.Current.Properties["email"] = newemail;
+                    await DisplayAlert("Error!", "Bitte wiederholen.", "Okay");
                 }
+                else
+                {
+                    var token = Application.Current.Properties["token"].ToString();
+                    var username = Application.Current.Properties["username"].ToString();
+
+
+                    LoginService serviceSetEmail = new LoginService();
+                    var setEmail = await serviceSetEmail.SetEmail(username, newemail, token);
+
+                    if (setEmail is true)
+                    {
+                        await DisplayAlert("Success!", "Die User Daten wurden erfolgreich aktualisiert.", "Okay");
+                        Application.Current.Properties["email"] = newemail;
+                    }
+                }
+                ListViewUserData();
             }
-            ListViewUserData();
         }
 
         private async void btnPopUpName_Clicked(object sender, EventArgs e)
         {
-            var input = await DisplayPromptAsync("Vor- Nachname einfügen!", "Vorname und Nachname eingeben");
+            var input = await DisplayPromptAsync("Vor- Nachname einfügen!", "Vorname und Nachname eingeben", keyboard:Keyboard.Text);
 
-            if (input.Length == 0)
+            if (input is null)
             {
-                await DisplayAlert("Error!", "Bitte wiederholen.", "Okay");
+                return;
             }
             else
             {
-                var firstNameInput = input.Split(' ')[0];
-                var lastNameInput = input.Split(' ')[1];
-
-                var token = Application.Current.Properties["token"].ToString();
-                var identityId = Application.Current.Properties["identityId"].ToString();
-                var school = Application.Current.Properties["school"].ToString();
-
-                LoginService serviceSetData = new LoginService();
-                var setName = await serviceSetData.SetData(firstNameInput, lastNameInput, token, identityId, school);
-
-                if (setName is true)
+                if (input.Length == 0)
                 {
-                    await DisplayAlert("Success!", "Die User Daten wurden erfolgreich aktualisiert.", "Okay");
-                    Application.Current.Properties["firstName"] = firstNameInput;
-                    Application.Current.Properties["lastName"] = lastNameInput;
+                    await DisplayAlert("Error!", "Bitte wiederholen.", "Okay");
                 }
+                else
+                {
+                    var firstNameInput = input.Split(' ')[0];
+                    var lastNameInput = string.Empty;
+
+                    var test = input.Split(' ').Length;
+
+                    if (input.Split(' ').Length == 2)
+                        lastNameInput = input.Split(' ')[1];
+                    else
+                        lastNameInput = null;
+
+                    var token = Application.Current.Properties["token"].ToString();
+                    var identityId = Application.Current.Properties["identityId"].ToString();
+
+                    if(Application.Current.Properties["school"] is null)
+                    {
+                        Application.Current.Properties["school"] = String.Empty;
+                    }
+                    
+                    var school = Application.Current.Properties["school"].ToString();
+                    
+                    LoginService serviceSetData = new LoginService();
+                    var setName = await serviceSetData.SetData(firstNameInput, lastNameInput, token, identityId, school);
+
+                    if (setName is true)
+                    {
+                            await DisplayAlert("Success!", "Die User Daten wurden erfolgreich aktualisiert.", "Okay");
+                            Application.Current.Properties["firstName"] = firstNameInput;
+                            Application.Current.Properties["lastName"] = lastNameInput;
+                    }
+                    
+                }
+                ListViewUserData();
             }
-            ListViewUserData();
         }
 
         private async void btnPopUpSchool_Clicked(object sender, EventArgs e)
         {
-            var inputSchool = await DisplayPromptAsync("Schule einfügen!", "Schulename eingeben");
+            //var quantity = await DisplayPromptAsync("Quantity",
+            //"How many?",
+            //initialValue: "1",
+            //maxLength: 2,
+            //keyboard: Keyboard.Numeric,
+            //accept: "OK",
+            //cancel: "Cancel");
 
-            var firstName = Application.Current.Properties["firstName"].ToString();
-            var lastName = Application.Current.Properties["lastName"].ToString();
             var token = Application.Current.Properties["token"].ToString();
             var identityId = Application.Current.Properties["identityId"].ToString();
 
-            LoginService serviceSetData = new LoginService();
-            var setSchool = await serviceSetData.SetData(firstName, lastName, token, identityId, inputSchool);
-
-            if (setSchool is true)
+            if (Application.Current.Properties["firstName"] is null)
             {
-                await DisplayAlert("Success!", "Die User Daten wurden erfolgreich aktualisiert.", "Okay");
-                Application.Current.Properties["school"] = inputSchool;
+                Application.Current.Properties["firstName"] = String.Empty;
+            }
+            if (Application.Current.Properties["lastName"] is null)
+            {
+                Application.Current.Properties["lastName"] = String.Empty;
+            }
+
+            var firstName = Application.Current.Properties["firstName"].ToString();
+            var lastName = Application.Current.Properties["lastName"].ToString();
+
+            var inputSchool = await DisplayPromptAsync("Schule einfügen!", "Schulename eingeben");
+
+            if (inputSchool is null)
+            {
+                return;
             }
             else
             {
-                await DisplayAlert("Error!", "Bitte wiederholen.", "Okay");
-            }
+                LoginService serviceSetData = new LoginService();
 
-            ListViewUserData();
+                var setSchool = await serviceSetData.SetData(firstName, lastName, token, identityId, inputSchool);
+
+                if (setSchool is true)
+                {
+                    await DisplayAlert("Success!", "Die User Daten wurden erfolgreich aktualisiert.", "Okay");
+                    Application.Current.Properties["school"] = inputSchool;
+                }
+                else
+                {
+                    await DisplayAlert("Error!", "Bitte wiederholen.", "Okay");
+                }
+
+                ListViewUserData();
+            }
         }
 
         private async void btnDeleteAcc_Clicked(object sender, EventArgs e)
         {
-            var password = await DisplayPromptAsync("Password einfügen!", "Password eingeben");
+            var password = await DisplayPromptAsync("Konto löschen!", "Password eingeben");
 
-            if (password.Length == 0)
+            if (password is null)
             {
-                await DisplayAlert("Error!", "Bitte wiederholen.", "Okay");
+                return;
             }
             else
             {
-                var token = Application.Current.Properties["token"].ToString();
-                var username = Application.Current.Properties["username"].ToString();
-
-
-                LoginService serviceDeleteUserAcc = new LoginService();
-                var setEmail = await serviceDeleteUserAcc.SetEmail(username, password, token);
-
-                if (setEmail is true)
+                if (password.Length == 0)
                 {
-                    await DisplayAlert("Success!", "Konto wurde erfolgreich gelöscht.", "Okay");
-                    await Navigation.PushAsync(new Registrierung());
+                    await DisplayAlert("Error!", "Bitte wiederholen.", "Okay");
+                }
+                else
+                {
+                    var token = Application.Current.Properties["token"].ToString();
+                    var username = Application.Current.Properties["username"].ToString();
+
+
+                    LoginService serviceDeleteUserAcc = new LoginService();
+                    var setEmail = await serviceDeleteUserAcc.SetEmail(username, password, token);
+
+                    if (setEmail is true)
+                    {
+                        await DisplayAlert("Success!", "Konto wurde erfolgreich gelöscht.", "Okay");
+                        await Navigation.PushAsync(new LoginPage());
+                    }
                 }
             }
         }
@@ -151,20 +209,29 @@ namespace Feedback_App_XAML.Views
         private async void btnPopUpPassword_Clicked(object sender, EventArgs e)
         {
             var inputpass = await DisplayPromptAsync("Password ändern!", "Altes Password eingeben");
-            var inputNewPass = await DisplayPromptAsync("Password ändern!", "Neues Password eingeben");
-
-            var userName = Application.Current.Properties["username"].ToString();
-
-            LoginService serviceSetData = new LoginService();
-            var setSchool = await serviceSetData.SetPass(userName, inputpass, inputNewPass);
-
-            if (setSchool is true)
-            {
-                await DisplayAlert("Success!", "Die User Daten wurden erfolgreich aktualisiert.", "Okay");
-            }
+            if (inputpass is null)
+                return;
             else
             {
-                await DisplayAlert("Error!", "Bitte wiederholen. Die Daten sind ungenau oder entsprechen nicht den Kriterien. Das neue Passwort muss: (Min. 6 Zeichen, 1x Groß, 1x klein) enthalten.", "Okay");
+                var inputNewPass = await DisplayPromptAsync("Password ändern!", "Neues Password eingeben");
+                if (inputNewPass is null)
+                    return;
+                else
+                {
+                    var userName = Application.Current.Properties["username"].ToString();
+
+                    LoginService serviceSetData = new LoginService();
+                    var setSchool = await serviceSetData.SetPass(userName, inputpass, inputNewPass);
+
+                    if (setSchool is true)
+                    {
+                        await DisplayAlert("Success!", "Die User Daten wurden erfolgreich aktualisiert.", "Okay");
+                    }
+                    else
+                    {
+                        await DisplayAlert("Error!", "Bitte wiederholen. Die Daten sind ungenau oder entsprechen nicht den Kriterien. Das neue Passwort muss: (Min. 6 Zeichen, 1x Groß, 1x klein) enthalten.", "Okay");
+                    }
+                }
             }
         }
         private async void buttonMyStat_Clicked(object sender, EventArgs e)
@@ -200,6 +267,13 @@ namespace Feedback_App_XAML.Views
                 await DisplayAlert("Statistik!", "Sie haben " + createdTeachingUnitsCount + " Einheiten erstellt. Ihr AVG ist: " + avgStars, "Okay");
 
             }
+        }
+
+        private async void btnAbmelden_Clicked(object sender, EventArgs e)
+        {
+            //NavigationPage.SetHasBackButton(this, false);
+
+            await Navigation.PushAsync(new LoginPage());
         }
     }
 }

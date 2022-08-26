@@ -17,6 +17,7 @@ namespace Feedback_App_XAML.Views
     {
         public HomePageLehrer()
         {
+            NavigationPage.SetHasBackButton(this, false);
             InitializeComponent();
         }
 

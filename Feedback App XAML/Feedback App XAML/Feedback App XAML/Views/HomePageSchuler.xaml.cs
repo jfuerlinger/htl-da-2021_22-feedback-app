@@ -17,6 +17,7 @@ namespace Feedback_App_XAML.Views
     {
         public HomePageSchuler()
         {
+            NavigationPage.SetHasBackButton(this, false);
             InitializeComponent();
         }
 
@@ -46,7 +47,6 @@ namespace Feedback_App_XAML.Views
             LoginService servicesearchUnits = new LoginService();
             var serachUnitsDataJson = await servicesearchUnits.SearchUnits(searchSchlussel);
 
-
             try
             {
                 var result = JsonConvert.DeserializeObject<List<AllUnit_FeedbackData>>(serachUnitsDataJson);
@@ -69,39 +69,44 @@ namespace Feedback_App_XAML.Views
                 await DisplayAlert("Error!", "Bitte wiederholen.", "Okay");
             }
 
-            //if(searchSchlussel == titleUnit)
-            //{
-                ListViewUnits();
-                BtnCreateFeedback.IsEnabled = true;
-
-            //}
-            //else
-            //{
-            //    await DisplayAlert("Error!", "Bitte wiederholen. Die Daten sind ungenau oder Unit ist noch nicht erstellt.", "Okay");
-            //}
+            ListViewUnits();
+            BtnCreateFeedback.IsEnabled = true;
         }
 
         private async void BtnCreateFeedback_Clicked(object sender, EventArgs e)
         {
-            var starsinput = await DisplayPromptAsync("Feedback erstellen!", "Stars eingeben (von 1 bis 5)");
-            var comment = await DisplayPromptAsync("Feedback erstellen!", "Komentar eingeben");
-
-            var stars = Convert.ToInt32(starsinput);
-            var token = Application.Current.Properties["token"].ToString();
-            var userId = (int)Application.Current.Properties["userId"];
-            var teachingUnitId = (int)Application.Current.Properties["idUnit"];
-
-            LoginService serviceCreateFeedback = new LoginService();
-            var setfeedback = await serviceCreateFeedback.CreateFeedback(teachingUnitId, userId, stars, comment, token);
-
-            if(setfeedback is true)
+            var starsinput = await DisplayPromptAsync("Feedback erstellen!", "Stars eingeben (von 1 bis 5)", keyboard:Keyboard.Numeric);
+            if (starsinput is null)
             {
-                BtnCreateFeedback.IsEnabled = false;
-                await DisplayAlert("Success!", "Feedback wurde erfolgreich erstellt.", "Okay");
+                return;
             }
             else
             {
-                await DisplayAlert("Error!", "Bitte wiederholen.", "Okay");
+                var comment = await DisplayPromptAsync("Feedback erstellen!", "Komentar eingeben");
+                if (comment is null)
+                {
+                    return;
+                }
+                else
+                {
+                    var stars = Convert.ToInt32(starsinput);
+                    var token = Application.Current.Properties["token"].ToString();
+                    var userId = (int)Application.Current.Properties["userId"];
+                    var teachingUnitId = (int)Application.Current.Properties["idUnit"];
+
+                    LoginService serviceCreateFeedback = new LoginService();
+                    var setfeedback = await serviceCreateFeedback.CreateFeedback(teachingUnitId, userId, stars, comment, token);
+
+                    if (setfeedback is true)
+                    {
+                        BtnCreateFeedback.IsEnabled = false;
+                        await DisplayAlert("Success!", "Feedback wurde erfolgreich erstellt.", "Okay");
+                    }
+                    else
+                    {
+                        await DisplayAlert("Error!", "Bitte wiederholen.", "Okay");
+                    }
+                }
             }
         }
     }

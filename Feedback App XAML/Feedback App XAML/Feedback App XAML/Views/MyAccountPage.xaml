@@ -4,7 +4,6 @@
              xmlns:local="clr-namespace:Feedback_App_XAML"  
              x:Class="Feedback_App_XAML.Views.MyAccountPage">
     <ContentPage.Content>
-        
         <StackLayout Margin="20,10,20,10">
 
             <StackLayout Padding="0" Margin="20,10,10,0" HorizontalOptions="EndAndExpand" VerticalOptions="End">
@@ -37,6 +36,7 @@
                 <StackLayout Margin="0,40,0,40">
                     <Button x:Name="btnPopUpPassword" Text="Password ändern?" Clicked="btnPopUpPassword_Clicked" TextColor="Black" BackgroundColor="WhiteSmoke"/>
                     <Button x:Name="btnDeleteAcc" Text="Konto löschen" Clicked="btnDeleteAcc_Clicked" TextColor="Red" BackgroundColor="WhiteSmoke"/>
+                    <Button x:Name="btnAbmelden" Text="Abmelden" Clicked="btnAbmelden_Clicked" TextColor="Red" BackgroundColor="White"/>
                 </StackLayout>
             </StackLayout>
         </StackLayout>

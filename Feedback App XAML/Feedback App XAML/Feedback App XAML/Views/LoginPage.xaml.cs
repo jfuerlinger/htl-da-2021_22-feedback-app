@@ -23,6 +23,7 @@ namespace Feedback_App_XAML.Views
     {
         public LoginPage()
         {
+            NavigationPage.SetHasBackButton(this, false);
             InitializeComponent();
         }
 
