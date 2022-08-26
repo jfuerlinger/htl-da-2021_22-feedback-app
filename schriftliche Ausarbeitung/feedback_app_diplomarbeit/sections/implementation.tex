@@ -68,7 +68,7 @@ Dieser erlaubt es, je nach Rolle, Zugriff auf die geschützten Bereiche der Web 
 \newpage
 \section{Frontend}
 \author{Mirzet Sakonjic}
-\subsection*{Login}
+\subsection{Login}
 Die Anwendungsseite wird ausschließlich in der Oberfläche realisiert, 
 indem das Bild in einem separaten Ressourcenordner gespeichert und mit <img> 
 angezeigt wird. Das Bild auf der Startseite ist urheberrechtlich geschützt, 
@@ -78,13 +78,111 @@ und im Hintergrund in der Datenbank gespeichert wurden. Bei Bedarf kann ein
 neuer Benutzer angelegt werden. Die Validierung überprüft, ob die E-Mail-Adresse 
 und das Passwort eingegeben wurden. Es überprüft auch Passwortregeln wie Länge, 
 Großbuchstaben oder zusätzliche Zeichen.
-Wenn der User auf den Button „Login“ drückt, wird ein API Get-Request mit der
+\begin{figure}[h]
+    \begin{center}\includegraphics[width=10cm]{pics/Xamarin Frontend/1.png}
+    \caption[Login]{Button Login}
+    \end{center}
+\end{figure}
+\newline
+Wenn der User auf den Button „Login“ drückt, wird ein LoginService-Request mit der
 eingegebenen E-Mail und Passwort ans Backend gesendet. Wenn die Zugangsdaten
 stimmen und der User vorhanden ist, werden die Logindaten inklusive Username
 zurückgesendet und in der globalen Komponente abgespeichert, damit im gesamten
 Projekt darauf zugegriffen werden kann.
+\begin{figure}[h]
+    \begin{center}\includegraphics[width=10cm]{pics/Xamarin Frontend/2.png}
+    \caption[Login]{RestClient}
+    \end{center}
+\end{figure}
+\newline
+\newpage
+Mit Hilfe von RestClient erstellen wir ein LoginModel und fügen es in eine bool-Variable ein, um zu antworten, ob die Anmeldung erfolgreich war oder nicht, d.h. ob das Profil existiert oder nicht.
+\begin{figure}[h]
+    \begin{center}\includegraphics[width=10cm]{pics/Xamarin Frontend/3.png}
+    \caption[Login]{HttpClient}
+    \end{center}
+\end{figure}
+\newline
 Sollten die Zugangsdaten nicht stimmen, wird eine Fehlermeldung angezeigt.
 Nach dem erfolgreichen Laden aller Daten wird der User zu der Startseite
 weitergeleitet.
+\newline
+\begin{figure}[h]
+    \begin{center}\includegraphics[width=10cm]{pics/Xamarin Frontend/4.png}
+    \caption[Login]{UserData laden}
+    \end{center}
+\end{figure}
+\newline
+Nachdem die Logindaten erfolgreich geladen wurden, werden die Profildaten
+wie Vorname, Nachname oder Schule mithilfe der userId geladen.
+\newline
+\begin{figure}[h]
+    \begin{center}\includegraphics[width=10cm]{pics/Xamarin Frontend/5.png}
+    \caption[Login]{UserData laden}
+    \end{center}
+\end{figure}
+\newpage
 
-\subsection*{Benutzerkontoverwaltung}
+
+\subsection{Registrierung}
+Bei der Registrierung werden die eingegebenen Werte zunächst daraufhin überprüft, ob sie den Standards entsprechen. Danach wird registerService erstellt und Daten werden über restClient an RegisterModel übergeben. Feedback kann eine Bestätigung oder ein Fehler sein.
+\begin{figure}[h]
+    \begin{center}\includegraphics[width=10cm]{pics/Xamarin Frontend/6.png}
+    \caption[Registrierung]{Konto erstellen}
+    \end{center}
+\end{figure}
+\newline
+Mit Hilfe von HttpClient werden die Daten im Backend geprüft und wir erhalten das Ergebnis.
+\begin{figure}[h]
+    \begin{center}\includegraphics[width=10cm]{pics/Xamarin Frontend/7.png}
+    \caption[Registrierung]{RestClient}
+    \end{center}
+\end{figure}
+\newline
+\begin{figure}[h]
+    \begin{center}\includegraphics[width=10cm]{pics/Xamarin Frontend/8.png}
+    \caption[Registrierung]{HttpClient}
+    \end{center}
+\end{figure}
+\newpage
+
+\subsection{Benutzerkontoverwaltung}
+Bei der Anmeldung des Benutzers ruft die Methode sofort die Daten des Benutzers ab und sie werden auf der Kontoseite des Benutzers per Ansichtsliste angezeigt.
+\begin{figure}[h]
+    \begin{center}\includegraphics[width=10cm]{pics/Xamarin Frontend/9.png}
+    \caption[MyAccount]{Benutzerkontoverwaltung Daten auslesen}
+    \end{center}
+\end{figure}
+\newline
+Wenn wir Daten wie E-Mail, Vorname, Nachname oder Schulname ändern möchten, tun wir dies über Tasks.
+\begin{figure}[h]
+    \begin{center}
+    \includegraphics[width=6cm]{pics/Xamarin Frontend/tasks.png}\hfill
+    \includegraphics[width=6cm]{pics/Xamarin Frontend/tasks2.png}
+    \caption[MyAccount]{Tasks}
+    \end{center}
+\end{figure}
+\newline
+Durch Drücken des Buttons Abmelden gelangen wir auf die Login-Homepage.
+\begin{figure}[h]
+    \begin{center}\includegraphics[width=10cm]{pics/Xamarin Frontend/abmelden.png}
+    \caption[MyAccount]{Abmelden Button}
+    \end{center}
+\end{figure}
+\newpage
+
+\subsection{Statistik}
+Beim Aufrufen der Statistikseite ziehen wir die Daten vom Server aus dem Backend.
+Aus den gespeicherten Daten prüfen wir, ob es sich um einen Schüler oder einen Lehrer handelt, und rufen die korrekten Daten über LoginService und Statistics Task ab.
+\begin{figure}[h]
+    \begin{center}\includegraphics[width=10cm]{pics/Xamarin Frontend/statistic.png}
+    \caption[Statistik]{Statistik Button}
+    \end{center}
+\end{figure}
+\newline
+Wir holen uns die Daten per httpclient vom Server und übertragen die Daten in den Response-String, damit wir ihn lesen können.
+\begin{figure}[h]
+    \begin{center}\includegraphics[width=10cm]{pics/Xamarin Frontend/stat http.png}
+    \caption[Statistik]{HttpClient}
+    \end{center}
+\end{figure}
