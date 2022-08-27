@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FeedbackApp.WebApi.Authentication.ChangeEmailModel">
+    <Position X="7.75" Y="1" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Authentication\ChangeEmailModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FeedbackApp.WebApi.Authentication.ChangePwModel">
+    <Position X="9.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAARAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Authentication\ChangePwModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FeedbackApp.WebApi.Authentication.LoginModel">
+    <Position X="7.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Authentication\LoginModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FeedbackApp.WebApi.Authentication.RegisterModel">
+    <Position X="9.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAQAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Authentication\RegisterModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FeedbackApp.WebApi.Feedback.FeedbackModel">
+    <Position X="5.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAEAAAAAAAAAAAAAAgAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Feedback\FeedbackModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FeedbackApp.WebApi.Feedback.ModifyFeedbackModel">
+    <Position X="3.25" Y="1" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAEAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Feedback\ModifyFeedbackModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FeedbackApp.WebApi.Feedback.ModifyTuModel">
+    <Position X="3.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAgAEAAIIAAAAAAACgAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Feedback\ModifyTuModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FeedbackApp.WebApi.Feedback.TeachingUnitModel">
+    <Position X="5.25" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAEAAIIAAAggAAKAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Feedback\TeachingUnitModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FeedbackApp.WebApi.AccountManagement.ModifierUserDataModel">
+    <Position X="3.25" Y="5.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAEAAAAAAAARAAAAAAAAAQAAAAAAAAAg=</HashCode>
+      <FileName>AccountManagement\ModifierUserDataModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FeedbackApp.WebApi.AccountManagement.UserDataRequestModel">
+    <Position X="5.5" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AccountManagement\UserDataRequestModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
