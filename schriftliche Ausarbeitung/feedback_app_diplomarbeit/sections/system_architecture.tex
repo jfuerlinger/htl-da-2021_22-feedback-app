@@ -96,14 +96,36 @@ der HTTP-Zugriffsmethoden für das Frontend. Eine genaue Beschreibung der Umsetz
 \section{Frontend}
 \setauthor{Mirzet Sankonjic}
 
-\subsection{Models}
-Jedes Model ist ein Interface. In diesem Interface wird ein neues Datenmodel definiert,
-welches in allen Componenten und Services verwendet werden kann. Dieses Datenmodel
-ist ident mit den Data Transfer Objects oder Entitäten des Servers und dient als
-Schnittstelle.
-\subsection{Services}
-Die Daten werden vom Client über einen Service per API an den Server gesendet
-und wieder empfangen. Hierfür wird das HttpClientModule eingebunden. Es stehen
-die HTTP-Requests GET, POST, PUT, PATCH und DELETE zur Verfügung. Die
-Services werden dann in den benötigten Componenten injiziert im Konstruktor. Durch
-die typisierte Variante wird ein Observable <> zurückgegeben.
+\subsection{Xamarin.Forms}
+In Visual Studio wird Code in Projektmappen und Projekten organisiert. Eine Projektmappe ist ein Container, der wenigstens ein Projekt beinhaltet. Ein Projekt kann z.B. eine Applikation, eine unterstützende Bibliothek oder eine Testanwendung sein. Die Notes-Anwendung besteht wie im nächsten Screenshot gezeigt aus einer Projektmappe mit drei Projekten:
+\begin{figure}[h]
+    \begin{center}\includegraphics[width=10cm]{pics/Xamarin2.png}
+    \caption[Xamarin.Forms Project Ansicht]{Xamarin.Forms Project Ansicht}
+    \end{center}
+\end{figure}
+\begin{itemize}
+        \item Feedback App XAML: Dieses Projekt ist das .NET Standard-Klassenbibliotheksprojekt, das den vollständigen freigegebenen Code und die komplette freigegebene Benutzeroberfläche beinhaltet.
+        \item Feedback App XAML.Android: Dieses Projekt beinhaltet Android-spezifischen Code und ist der Einstiegspunkt für die Android-Anwendung.
+        \item Feedback App XAML.iOs: Dieses Projekt beinhaltet iOS-spezifischen Code und ist der Einstiegspunkt für die iOS-Anwendung.
+\end{itemize}
+\newpage
+Diese Projekte sind folgende:
+\begin{figure}[h]
+    \begin{center}\includegraphics[width=10cm]{pics/Xamarin1.png}
+    \caption[Project Ansicht]{Project Ansicht}
+    \end{center}
+\end{figure}
+
+Das Projekt verfügt über den Knoten Abhängigkeiten, der die Knoten NuGet und SDK beinhaltet:
+\begin{itemize}
+        \item NuGet: die dem Projekt hinzugefügten NuGet-Pakete für Xamarin.Forms, Xamarin.Essentials, Newtonsoft.Json und sqlite-net-pcl.
+        \item SDK: Das NETStandard.Library-Metapaket, das alle NuGet-Pakete referenziert, die .NET Standard definieren.
+\end{itemize}
+\newpage
+\subsection{Anwendungsgrundlagen}
+Eine Xamarin.Forms-Anwendung ist gleichwohl aufgebaut wie eine herkömmliche plattformübergreifende Applikation. Freigegebener Code wird meistens in einer .NET Standard-Bibliothek platziert und von plattformspezifischen Apps genutzt. Die sich anschließende Abbildung offeriert für die Notes-Anwendung einen Überblick über ebendiese Beziehung:
+\begin{figure}[h]
+    \begin{center}\includegraphics[width=14cm]{pics/Frontend architecture.png}
+    \caption[Anwendungsgrundlagen Ansicht]{Anwendungsgrundlagen}
+    \end{center}
+\end{figure}
