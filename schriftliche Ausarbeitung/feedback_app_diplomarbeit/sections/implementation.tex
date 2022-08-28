@@ -170,6 +170,48 @@ Durch Drücken des Buttons Abmelden gelangen wir auf die Login-Homepage.
     \end{center}
 \end{figure}
 \newpage
+Die Änderung der persönlichen Daten des Benutzers erfolgt auf die gleiche Weise. Die eingegebenen Daten werden an den LoginService gesendet und dann über den RestClient mit bool Tasks überprüft. Wenn die Antwort positiv ist, wurden die Daten geändert und gespeichert, andernfalls wird ein Fehler ausgegeben.
+\newline
+Nachfolgend finden Sie Beispiele für die Änderung von Daten wie E-Mail, Vorname, Nachname, E-Mail und Passwort.
+\begin{figure}[h]
+    \begin{center}
+    \includegraphics[width=6cm]{pics/Xamarin Frontend/email1.png}\hfill
+    \includegraphics[width=6cm]{pics/Xamarin Frontend/email2.png}
+    \caption[MyAccount]{Email ändern}
+    \end{center}
+\end{figure}
+\begin{figure}[h]
+    \begin{center}
+    \includegraphics[width=6cm]{pics/Xamarin Frontend/name1.png}\hfill
+    \includegraphics[width=6cm]{pics/Xamarin Frontend/email2.png}
+    \caption[MyAccount]{Vorname und Nachname ändern}
+    \end{center}
+\end{figure}
+\begin{figure}[h]
+    \begin{center}
+    \includegraphics[width=6cm]{pics/Xamarin Frontend/school1.png}\hfill
+    \includegraphics[width=6cm]{pics/Xamarin Frontend/school2.png}
+    \caption[MyAccount]{Schule ändern}
+    \end{center}
+\end{figure}
+\begin{figure}[h]
+    \begin{center}
+    \includegraphics[width=6cm]{pics/Xamarin Frontend/pass1.png}\hfill
+    \includegraphics[width=6cm]{pics/Xamarin Frontend/pass2.png}
+    \caption[MyAccount]{Password ändern}
+    \end{center}
+\end{figure}
+\newline
+Um ein Profil zu löschen, müssen Sie eine gültige E-Mail-Adresse eingeben. Dann werden die Daten an den LoginService gesendet und über RestClient prüfen wir, ob das Passwort korrekt ist. HttpClient sendet uns eine Antwort, und wenn dies zutrifft, werden die Daten und das Konto aus der Datenbank und dem Server gelöscht.
+\begin{figure}[h]
+    \begin{center}
+    \includegraphics[width=6cm]{pics/Xamarin Frontend/accDelete.png}\hfill
+    \includegraphics[width=6cm]{pics/Xamarin Frontend/accDelete2.png}
+    \caption[MyAccount]{Konto löschen}
+    \end{center}
+\end{figure}
+\newpage
+
 
 \subsection{Statistik}
 Beim Aufrufen der Statistikseite ziehen wir die Daten vom Server aus dem Backend.
