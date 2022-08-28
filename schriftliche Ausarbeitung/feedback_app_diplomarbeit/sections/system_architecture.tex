@@ -5,8 +5,10 @@ Diese Abbildung bietet einen groben Überblick über die Technologien, die für 
 Für die Umsetzung der Applikation wurde die Programmiersprache C\# verwendet. Die Technologien werden in Kapitel 3 ausführlich erklärt.
 
 \begin{figure} [h]
-    \includegraphics*[width=15cm]{./pics/architecture_overview.png}
-    \caption[overview architecture]{Systemarchitektur Überblick \cite{CSharpLogo} \cite{XamarinLogo}}
+    \begin{center}
+        \includegraphics*[width=15cm]{./pics/architecture_overview.png}
+        \caption[overview architecture]{Systemarchitektur Überblick \cite{CSharpLogo} \cite{XamarinLogo}}
+    \end{center}
 \end{figure}
 
 \subsubsection{Backend}
@@ -28,11 +30,69 @@ mit dem Betriebssystem Android und iOS lauffähig. Das Frontend wurde mit Xamari
 
 \section{Backend}
 \setauthor{Stefano Pyringer}
-
 \subsection{Datenstruktur}
-\subsection{Models}
-\subsection{API-Services}
+\setauthor{Stefano Pyringer}
 
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics*[width=12cm]{./pics/FeedbackDb-ERD.png}
+    \caption[ERD FeedbackDb]{FeedbackDb Entity Relationship Diagramm}
+    \end{center} 
+\end{figure}
+
+\subsubsection{Tabelle Feedback}
+Diese Tabelle beschreibt das Feedback für eine Lehreinheit. Der User kann die Lehreinheit in Sternen (1-5) bewerten und einen Kommentar hinzufügen. 
+
+\subsubsection{Tabelle User}
+Beinhaltet alle zusätzlichen personenbezogene Daten des Benutzers und die Rolle. Der Fremdschlüssel IdentityId verbindet die Tabelle 1:1 zu der User-Tabelle 
+der Identity-Datenbank. Der User kann mehrere Feedbacks und Lehreinheiten erstellen. Je Benutzer ist eine Statistiktabelle verbunden.
+
+\subsubsection{Tabelle TeachingUnit}
+Es ist die Hauptkomponente der gesamten Datenbank. Hier werden alle notwendigen Daten gespeichert, die für das Erstellen einer Lehreinheit notwendig sind. 
+Sie ist verbunden mit mehreren Feedbacks von anderen Usern und ist mit einer Tabelle für die Statistiken der Lehreinheit verbunden.
+
+\subsubsection{Tabelle TeachingUnitStats}
+Die Statistik für eine Lehreineinheit speichert die Anzahl der gegebenen Feedbacks und die durschnittliche Bewertungszahl einer Lehreinheit.
+
+\subsubsection{Tabelle UserStats}
+Diese Tabelle beinhaltet Statistiken für einen User. Es werden die Anzahl der erstellen Lehreineinheiten und Bewertungen mit deren durschnittlichen Bewertungszahl erfasst.
+
+\subsubsection{Tabelle GlobalHistory}
+Die globale Statistik Tabelle zählt alle jemals erstellten Lehreinheiten und Bewertungen des Servers an. Diese sind öffentlich zugänglich. 
+D. h. es ist keine Authorisierung notwendig.
+
+\subsubsection{ASP.NET CORE Identity}
+Die Daten für die ASP.NET Core Identity Authentifizierungsschnittstelle ist in der SarathalDb realisiert. Die Tabellen 
+entsprechen dem vorgefertigten Schemas des NuGet-Package.
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics[width=8cm]{./pics/identity_tables.png}
+        \caption[Identity Tables]{Tabellen der Idendity Datenbank}
+    \end{center}
+\end{figure}
+
+\newpage
+\subsection{Models}
+\setauthor{Stefano Pyringer}
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics*[width=15cm]{./pics/models_FeedbackWebAPI.png}
+        \caption[models API]{Model Feedback Web-API | links oben: Feedback, links unten: AccountManagement, rechts: Feedback}
+    \end{center}
+\end{figure}
+
+Diese Models dienen als Schnittstelle für den Zugriff aus der HTTP-API zum Controller. Die Models definieren, welche Felder im HTTP-Body
+einer HTTP-Request haben soll, um von der Methode angenommen zu werden. Zudem wird eine gewisse Sicherheit gewährleistet, da nur die definierten Felder 
+erstellt oder bearbeitet werden dürfen.
+
+\subsection{API-Services}
+\setauthor{Stefano Pyringer}
+Das Backend stellt einen API-Service für das Frontend zur Verfügung. Mittel HTTP-Requests können Daten empfangen und gesendet werden. 
+Die Authorisierung wird mittels Anhang eines JWT-Tokens realisiert. Die API-Methoden werden mit OpenAPI Swagger beschrieben und vereinfachte so die Entwicklung 
+der HTTP-Zugriffsmethoden für das Frontend. Eine genaue Beschreibung der Umsetzung ist in Kapitel 6.1 zu finden.
+
+\newpage
 \section{Frontend}
 \setauthor{Mirzet Sankonjic}
 
