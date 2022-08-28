@@ -117,18 +117,18 @@ Die Schnittstellen können mit Swagger/Open-API dokumentiert werden.
 
 \subsubsection{Web-Apps und APIs mit MVC}
 ASP.NET Core MVC ist ein zusätzliches umfassendes Framework bassierend auf dem Model-View-Controller-Entwurfsmusters. Damit werden 
-die einzelnen Bereiche getrennt, was die Entwicklung, Organisition und Testbarkeit erleichtert. 
+die einzelnen Bereiche getrennt, was die Entwicklung, Organisation und Testbarkeit erleichtert. 
 ASP.NET Core MVC wird parallel zu Razor Pages als Alternative weiterhin unterstützt.
 
 \subsubsection{Web-Apps und APIs mit Razor Pages}
 Razor Pages ist der Nachfolger von MVC in ASP.NET Core und ersetzt ASP.NET Web Forms. 
-Sie bassiert auf dem MVC-Framework, jedoch ist die Komplexität reduziert. Razor Pages verwendet das 
+Sie basiert auf dem MVC-Framework, jedoch ist die Komplexität reduziert. Razor Pages verwendet das 
 MVVM-Entwurfsmuster (Model-View-View-Model). Somit entfällt der Controller.
 
 
 \subsubsection{Echtzeit-Web-Apps mithilfe von SignalR}
-SignalR ist eine Open-Source-Bibliothek mithilfe die Hinzuufügung von Echtzeitwebfunktionen zu Apps zu vereinfachen.
-Diese Funktionen ermöglichen serverseitigen Code, Inhalte sofort an die Clients zu senden. SignalR verarbeitet die Verbindungsveraltung 
+SignalR ist eine Open-Source-Bibliothek mithilfe der Hinzufügung von Echtzeitwebfunktionen zu Apps zu vereinfachen.
+Diese Funktionen ermöglichen serverseitigen Code, Inhalte sofort an die Clients zu senden. SignalR verarbeitet die Verbindungsverwaltung 
 automatisch.
 
 SignalR ist besonders für Szenarien geeignet, wo man Daten vom Server mit einer hohen Aktualisierungsfrequenz benötigt. 
@@ -158,7 +158,7 @@ Browser mittels CRUD-Operationen verändert werden, ohne auf eine spezielle Soft
 Verschiedene Technologien können miteinander kombiniert werden. So können alle vorherigen genannten Anwendungsmöglichkeiten 
 mit ASP.NET Core in einer App verwendet werden. 
 Es ist auch ein ist auch eine Verschmelzung von Benutzeroberflächen mit .NET MAUI, WPF und Windows Forms möglich. Diese laufen nicht im Browser, 
-sondern in einer eigenen Anwendung dargestellt, ohne die z. B. exestierende Oberfläche neu für die anzuwendende UI zu programmieren.
+sondern in einer eigenen Anwendung dargestellt, ohne die z. B. existierende Oberfläche neu für die anzuwendende UI zu programmieren.
 
 \subsection{Identity}
 \setauthor{Stefano Pyringer}
@@ -167,7 +167,7 @@ sondern in einer eigenen Anwendung dargestellt, ohne die z. B. exestierende Ober
 
 ASP.NET Core Identity ist eine API, dass das Benutzermanagement (Login-Interface) ermöglicht. 
 Die Benutzer können einen Account erstellen und mit diesen einloggen. Die API verwendet dafür eine 
-SQL-Datenbank, die die Benutzernamen, Rollen, Passwörter, E-Mail Adressen und weitere benutzerbezogene Daten verwaltet. 
+SQL-Datenbank, die die Benutzernamen, Rollen, Passwörter, E-Mail-Adressen und weitere benutzerbezogene Daten verwaltet. 
 Als Alternative ist die Speicherung der Datenbank auf externen Datenbanksystemen wie Azure möglich.
 
 Ein externer Login von Login-Providern wie Google, Microsoft, Twitter und Facebook wird von ASP.NET Core Identity ebenfalls unterstützt.
@@ -193,12 +193,12 @@ Zudem sind folgende erweiterte Sicherheitsfeatures möglich:
 
 Das Entity Framework (EF) ist ein moderner Objektdatenbank-Mapper für .NET-Objektstrukturen. Es
 wurde von Microsoft entwickelt und die erste Version erschien als Teil des .NET Framework 3.5 im
-Jahr 2008. Damals gehörte es noch zu ADO.NET, welches seit 2002 exestiert.  Es ist als Ergänzung zu verstehen, 
-der die Differenzen zwischen der objektorientierten Programmierung und relationalen Datenbanken addressiert.
+Jahr 2008. Damals gehörte es noch zu ADO.NET, welches seit 2002 existiert.  Es ist als Ergänzung zu verstehen, 
+der die Differenzen zwischen der objektorientierten Programmierung und relationalen Datenbanken adressiert.
 
 Im Jahr 2021 mit der Version 5 machte Microsoft das Framework quelloffen verfügbar und hieß
 Entity Framework. Mit .NET Core gibt es seit 2016 das Framework als separates Zusatzpaket Entity
-Framework Core (EF Core). Die aktuellste Version ist EF Core 6.0 (Stand Juli 2022) und 
+Framework Core (EF Core). Die aktuelle Version ist EF Core 6.0 (Stand Juli 2022) und 
 erhält Langzeit-Support (LTS) bis 8. November 2024.
 
 Es unterstützt LINQ-Abfragen, Migrationen und Änderungsnachverfolgung (Tracking). EF-Core
@@ -268,11 +268,11 @@ Daraus ergeben sich folgende Szenarien:
 
 \subsubsection{Code First - keine Datenbank vorhanden}
 Bestehende Klassen (MVC-Model) werden mit Annotationen ausgezeichnet, welche die Abbildung auf eine Datenbank steuern.
-Darauf afbauend werden vom DbContext die Datenbank und die Datenbank-Tabellen modelliert und beim Aufruf der SaveChanges-Methode erstellt.
+Darauf aufbauend werden vom DbContext die Datenbank und die Datenbank-Tabellen modelliert und beim Aufruf der SaveChanges-Methode erstellt.
 
 \subsubsection{Model First - keine Datenbank vorhanden}
 Die Entity-Klassen werden mit einem grafischen Designer modelliert. Dieses Modell wird mit Hilfe des Text Template Transformation Toolkit (T4) und 
-der dazugehörigen Skriptsprache in Entity-Klassen umgewandel. Der Designer erstellt zusätzlich ein SQL-Skript, mit dem die Datenbank erstellt wird.
+der dazugehörigen Skriptsprache in Entity-Klassen umgewandelt. Der Designer erstellt zusätzlich ein SQL-Skript, mit dem die Datenbank erstellt wird.
 
 \subsubsection{Code First - Verwendung einer bestehenden Datenbank}
 Die Entity-Klassen können entsprechend der vorgegebenen Datenbank manuell erstellt werden. Dies ist jedoch sehr arbeitsintensiv.
@@ -319,11 +319,11 @@ notwendig ist (z. B. Unique-Constraint).
 Die OpenAPI Spezifikation, auch als Swagger-Spezifikation bekannt, ist ein Standard für die Beschreibung von 
 REST-Schnittstellen. Es war ursprünglich ein Bestandteil des Open-Source-Frameworks Swagger, welches HTTP-Webservices bereitstellt.
 Seit 2016 ist es ein eigenständiges Projekt, das von der OpenAPI Initiative verwaltet und gefördert wird. 
-Mitlgieder dieser Initiative sind große Unternehmen wie z. B. Microsoft, Google, IBM, Paypal und SAP sowie weitere Initiative wie Smartbear und die Linux Foundation.
+Mitlglieder dieser Initiative sind große Unternehmen wie z. B. Microsoft, Google, IBM, Paypal und SAP sowie weitere Initiative wie Smartbear und die Linux Foundation.
 Ziel ist es, ein offenes und herstellerneutrales Beschreibungsformat für API-Dienste bereitzustellen. Bei den API-Spezifikationen kommen meistens die 2 Sprachen YAML oder JSON zum Einsatz. 
-Die aktuellste der OpenApi-Spezifikation ist 3.1 (Stand Juli 2022). 
+Die aktuelle der OpenApi-Spezifikation ist 3.1 (Stand Juli 2022). 
 
-Der OpenApi-Standard definiert eine Reihe von Eigenschaften, die auch als sogennante Objekte zusammengefasst werden können. 
+Der OpenApi-Standard definiert eine Reihe von Eigenschaften, die auch als sogenannte Objekte zusammengefasst werden können. 
 Folgende Objekte liegen in einer Dokumentation vor:
 \begin{itemize}
     \item Info Objekt: Version und Name der API
@@ -337,15 +337,15 @@ Folgende Objekte liegen in einer Dokumentation vor:
 \end{itemize}
 
 Da es um eine nur um eine technische Spezifikation handelt, ist es nicht an eine spezielle technische Implementierung gebunden. Dafür gibt es Tools wie Swagger. 
-Swagger ist ein Sammlung von Open-Source-Werkzeugen, die helfen, die API-Dokumention zu entwickeln. 
+Swagger ist eine Sammlung von Open-Source-Werkzeugen, die helfen, die API-Dokumention zu entwickeln. 
 \begin{itemize}
     \item Swagger Editor: ein Browser-basierter Editor, wo die OpenAPI-Dokumentation geschrieben werden kann
     \item Swagger UI: erzeugt die OpenAPI-Dokumentation
     \item Swagger Codegen: generiert die Server Stubs und Client SDKs
 \end{itemize}
 
-Es exestieren auch kostenplichtige Tools wie SwaggerHub Enterprise, Swagger Inspector und API-Tree. 
-Desweiteren gibt es verschiedene Entwicklungsumgebungen und Erweiterungen zur Unterstützung der OpenAPI-Dokumentation. 
+Es existieren auch kostenpflichtige Tools wie SwaggerHub Enterprise, Swagger Inspector und API-Tree. 
+Des weiteren gibt es verschiedene Entwicklungsumgebungen und Erweiterungen zur Unterstützung der OpenAPI-Dokumentation. 
 Nicht jede beliebige API lässt sich mittels OpenAPI abbilden. REST-APIs werden vollständig unterstützt.
 
 \subsection{Anwendungsgebiete}
@@ -360,16 +360,16 @@ Generell wird die OpenAPI eingesetzt, um REST-APIs auf eine einheitliche Weise z
 maschinenlesbaren Format vorliegen, können automatisiert folgende Möglichkeiten erzeugt werden.
 
 \subsubsection{Erzeugung der API-Dokumentation}
-Es kann aus den Code der API-Definition eine HTML-basierte Dokumentation erzeugt werden. Diese dient als Nachschlagewerk für jene Entwickler, 
-die auf die APIs zugreifen wollen. Ändert sich die API-Defintion, so wird die Dokumentation automatisch neu erzeugt.
+Es kann aus dem Code der API-Definition eine HTML-basierte Dokumentation erzeugt werden. Diese dient als Nachschlagewerk für jene Entwickler, 
+die auf die APIs zugreifen wollen. Ändert sich die API-Definition, so wird die Dokumentation automatisch neu erzeugt.
 
 \subsubsection{Erzeugung von Anbindungen in verschiedenen Programmiersprachen}
 Aus API-Definition können mit den passenden Tools eine Client-seitige Softwarebibliothek in einer unterstützten Programmiersprache 
-erzeugt werden. Diese werden ganz normal eingebunden und die Zugriffe auf die API-Diensten erfolgen z. B. über Funktionsaufrufe innerhalb 
+erzeugt werden. Diese werden normal eingebunden und die Zugriffe auf die API-Diensten erfolgen z. B. über Funktionsaufrufe innerhalb 
 der gewohnten Entwicklungsumgebung. Damit werden Entwickler mit unterschiedlichen Programmiersprachen der Zugriff auf die API ermöglicht.
 
 \subsubsection{Erzeugung von Testfällen}
-Aus den API-Defintion hat man die Möglichkeit, Testfälle zu definieren. Diese Test werden bei jeder Änderung der API automatisch durchgeführt, 
+Aus den API-Definition hat man die Möglichkeit, Testfälle zu definieren. Dieser Test werden bei jeder Änderung der API automatisch durchgeführt, 
 um sicherzustellen, dass jede Komponente der Software ordnungsgemäß funktioniert.
 
 \subsection{Vorteile von OpenAPI}
@@ -382,7 +382,7 @@ Außerdem ergeben sich aus der Nutzung von OpenAPI weitere Vorteile:
     \item HTTP-APIs werden unabhängig von einer spezifischen Programmiersprache definiert
     \item Server-Code für eine OpenAPI definierte API generieren
     \item Client-Bibliotheken für eine OpenAPI-konforme API in mehr als 40 Programmiersprachen generieren
-    \item OpenAPI-Defintionen mit geigneten Tools verarbeiten
+    \item OpenAPI-Definitionen mit geeigneten Tools verarbeiten
     \item Eine interaktive API-Dokumentation erstellen
     \item Auf API-Services mit minimalen Implementationsaufwand zugreifen
     \item Services verstehen, ohne dafür Einsicht in den Quelltext oder weiteren zusätzlichen Dokumentation nehmen zu müssen
@@ -403,7 +403,7 @@ sicher und kompakt ausgetauscht werden können. JWTs sind digital signiert und k
 
 Der Token überträgt Claims, die die notwendigen Informationen für die Authentifizierung einer Entität enthalten. 
 Dieser Token kann z. B. im HTTP-Header oder in der URL übertragen werden. JSON Web Tokens eignen sich für Authentifizierungsvorgänge zustandsloser Sessions und kommen 
-im Webumfeld beispielsweise für Single Sign-on Anwendugnen (SSO) zum Einsatz. Sie sind eine Alternative zu Session Cookies. 
+im Webumfeld beispielsweise für Single Sign-on Anwendungen (SSO) zum Einsatz. Sie sind eine Alternative zu Session Cookies. 
 
 \subsection{Aufbau}
 JWTs sind Zeichenstrings, die aus 3 Teilen bestehen, die mit einem Punkt (.) getrennt werden:
@@ -415,19 +415,19 @@ JWTs sind Zeichenstrings, die aus 3 Teilen bestehen, die mit einem Punkt (.) get
 Der Token könnte in folgender Form dargestellt werden: \textit{Header.Payload.Signature}
 
 \subsubsection{Header}
-Der Header beschreibt, welcher Typ der Token hat und und welcher Signierungsalgorithmus verwendet wurde. 
+Der Header beschreibt, welcher Typ der Token hat und welcher Signierungsalgorithmus verwendet wurde. 
 Bei JSON Web Tokens ist immer der Typ als \textit{JWT} angegeben.
 
 \subsubsection{Payload}
 Die Payload beinhaltet die Claims. Claims beinhalten Informationen über die Entität (den User) und zusätzliche Daten. 
-Claim Bezeichnungen werden stets nur mit 3 Buchstaben lang, da JWT ein kompakter Standard ist. Es exestieren 3 verschiedene Arten von Claims. 
+Claim Bezeichnungen werden stets nur mit 3 Buchstaben lang, da JWT ein kompakter Standard ist. Es existieren 3 verschiedene Arten von Claims. 
 
 \textbf{Registered Claims} sind ein Set von vordefinierten Claims, welche empfohlen werden für ein funktionelle verwendbare Claims. 
 Diese können beispielweise \textit{iss} (issuer), \textit{exp} (expiration time), \textit{sub} (subject) oder \textit{aud} (audience) sein. 
 Die vorgeschlagenen Claims müssen nicht verwendet werden. 
 
 \textbf{Public Claims} können von den Benutzern den Belieben nach vereinbart werden. Sie sollten in der 
-IANA JSON Web Token Registry definiert sein um Kollisionen zu vermeiden. Als Alternative können sie auch als URI definiert sein, welche eine Kollisionsvermeidung für Namespaces hat.
+IANA JSON Web Token Registry definiert sein, um Kollisionen zu vermeiden. Als Alternative können sie auch als URI definiert sein, welche eine Kollisionsvermeidung für Namespaces hat.
 
 \textbf{Private Claims} sind selbsterstellte Claims, die Informationen beinhalten, auf die sich die benutzenden Parteien geeinigt haben und weder den \textit{registered} 
 oder den \textit{public} Claims zuzuordnen sind.
@@ -437,9 +437,9 @@ Die Signatur wird dazu benutzt, um festzustellen, dass die Nachricht nicht verä
 Die Signatur ist die Verschlüsselung vom Header, Payload, Passwort und im Header angegebene Verschlüsselungsmethode.
 
 \subsubsection{Erstellter Token}
-Das Ergebnis sind 3 Base64-URL Strings die mit einem Punkt getrennt werden. Diese Strings sind platzsparend in HTML und HTTP Umgebungen im Gegensatz zu XML bassierten Standards wie SAML. 
+Das Ergebnis sind 3 Base64-URL Strings die mit einem Punkt getrennt werden. Diese Strings sind platzsparend in HTML und HTTP Umgebungen im Gegensatz zu XML basierten Standards wie SAML. 
 Der \href{https://jwt.io/#debugger-io}{jwt.io Debugger} kann JSON Web Tokens decodieren, was nützlich ist zum Debuggen. Da der JWT Token durch den Debugger alle Informationen einsehbar sind, 
-sollten keine sennsiblen Daten im Token angefügt werden.
+sollten keine sensiblen Daten im Token angefügt werden.
 
 \begin{figure}[h]
     \begin{center}
@@ -468,7 +468,7 @@ Folgendes Diagramm zeigt den Ablauf für eine Anforderung einer geschützten Res
 \begin{enumerate}
     \item Die Anwendung sendet einen Authentifizierungs-Request an den Authentifizierungsserver. Diese führt einen bestimmten \textit{authorization-code-flow} durch (z. B. OpenID)
     \item Bei einer erfolgreichen Authentifizierung sendet der Authentisierungsserver ein Zugriffstoken zurück an den Client.
-    \item Die Anwendung kann mit dem erhaltenen Zugriffstoken auf die geschützte Ressourcen zugreifen (z. B. API).
+    \item Die Anwendung kann mit dem erhaltenen Zugriffstoken auf die geschützten Ressourcen zugreifen (z. B. API).
 \end{enumerate}
 
 \newpage
@@ -516,6 +516,6 @@ Xamarin ist für Entwickler mit den folgenden Zielen:
     \item Plattformübergreifende Anwendungen in C\# mit Visual Studio schreiben
 \end{enumerate}
 Es wurde für unsere Arbeit ausgewählt, weil es den zusätzlichen Tools 
-der Visual Studio-Software durchaus nahe kommt und zudem für uns kostenlos 
+der Visual Studio-Software durchaus nahekommt und zudem für uns kostenlos 
 nutzbar ist. Die Enterprise-Lizenz wird von der HTL bereitgestellt und 
 darf nur für schulische Zwecke verwendet werden.
