@@ -47,7 +47,7 @@ darf ausschließlich für schulische Zwecke eingesetzt werden.
 \cite{VsCodeWU}
 
 Visual Studio Code, wird auch als VS Code bezeichnet, ist ein Code-Editor entwickelt von Microsoft. 
-Seit November 2015 ist der Source-Code des Code-Editors auf Github verfügbar. Im April 2016 wurde die erste finale Version 
+Seit November 2015 ist der Source-Code des Code-Editors auf GitHub verfügbar. Im April 2016 wurde die erste finale Version 
 von Visual Studio Code veröffentlicht. Der Source-Code des Code-Editors ist mit einer MIT-Lizenz lizensiert und ist somit Open-Source.
 Das installierbare Programm hingegen enthält Microsoft-Binaries und ist deshalb keine Open-Source. Das Programm ist kostenlos verfügbar.
 
@@ -152,9 +152,25 @@ mit Visual Studio für unsere Arbeit ausgewählt. Es gibt keine Lizenz und es ka
 kostenlos für jeden Zweck verwendet werden.
 \newpage
 
+\newpage
 \section{Testen auf dem Endgerät}
 \subsection{Android Emulator}
-\newpage
+\cite{AndroidEmulator}
+In Visual Studio 2022 wird der Android x86-Emulator verwendet, der die Anwendung in einer simulierten Android Umgebung ausführen 
+und debuggen kann. Dank Hyper-V Unterstützung wird die virtuelle Maschine beschleunigt. 
+Der Emulator kann verschiedenste Sensoren wie GPS, Bewegungsensoren, Kamera, etc. simulieren.
+
+Im Visual Studio Emulator können verschiedenste Geräteprofile ausgewählt werden, um die Kompatibilität der zu entwickelnden App zu 
+gewährleisten. Diese Profile beinhalten verschiedene Hersteller und Android Versionen.
+
+Der Emulator lässt sich auch mit ADB (Android Debug Bridge) verbinden, 
+sodass andere beliebte Android Entwicklungstools wie Eclipse und Android Studio problemlos auf den Emulator zugreifen können.
+
+\subsubsection{Verwendungsgrund}
+Mit dem Visual Studio Android Emulator kann die Anwendung unabhängig eines echten Android-Smartphones getestet werden. 
+Da der Emulator bereits in Visual Studio 2022 mit dem Instalationspaket Xamarin enthalten ist, ist die Instalation und Inbetriebnahme des 
+Emulators einfacher als eine separate Installation. Zudem ist das Debugging bereits in Visual Studio integriert.
+
 
 \subsection{iOS Emulator}
 \setauthor{Mirzet Sakonjic}
